@@ -4,6 +4,7 @@
 <?php
   $banner = ControladorBanner::ctrMostrarBanner();   /* lo que estoy haciendo pido al controlador : traeme los banner *//* aqui tengo una collecion de objeto banner desde la base de datos *//* trae ubicacion de img en disco duro  */
 ?>                                                   <!-- aqui la vista esta solicitando la informacion al controlador  -->
+                                                     <!-- desde aqui hizimos una peticion al controlador  -->
 
 
 <!--=====================================
@@ -17,22 +18,22 @@ BANNER
 		<div class="slide-inner">
 			
 			<ul class="slide-area">
-
-                <?php foreach ($banner as $key => $value): ?>  <!-- $banner es colleccion y $key indice de objetos $value objetos  -->
+            <!--              coleccion  indice   objeto             -->
+                <?php foreach ($banner as $key => $value): ?>  <!-- recorremos $banner con foreach de php   -->
                 
         				
 				 <li>					
-                    <img src="<?php echo $servidor.$value["img"]; ?>" width="100%">   <!-- $servido es path del backend , en indice 0 en el objeto value selecciono la propiedad img del objetos asi vamos recorriendo toda collecion   -->
-                </li>                                                                  <!-- de esta manera ubico la img en dico duro en funccion de routa que devuelva la base de datos  -->
+                    <img src="<?php echo $servidor.$value["img"]; ?>" width="100%">  <!-- $servidor es path del backend , img es propiedad del objeto:string => roota de img en repositorio backend necesario para cargar img en este plantilla  -->
+                </li>                                                                <!-- de esta manera ubico la img en disco duro en funccion de routa que devuelva la base de datos  -->
   
-
                <?php endforeach ?>
 
 			</ul>
 
 		</div>
 
-	 	<div class="controller d-none">
+	 	<div class="controller d-none"><div class="">
+		 </div>
 		 	
 			<a class="auto" href="#">
 

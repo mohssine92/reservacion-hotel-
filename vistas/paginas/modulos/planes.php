@@ -1,6 +1,6 @@
 <?php
 
-$planes = ControladorPlanes::ctrMostrarPlanes();
+$planes = ControladorPlanes::ctrMostrarPlanes();  /* obtengo colleccion de objetos de la tabla planes atraves peticiones al controlador modelo base de datos  */
 
 ?>
 
@@ -19,9 +19,9 @@ PLANES
 				<h1 class="text-center py-3 py-lg-5 tituloPlan text-uppercase" tituloPlan="BIENVENIDO">BIENVENIDO</h1>
 
 				<p class="text-muted text-left px-4 descripcionPlan" descripcionPlan="Salam ipsum dolor sit amet, consectetur adipisicing elit. Iure deleniti quidem minus voluptatibus repellendus error, excepturi quam, iste vitae tenetur fugiat possimus in. In iure cum facilis, saepe, libero accusantium.">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure deleniti quidem minus voluptatibus repellendus error, excepturi quam, iste vitae tenetur fugiat possimus in. In iure cum facilis, saepe, libero accusantium.</p>
-
+                 
 			</div>
-
+           <!--           collecion   indice    objeto -->
 			<?php foreach ($planes as $key => $value): ?>
 
 			<div class="grid-item d-none d-lg-block" data-toggle="modal" data-target="#modalPlanes">
@@ -29,7 +29,7 @@ PLANES
 				<figure class="text-center">
 					
 					<h1 descripcion="<?php echo $value["descripcion"]; ?>" class="text-uppercase">PLAN <?php echo $value["tipo"]; ?></h1>
-
+                <!-- por el tema de descripcion capturar la descripcion y luego con javascript mostrarla en la ventana del modales y con una imagen -->
 				</figure>
 
 				<img src="<?php echo $servidor.$value["img"]; ?>" class="img-fluid" width="100%">

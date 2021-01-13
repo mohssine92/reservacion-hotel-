@@ -5,7 +5,8 @@ include "modulos/banner.php";  /* este modulo de banner es dinamico mueve imagen
                                 /* mas adelante cuando estemos trabajando gestor de banel en el panel administrativo en el backend podemos subir y cambiar imagenes cuantas veces queramos  */
                                 /* las imagenes del banner vienes de repositorio del backend -  */
 
-include "modulos/planes.php";   /*  anuncios infs planes que podra hacer   */ /* hay un modalplanes su codigo esta paginas/modulos/modal  */
+
+include "modulos/planes.php"; /*  */   
 
 include "modulos/habitaciones.php";     /* la parte de habitaciones tipo de habitaciones  */
 

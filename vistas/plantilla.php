@@ -1,7 +1,8 @@
 <?php
 /* variables de rutas en el proyecto  */  /* esta funcciones se ejecutan de manera statica nada mas arrancar el proyecto  */
 $ruta = ControladorRuta::ctrRuta();  /* simplemente me devuelve ruta raiz del frontend que voy a estar usando en redericcionamiendo y carga de contenido en frontend */
-$servidor = ControladorRuta::ctrServidor();  /* siemplemente me devuelve la ruta raiz a nivel servidor que voy a estar utulizando para derigirme a nivel de backend  */
+$servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de rootas - me returna  roota del backend   */
+
 
 ?>
 

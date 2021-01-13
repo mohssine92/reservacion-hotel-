@@ -1,4 +1,6 @@
 <?php
+require_once "modelos/planes.modelo.php";   /* modelo al que se va hacer peticion este controlador  */
+
 
 Class ControladorPlanes{
 

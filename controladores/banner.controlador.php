@@ -6,8 +6,9 @@ Class ControladorBanner{
 	/*=============================================
 	Mostrar banner
 	=============================================*/
-    /* controla la tabla banner */  /* el controlador es el que se va ejecutar ese metodo del modelo  */
-	static public function ctrMostrarBanner(){
+	/* controla la tabla banner */  /* el controlador es el que se va ejecutar ese metodo del modelo  */
+	
+	static public function ctrMostrarBanner(){ /* cuando se ejcute haga una peticion al modelo  */
 
 		$tabla = "banner";  /* es una tabla */
 
