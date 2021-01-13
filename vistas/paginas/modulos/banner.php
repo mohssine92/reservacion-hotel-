@@ -1,8 +1,10 @@
+<!--                                                        no olvides que el codigo se esta ejecutando en la linea 24 del index principal 
+ -->
+
 <?php
+  $banner = ControladorBanner::ctrMostrarBanner();   /* lo que estoy haciendo pido al controlador : traeme los banner *//* aqui tengo una collecion de objeto banner desde la base de datos *//* trae ubicacion de img en disco duro  */
+?>                                                   <!-- aqui la vista esta solicitando la informacion al controlador  -->
 
-$banner = ControladorBanner::ctrMostrarBanner();    /* no olvides que el codigo se esta ejecutando en la linea 24 del index principal */
-
-?>
 
 <!--=====================================
 BANNER

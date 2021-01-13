@@ -76,7 +76,7 @@ $servidor = ControladorRuta::ctrServidor();  /* siemplemente me devuelve la ruta
 	<!-- https://www.jqueryscript.net/slider/Carousel-Slideshow-jdSlider.html -->
 	<script src="js/plugins/jquery.jdSlider-latest.js"></script>
 
-	<!-- Pano -->
+	<!-- Pano --> <!-- pluigin para colocar imagenes de 360 grados  -->
 	<!-- https://www.jqueryscript.net/other/360-Degree-Panoramic-Image-Viewer-with-jQuery-Pano.html -->
 	<script src="js/plugins/jquery.pano.js"></script>
 

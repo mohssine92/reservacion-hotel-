@@ -14,11 +14,11 @@ Class ModeloBanner{
 
 		$stmt -> execute();
 
-		return $stmt -> fetchAll();   /* devuelve coleccion de objetos de la base de datos de la tabla banner  */
+		return $stmt -> fetchAll();   /* devuelve coleccion de objetos de la base de datos de la tabla banner  */ /*cuanto returnamos solo una fila usamo fetch  y varias filas con fetchall */
 
-		$stmt -> close();
+		$stmt -> close();  /* por seguridad - cerrar la sentencias isql   */
 
-		$stmt = null;
+		$stmt = null;   /* vaciar el objeto  darle valor nulo*/
 
 	}
 

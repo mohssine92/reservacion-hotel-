@@ -6,7 +6,7 @@ class ControladorRuta{
 
 	static public function ctrRuta(){
 
-		return "http://localhost/reservas-hotel-copia";  /* roota para uso frontend */
+		return "http://localhost/reservas-hotel-copia/";  /* roota para uso frontend */ /* donde ponemos nuestro dominio en caso del desplegue en un vps  */
 
 	}
 
