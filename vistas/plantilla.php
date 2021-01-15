@@ -101,6 +101,17 @@ PÁGINAS
 
 if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html debajo del navbar en funccion de de la condicion -> par rederigirnos a paginas  */
 
+	$rutasCategorias = ControladorCategorias::ctrMostrarCategorias(); /* objetivo rutas en tabla categorias */
+    $validarRuta = false;
+	foreach ($rutasCategorias as $key => $value) {
+
+		if($_GET["pagina"] == $value["ruta"]){
+
+			$validarRuta = true;
+
+		}
+		
+	}
 	
 	if($_GET["pagina"] == "habitaciones"){
 
@@ -108,17 +119,16 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 		
 	}
 
-	if($_GET["pagina"] == "reservas"){
+	if($_GET["pagina"] == "reservas" || $_GET["pagina"] == "perfil"){
 
-		include "paginas/reservas.php";
+		include "paginas/".$_GET["pagina"].".php";
 		
-	}
+	}else if($validarRuta = true){
 
-	if($_GET["pagina"] == "perfil"){
+		include "paginas/habitaciones.php";
 
-		include "paginas/perfil.php";
-		
 	}
+	
 
 }else{
 
