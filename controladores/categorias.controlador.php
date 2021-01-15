@@ -1,5 +1,6 @@
 <?php
 
+require_once "modelos/categorias.modelo.php";   
 Class ControladorCategorias{
 
 	/*=============================================

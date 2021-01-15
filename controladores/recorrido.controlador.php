@@ -1,5 +1,7 @@
 <?php
 
+require_once "modelos/recorrido.modelo.php"; 
+
 Class ControladorRecorrido{
 
 	/*=============================================

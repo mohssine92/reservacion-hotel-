@@ -1,21 +1,18 @@
 <?php
   /* esto es contenido de pagina de inicio  */
 
-include "modulos/banner.php";  /* este modulo de banner es dinamico mueve imagenes traidas  de una base de datos   */
-                                /* mas adelante cuando estemos trabajando gestor de banel en el panel administrativo en el backend podemos subir y cambiar imagenes cuantas veces queramos  */
-                                /* las imagenes del banner vienes de repositorio del backend -  */
+include "modulos/banner.php";  
+                                                    /* esos modulos estan dinamicos gracias a base de datos y foreach por recorrer las collecciones de objetos de datos recuperados desde tablas de base de datos */
 
+include "modulos/planes.php";           /* usa tabla planes  */
 
-include "modulos/planes.php"; /*  */   
+include "modulos/habitaciones.php";     /* usa tabla categorias   */
 
-include "modulos/habitaciones.php";     /* la parte de habitaciones tipo de habitaciones  */
+include "modulos/planes-movil.php";  /* usa tabla categorias  */
 
-include "modulos/planes-movil.php";  /* ???? */
+include "modulos/recorrido-pueblo.php";   /* usa tabla recorrido  */ 
 
-include "modulos/recorrido-pueblo.php";    /* recorrido del pueblo es slider   */
-
-include "modulos/restaurante.php";   /* parte de carta restaurantes etc , formulario de contacto y mapa esta incluyendo en el footer estan in index principal del proyecto  */
-
+include "modulos/restaurante.php";   /* usa tabla restaurante  */
 
 
 

@@ -1,5 +1,8 @@
 <?php
 
+require_once "controladores/planes.controlador.php"; 
+
+
 require_once "modelos/banner.modelo.php"; /* modelo banner encarga de dar respuesta al controlador desde la base de datos  */
 Class ControladorBanner{
 

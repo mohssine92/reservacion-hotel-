@@ -1,5 +1,7 @@
 <?php
 
+require_once "modelos/restaurante.modelo.php";  
+
 Class ControladorRestaurante{
 
 	/*=============================================
