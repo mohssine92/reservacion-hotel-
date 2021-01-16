@@ -8,7 +8,7 @@ include "modulos/planes.php";           /* usa tabla planes  */
 
 include "modulos/habitaciones.php";     /* usa tabla categorias   */
 
-include "modulos/planes-movil.php";  /* usa tabla categorias  */
+include "modulos/planes-movil.php";    /* usa tabla categorias  */
 
 include "modulos/recorrido-pueblo.php";   /* usa tabla recorrido  */ 
 

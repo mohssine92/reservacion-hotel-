@@ -151,7 +151,9 @@ include "paginas/modulos/modal.php";
 <script src="js/plantilla.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/idiomas.js"></script>
+<script src="js/habitaciones.js"></script>
 <script src="js/reservas.js"></script>
+
 	
 </body>
 </html>
