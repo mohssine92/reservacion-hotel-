@@ -41,16 +41,18 @@ INFO HABITACIÓN
 					<ul class="nav nav-justified mt-lg-4">	
 
 					
-					<?php foreach ($habitaciones as $key => $value): ?>  <!-- todos objetos devueltos por categoria  a listarlos -->
+					<?php foreach ($habitaciones as $key => $value): ?> 
 
 						<li class="nav-item">
-                                                                                               <!-- por esta variable viene columna ruta de tabla categorias asi cada vez sera captada ruta diferente dinamicamente  -->
+                                                                                             
 							<a class="nav-link text-white" orden="<?php echo $key; ?>" ruta="<?php echo $_GET["pagina"]; ?>"  href="#">
-							   <?php echo $value['estilo'];?> 
+							 
+							   <?php echo $value['estilo']; ?>   <!--listando los estilos de habitaciones disponibles en cada categorias   -->
+
 							</a>                            
 						</li>
-                         <!--estilo es propiedad en la segunda tabla representa los estilos disponibles en categoria seleccionada por eso es obligatoriamente no tener coincidencia entre propiedades de tablas relacionadas -->
-					     <!-- tambien la classe active se pone en funccion del estilo seleccionado ver js/habitaciones.js  -->
+                           
+						
                     <?php endforeach ?>
 
 					</ul>

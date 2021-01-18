@@ -1,7 +1,7 @@
 <?php
 
 /* necesito requirer el modelo y el controlador a donde voy a hacer las peticiones porque todo se hace de forma asincrona , sabes no esta asincronizado al index sino esta por separado , sabemos el index el que se requiere los modelos y controladores 
-pero ARCHIVO ajax no esta conectado al index esta totalmente deparado , solo lo esta solicitando javascript entones necesito volver a requerir el modelo y elcontrolador de habitaciones   */
+pero ARCHIVO ajax no esta conectado al index esta totalmente Separado , solo lo esta solicitando javascript entones necesito volver a requerir el modelo y el controlador de habitaciones en ajax    */
 require_once "../modelos/habitaciones.modelo.php";
 require_once "../controladores/habitaciones.controlador.php";
 
