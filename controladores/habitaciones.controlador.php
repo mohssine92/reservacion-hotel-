@@ -1,10 +1,5 @@
 <?php
   
-require_once "modelos/habitaciones.modelo.php";  /*  este modelo se conecta a la base de datos y la base de datos dispone a estos 2 tablas que necesita este modelo asi que no hace falta incluir modelo de categorias que a su vez solicita tabla de categoria 
-                                                  a la base de datos   */ 
-
-
-
 Class ControladorHabitaciones{
 
 
@@ -12,8 +7,10 @@ Class ControladorHabitaciones{
 	MOSTRAR CATEGORIAS-HABITACIONES CON INNER JOIN
 	=============================================*/
 
-	static public function ctrMostrarHabitaciones($valor){
-
+	static public function ctrMostrarHabitaciones($valor){   /* estamos haciendo la seleccion atraves de innerjoin a la base de datos , recurda el parametro valor es esa ruta que captamos atraves $_GET['pagina'] , es una propiedad de de la tabla categoria  */
+                                                            /* por eso lo estamos capturando como atributo de elemeto a , lo que es estamos capturando ej fichero habitaciones.js  */
+	
+	
 		/* 2 tablas relacionadas  */ /* aqui puedas crear tercera tabla si hay tercera coincidencia sin problema  */
 		$tabla1 = "categorias";
 		$tabla2 = "habitaciones";
@@ -21,6 +18,10 @@ Class ControladorHabitaciones{
 		$respuesta = ModeloHabitaciones::mdlMostrarHabitaciones($tabla1, $tabla2, $valor);  /* 3 parametros, dos tablas relacionadas y valor es una propiedad irrepetible de la tabla categorias  */
 
 		return $respuesta;  /* ASI CON ESTA COLLECCION DE INFS PUEDO CONVERTIR EL MODULO INFO-HABITACIONES - EN MODULO DINAMICOS  */
+
+
+
+
 
 	}  
 

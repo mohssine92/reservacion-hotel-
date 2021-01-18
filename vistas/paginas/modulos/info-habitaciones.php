@@ -1,6 +1,6 @@
 <?php
      
-  $valor = $_GET['pagina'];  /* esta variable captura propiedad de ruta de la tabla categorias , dar en cuenta que los valores de la propiedad ruta no deben coincider asi tenemos un punto para seleccionar el id correspondiente en dicha tabla 
+$valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabla categorias , dar en cuenta que los valores de la propiedad ruta no deben coincider asi tenemos un punto para seleccionar el id correspondiente en dicha tabla 
 							  el que es un factor importante en la relacion con la tabla habitaciones   */
 
   $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /* Obtenemos una respuesta de habitaciones.controller.php */ /* nos esta llegando infs tanto de la tabla categoria y tabla habitaciones  */
@@ -34,25 +34,23 @@ INFO HABITACIÓN
 						<h5><i class="fas fa-chevron-left"></i> Regresar</h5>
 					</a>
 
-					<h2 class="float-right text-white px-3 categoria text-uppercase "><?php echo $habitaciones[0]['tipo']; ?></h2>
+					<h2 class="float-right text-white px-3 categoria text-uppercase "><?php echo $habitaciones[0]["tipo"]; ?></h2>
 
 					<div class="clearfix"></div>
 
 					<ul class="nav nav-justified mt-lg-4">	
 
 					
-					<?php foreach ($habitaciones as $index => $value): ?>  <!-- todos objetos devueltos por categoria  a listarlos -->
+					<?php foreach ($habitaciones as $key => $value): ?>  <!-- todos objetos devueltos por categoria  a listarlos -->
 
 						<li class="nav-item">
                                                                                                <!-- por esta variable viene columna ruta de tabla categorias asi cada vez sera captada ruta diferente dinamicamente  -->
-							<a class="nav-link text-white" orden="<?php echo $index; ?>" ruta="<?php echo $_GET['pagina']; ?>"  href="#">
-
-							   <?php echo $value['estilo'];?> <!--estilo es propiedad en la segunda tabla representa los estilos disponibles en categoria seleccionada por eso es obligatoriamente no tener coincidencia entre propiedades de tablas relacionadas -->
-						                                 	  <!-- tambien la classe active se pone en funccion del estilo seleccionado ver js/habitaciones.js  -->
-
+							<a class="nav-link text-white" orden="<?php echo $key; ?>" ruta="<?php echo $_GET["pagina"]; ?>"  href="#">
+							   <?php echo $value['estilo'];?> 
 							</a>                            
 						</li>
-
+                         <!--estilo es propiedad en la segunda tabla representa los estilos disponibles en categoria seleccionada por eso es obligatoriamente no tener coincidencia entre propiedades de tablas relacionadas -->
+					     <!-- tambien la classe active se pone en funccion del estilo seleccionado ver js/habitaciones.js  -->
                     <?php endforeach ?>
 
 					</ul>
@@ -80,11 +78,11 @@ INFO HABITACIÓN
 						// echo '<pre class="bg-white">'; print_r($galeria); echo '</pre>';
  				     	?>
 
-					     	<?php foreach ($galeria as $index => $valorImage): ?>
+					     	<?php foreach ($galeria as $index => $ImageOfGaleria): ?>
                          
 						      <li>	
                                     
-							     	<img src="<?php echo $servidor.$valorImage;?>" class="img-fluid">
+							     	<img src="<?php echo $servidor.$ImageOfGaleria;?>" class="img-fluid">
 
 							  </li>
   

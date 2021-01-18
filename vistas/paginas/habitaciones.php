@@ -1,8 +1,5 @@
 <?php
     
-    
-
-
 include "modulos/banner-interior.php";  /*  container-fluid de foto fondo  */
 
 include "modulos/info-habitaciones.php";  /* aqui manejamos la respuesta de innerjoin */

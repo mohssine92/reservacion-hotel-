@@ -25,8 +25,8 @@ HABITACIONES
 					
 					<figure class="text-center">
 						
-						<img src="<?php echo $servidor.$value["img"]; ?>" class="img-fluid" width="100%">
-
+				    	<img src="<?php echo $servidor.$value["img"]; ?>" class="img-fluid" width="100%">
+ 
 						<p class="small py-4 mb-0"><?php echo $value["descripcion_cat"]; ?></p>
 
 						<h3 class="py-2 text-gray-dark mb-0">DESDE $<?php echo number_format($value["continental_baja"]); ?> COP</h3>

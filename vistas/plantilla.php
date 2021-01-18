@@ -102,7 +102,7 @@ PÁGINAS
 if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html debajo del navbar en funccion de de la condicion -> par rederigirnos a paginas  */
 
 	$rutasCategorias = ControladorCategorias::ctrMostrarCategorias(); /* objetivo rutas en tabla categorias */
-    $validarRuta = false;
+    $validarRuta = "";
 	foreach ($rutasCategorias as $key => $value) {
 
 		if($_GET["pagina"] == $value["ruta"]){
@@ -123,7 +123,7 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 
 		include "paginas/".$_GET["pagina"].".php";
 		
-	}else if($validarRuta = true){
+	}else if($validarRuta != ""){
 
 		include "paginas/habitaciones.php";
 
@@ -148,7 +148,12 @@ include "paginas/modulos/modal.php";
 
 ?>
 
-<script src="js/plantilla.js"></script>
+<!-- estos dos variables seran captadas en cualquiera de estos ficheros de javasvript de abajo  -->
+<!-- traerme la ruta de mi hosting porque la necesito para ubicar archivo ajax en mi fichero de habitacion.js  - porque voy a hacer una peticion sincrona ajax al controlador habitaciones para traer toda informacion sobre habitaciones  -->
+<input type="hidden" value="<?php echo $ruta; ?>" id="urlPrincipal"> <!-- de esta manera llevo la variable ruta de php  a javascript  -->
+<input type="hidden" value="<?php echo $servidor; ?>" id="urlServidor"> <!-- por si acaso necesitamos url del servidor  -->
+
+<script src="js/plantilla.js"></script>  <!-- nada mas la var urlPrincipal  y var urlSeervidor estan incluidas en este fichero ya puedo urulizarlas en los siguientes ficheros de javascript en incorporarse   -->
 <script src="js/menu.js"></script>
 <script src="js/idiomas.js"></script>
 <script src="js/habitaciones.js"></script>
