@@ -107,7 +107,7 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 
 		if($_GET["pagina"] == $value["ruta"]){
 
-			$validarRuta = true;
+			$validarRuta = 'habitaciones';
 
 		}
 		
@@ -122,17 +122,23 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 	if($_GET["pagina"] == "reservas" || $_GET["pagina"] == "perfil"){
 
 		include "paginas/".$_GET["pagina"].".php";
-		
-	}else if($validarRuta != ""){
+	
+
+	}else if ($validarRuta != "" ){
 
 		include "paginas/habitaciones.php";
+           
 
-	}
+	}else{
+        echo '<script>
+	             window.location = "'.$ruta.'";    
+	         </script>';
+    } /* redericcionMIENTO */
 	
 
 }else{
 
-	include "paginas/inicio.php";
+	  include "paginas/inicio.php";
 
 }
 

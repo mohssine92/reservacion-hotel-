@@ -44,12 +44,25 @@ $(".cabeceraHabitacion ul.nav li.nav-item a").click(function(e){   /* cuando doy
 	/*=============================================
 	    AJAX HABITACIONES
 	=============================================*/	
+    
+	var listaSlide = $(".slideHabitaciones .slide-inner .slide-area li"); /* capturar las listas del slider que tenemos las li : numero de li sera en funccion del indeces del objeto recorrido por php  */
+    var alturaSlide = $(".slideHabitaciones .slide-inner .slide-area").height(); /* se vemos cada vez cambiamos elemento a el silder se recarga de nueva vamos a solucionarlo */
+	                                                                            /* capturo el area del slide y capturo su altura */
+	for(var i = 0; i < listaSlide.length; i++){
+  
+	   	$(".slideHabitaciones .slide-inner .slide-area").css({"height":alturaSlide+"px"}) /* cuando estamos quitando la etiquetas img en la minea de codigo de abajo */ /* antes de quitar img necesito que mantenga la altura que traea  */
+
+		$(listaSlide[i]).html("");  /* vaciame todos li de sus image es el html de li , es decir todo html de li creado por foreach de php lo estoy vaciando con esta linea de codigo - asi borramos las etiquetas de img  */
+                                  
+	}
+
+
 	
 	var datos = new FormData();       /* iniciamos objeto tipo formdata  */  /* asimulara un formulario para crear variables post  */
 	datos.append("ruta", ruta);      /*  agregamos una variable post se va llamar ruta y su valor sera la variable $ruta  */
 	
 
-	/* vamos a ejecutar ajax  */
+	/* vamos a ejecutar ajax  */ /* obtener json de objetos desde la base de datos  para manipularlo a nivel de javascript  */
 	$.ajax({
 
 		url:urlPrincipal+"ajax/habitaciones.ajax.php",    /* la ubicacion de ajax para conectarnos a jax  */
@@ -59,9 +72,37 @@ $(".cabeceraHabitacion ul.nav li.nav-item a").click(function(e){   /* cuando doy
 		contentType: false,
 		processData: false,
 		dataType:"json",
-		success:function(respuesta){
+		success:function(respuesta){  
+         /*  console.log(respuesta[orden]); */
+			
+		 
+            /* capturar y remmplazar el slider  */
+		    var galeria = JSON.parse(respuesta[orden]["galeria"]);  /* recuerda que las imagenes viene en una columna galeria y vienen en un array , asi que vamos a convertir ese array en datos Json para manipularlo a nivel de javascript  */
+		    console.log("galeria", galeria);                        /* eso quiere decir ya puedo recorre galeria a nivel de javascript gracias a la estructura llave : valor  */
+		 
+			for(var i = 0; i < galeria.length; i++){		
+ 
+				$(listaSlide[0]).html('<img class="img-fluid" src="'+urlServidor+galeria[galeria.length-1]+'">')
+   
+				$(listaSlide[i+1]).html('<img class="img-fluid" src="'+urlServidor+galeria[i]+'">')
+   
+				$(listaSlide[galeria.length+1]).html('<img class="img-fluid" src="'+urlServidor+galeria[0]+'">')
+			
+			}  /* fin slider  */
+		   
 
-			console.log(respuesta[orden]);
+		  $(".videoHabitaciones iframe").attr("src", "https://www.youtube.com/embed/"+respuesta[orden]["video"]);  /* para el video capturado reemplazado segun indice del objeto donde se encuentra  */ 
+		  
+                         /* nombre variable valorde la variable*/
+		  $("#myPano").attr("back", urlServidor+respuesta[orden]["recorrido_virtual"]);   /* capturado y cambiarle valor de imagen 360 grados segun indice de  objeto cliqueado  */
+     
+		  $(".descripcionHabitacion h1").html(respuesta[orden]["estilo"]+" "+respuesta[orden]["tipo"])    /* capturar */ /*  y darle valor html  */
+
+          $(".d-habitaciones").html(respuesta[orden]["descripcion_h"])   /* capturar */ /* ya darle valor html  */
+
+
+
+
 			
 		}
 

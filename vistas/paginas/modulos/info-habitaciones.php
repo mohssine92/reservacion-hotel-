@@ -116,14 +116,14 @@ INFO HABITACIÓN
 				<section class="mb-3 my-lg-3 videoHabitaciones d-none">
 					
 					<iframe width="100%" height="380" src="https://www.youtube.com/embed/<?php echo $habitaciones[0]['video'] ;?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				
+		
 				</section>
 
 				<!-- 360 GRADOS -->
 
 				<section class="mb-3 my-lg-3 360Habitaciones d-none">
-
-					<div id="myPano" class="pano">
+          
+				    <div id="myPano" class="pano" back="<?php echo $servidor.$habitaciones[0]["recorrido_virtual"]; ?>">  <!-- capturado y reemplazado por js  -->
 
 						<div class="controls">
 							<a href="#" class="left">&laquo;</a>
@@ -138,9 +138,9 @@ INFO HABITACIÓN
 				DESCRIPCIÓN HABITACIONES
 				======================================-->	
 
-				<div class="descripcionHabitacion px-3">
+				<div class="descripcionHabitacion px-3"> 
 					
-					<h1 class="colorTitulos float-left"><?php echo $habitaciones[0]['estilo']." ".$habitaciones[0]['tipo']; ?></h1>
+					<h1 class="colorTitulos float-left"><?php echo $habitaciones[0]['estilo']." ".$habitaciones[0]['tipo']; ?></h1>   <!-- capturado reeeplazado por js  -->
 
 					<div class="float-right pt-2">
 						
@@ -154,9 +154,9 @@ INFO HABITACIÓN
 
 					<div class="clearfix mb-4"></div>	
 
-				    <div class="d-habitaciones">
+				    <div class="d-habitaciones">  <!-- Remplazable - segun peticion ajax  --> <!-- es decir el div se captura en el fichero habitaciones.js y ..... -->
 					
-					  <?php echo $habitaciones[0]['descripcion_h']; ?>  <!-- esta columna nos devuelve texto con etiquetas de html  --> <!-- luego veremos como se registra este tipo de texto  en la columna de la tabla -->
+					  <?php echo $habitaciones[0]['descripcion_h']; ?>  <!-- capturado  remplazado por js   -->
 					
 					</div>
 
@@ -202,127 +202,82 @@ INFO HABITACIÓN
 
 				</div>
 
-			</div>
-			
+			</div>   <!-- comenzemos de abajo hacia arriba a reeemplazar  -->
+			  
 			<!--=====================================
 			BLOQUE DER
 			======================================-->
 
 			<div class="col-12 col-lg-4 colDerHabitaciones">
 
-				<h2 class="colorTitulos">SUITE INCLUYE:</h2>
+			    <h2 class="colorTitulos text-uppercase"><?php echo $habitaciones[0]["tipo"]; ?> INCLUYE:</h2>  
 				
 				<ul>
-					<li>
-						<h5>
-							<i class="fas fa-bed w-25 colorTitulos"></i> 
-							<span class="text-dark small">cama 2 x 2</span>
-						</h5>
-					</li>
+				<!-- recuerda que incluye es una propiedad de la tablla habitacines que es un json son propiedades metidas dentro de un array  -->
+				<!-- entonces debo convertir eso en un array que pueda recorrer en php  -->
+                <?php
 
-					<li>
-						<h5>
-							<i class="fas fa-tv w-25 colorTitulos"></i> 
-							<span class="text-dark small">TV de 42"</span>
-						</h5>
-					</li>
+					$incluye = json_decode($habitaciones[0]["incluye"], true);
+					/* echo '<pre class="bg-white">'; print_r($incluye); echo '</pre>'; */
+				?>
+                	<?php foreach ($incluye as $key => $value): ?>
 
-					<li>
-						<h5>
-							<i class="fas fa-tint w-25 colorTitulos"></i> 
-							<span class="text-dark small">Agua caliente</span>
-						</h5>
-					</li>
+                        <li>
+	                        <h5>
+	                	        <i class="<?php echo $value["icono"]; ?> w-25 colorTitulos"></i> 
+	                	        <span class="text-dark small"><?php echo $value["item"]; ?></span>
+	                        </h5>
+                        </li>
 
-					<li>
-						<h5>
-							<i class="fas fa-water w-25 colorTitulos"></i> 
-							<span class="text-dark small">Jacuzzi</span>
-						</h5>
-					</li>
+                    <?php endforeach ?>
 
-					<li>
-						<h5>
-							<i class="fas fa-toilet w-25 colorTitulos"></i> 
-						    <span class="text-dark small">Baño privado</span>
-						</h5>
-					</li>
-
-					<li>
-						<h5>
-							<i class="fas fa-couch w-25 colorTitulos"></i>
-							<span class="text-dark small"> Sofá</span>
-						</h5>
-					</li>
-
-					<li>
-						<h5>
-							<i class="far fa-image w-25 colorTitulos"></i> 
-							<span class="text-dark small">Balcón</span>
-						</h5>
-					</li>
-
-
-					<li>
-						<h5>
-							<i class="fas fa-wifi w-25 colorTitulos"></i> 
-							<span class="text-dark small">Servicio Wifi</span>
-						</h5>
-					</li>
 				</ul>
 
 				<!-- HABITACIONES -->
 
-				<div class="habitaciones">
+				<div class="habitaciones " id="habitaciones">
 
 					<div class="container">
 
 						<div class="row">
 
-							<div class="col-12 pb-3 px-0 px-lg-3">
+						<?php
 
-								<a href="<?php echo $ruta;  ?>habitaciones">
-									
-									<figure class="text-center">
-										
-										<img src="img/habitacion02.png" class="img-fluid" width="100%">
+							$categorias = ControladorCategorias::ctrMostrarCategorias();
 
-										<p class="small py-4 mb-0">Lorem ipsum dolor sit amet, consectetur</p>
+						?>
+           
+                    	<?php foreach ($categorias as $key => $value): ?>
 
-										<h3 class="py-2 text-gray-dark mb-0">DESDE $200 USD</h3>
+                        <?php if ($_GET["pagina"] != $value["ruta"]): ?>  <!-- no quiero que me muestra la categoria del categoria en que estoy actualmente asi es mas elegante  -->
 
-										<h5 class="py-2 text-gray-dark border">Ver detalles <i class="fas fa-chevron-right ml-2" style=""></i></h5>
+                         <div class="col-12 pb-3 px-0 px-lg-3">
 
-										<h1 class="text-white p-3 mx-auto w-50 lead" style="background:#197DB1">ESPECIAL</h1>
+	                        	<a href="<?php echo $ruta.$value["ruta"];  ?>">  <!-- dar en cuenta que estan listados dentro de elemento a que se vualva a cargar la misma pagina con valor ruta diferente  -->
 
-									</figure>
+	                         	<figure class="text-center">
+			
+	                     	  	 <img src="<?php echo $servidor.$value["img"]; ?>" class="img-fluid" width="100%">
 
-								</a>
+		                        	<p class="small py-4 mb-0"><?php echo $value["descripcion_cat"]; ?></p>
+                     
+		                        	<h3 class="py-2 text-gray-dark mb-0">DESDE $<?php echo number_format($value["continental_baja"]); ?> COP</h3>
 
-							</div>
+		                        	<h5 class="py-2 text-gray-dark border">Ver detalles <i class="fas fa-chevron-right ml-2"></i></h5>
+			 
+		                     	   <h1 class="text-white p-3 mx-auto w-50 lead text-uppercase" style="background:<?php echo $value["color"]; ?>"><?php echo $value["tipo"]; ?></h1>
 
-							<div class="col-12 pb-3 px-0 px-lg-3">
+	                        	</figure>
+                     
+                            	</a>
 
-								<a href="<?php echo $ruta;  ?>habitaciones">
-									
-									<figure class="text-center">
-										
-										<img src="img/habitacion03.png" class="img-fluid" width="100%">
+                         </div>
 
-										<p class="small py-4 mb-0">Lorem ipsum dolor sit amet, consectetur</p>
+                        <?php endif ?>	
 
-										<h3 class="py-2 text-gray-dark mb-0">DESDE $150 USD</h3>
+                    	<?php endforeach ?>
 
-										<h5 class="py-2 text-gray-dark border">Ver detalles <i class="fas fa-chevron-right ml-2"></i></h5>
-
-										<h1 class="text-white p-3 mx-auto w-50 lead" style="background:#2F7D84">STANDAR</h1>
-
-									</figure>
-
-								</a>
-
-							</div>
-
+		            	
 						</div>
 
 					</div>

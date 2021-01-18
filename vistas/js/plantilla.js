@@ -215,7 +215,7 @@ SLIDE HABITACIONES
 
  	isSliding: true,
     isAuto: true,
-    isLoop: true,
+    isLoop: true,  /* efecto rotatorio  */
     isDrag: true,
     interval: 3000,
     isCursor: false,
@@ -231,7 +231,7 @@ SLIDE HABITACIONES
 =============================================*/
 
  $("#myPano").pano({
-	img: "img/360.jpg"
+	img: $('#myPano').attr("back")
 });
 
  /*=============================================
