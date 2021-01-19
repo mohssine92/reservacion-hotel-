@@ -159,14 +159,21 @@ INFO HABITACIÓN
 					  <?php echo $habitaciones[0]['descripcion_h']; ?>  <!-- capturado  remplazado por js   -->
 					
 					</div>
+ 
 
-					<div class="container">
+                <form action="<?php echo $ruta;  ?>reservas" method="post" > <!-- metodo que voy a usar varables post , variables occultas -->
+				
+					<input type="hidden" name="id-habitacion" value="<?php echo $habitaciones[0]["id_h"]; ?>" >  <!-- el indice es el que indica en que habitacion de que  categoria estamos comprobando gracias a peticiones ajax al mismo controlador  -->
+                                                                                                                <!-- gracias a ajax en habitaciones.js vamos actualizando datos segun seleccionamos de manera asincrona -->
+				 
+				 	<div class="container">     <!-- formulario de comprobar la disponiblidad : sabemos para comprobar la disponiblidad de algun producto necesitaremos el id del producto a que queremos ver la disponiblidad  -->
+                                                <!-- en estre caso el producto es la habitacion -->
 
 						<div class="row py-2" style="background:#509CC3">
 
 							 <div class="col-6 col-md-3 input-group pr-1">
 							
-								<input type="text" class="form-control datepicker entrada" placeholder="Entrada">
+								<input type="text" class="form-control datepicker entrada" placeholder="Entrada" name="fecha-ingreso" required>
 
 								<div class="input-group-append">
 									
@@ -178,7 +185,7 @@ INFO HABITACIÓN
 
 						 	<div class="col-6 col-md-3 input-group pl-1">
 							
-								<input type="text" class="form-control datepicker salida" placeholder="Salida">
+								<input type="text" class="form-control datepicker salida" placeholder="Salida" name="fecha-salida" required>
 
 								<div class="input-group-append">
 									
@@ -190,15 +197,17 @@ INFO HABITACIÓN
 
 							<div class="col-12 col-md-6 mt-2 mt-lg-0 input-group">
 								
-								<a href="<?php echo $ruta;  ?>reservas" class="w-100">
-									<input type="button" class="btn btn-block btn-md text-white" value="Ver disponibilidad" style="background:black">	
-								</a>
+								
+									<input type="submit" class="btn btn-block btn-md text-white" value="Ver disponibilidad" style="background:black">	
+						            <!-- estos variables post se van a pagina reservas pero yo las necesito especificamente en modulo infs reservas   -->
 
 							</div>
 
 						</div>
 
 					</div>
+				
+				</form>	
 
 				</div>
 

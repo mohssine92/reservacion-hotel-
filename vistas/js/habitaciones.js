@@ -98,7 +98,9 @@ $(".cabeceraHabitacion ul.nav li.nav-item a").click(function(e){   /* cuando doy
      
 		  $(".descripcionHabitacion h1").html(respuesta[orden]["estilo"]+" "+respuesta[orden]["tipo"])    /* capturar */ /*  y darle valor html  */
 
-          $(".d-habitaciones").html(respuesta[orden]["descripcion_h"])   /* capturar */ /* ya darle valor html  */
+		  $(".d-habitaciones").html(respuesta[orden]["descripcion_h"])   /* capturar */ /* ya darle valor html  */
+		  
+		  $('input[name="id-habitacion"]').val(respuesta[orden]["id_h"])   /* actualizar datos de value de este input  */
 
 
 

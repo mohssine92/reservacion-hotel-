@@ -1,3 +1,27 @@
+<?php
+   /* datos recebidos desde el formulario desde el modulo infos habitaciones  */
+if(isset($_POST["id-habitacion"])){
+
+	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+    echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
+    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>'; 
+      
+
+
+
+
+}else{
+     /* en de venir sin fechas o id de habitacion no voy a dejar pasar te mando a pagina ed inicio */  /* asi si no me trare id de producto a reservar no dejo pasar  */
+	echo '<script> window.location="'.$ruta.'"</script>';
+
+}
+
+
+?>
+
+
+
+
 <!--=====================================
 INFO RESERVAS
 ======================================-->

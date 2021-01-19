@@ -1,10 +1,20 @@
 <?php
 
-include "modulos/banner-interior.php";   /* primer contenedor de foto  */
-include "modulos/info-reservas.php";  /*conmainer-fluid:{ container:{ row: col -> ... col -> form }}  */ /* consulta de disponiblidad  */
-include "modulos/habitaciones.php";    /* detailles habiataciones */
+
+
+
+include "modulos/banner-interior.php";    /* es el fondo de fotofrafia */
+include "modulos/info-reservas.php";     /* es estructa columna derecha y izquierada donde tenemos calendario las opciones regresar , ver reserva , donde se muestra al cliente si esta disponible o no y columna derecha codigo reserva , salida ingreso la habitacion */
+                                         /* el plan que pueda elegir etc */                                       
+
+include "modulos/habitaciones.php";    /* este modulo configurado recientemente es el que lista las categorias que tenemos  */
+
+include "modulos/planes.php";     
+include "modulos/planes-movil.php";   
+include "modulos/recorrido-pueblo.php";  
+include "modulos/restaurante.php";  
+
+
+
 echo '<div class="mb-5"></div>';
 
-  /* para recordar forms de contacto y mapa son contenido del footer esta presente en todas plantollas  */
-  /*  en seguida tenemos requerido la resupuestas de modales que hemos usado  */
-  /* y por fin declarado los scripts de librerias y js que necesitamos paraque los elemetos del donm actuen  */
