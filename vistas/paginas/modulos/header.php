@@ -1,3 +1,11 @@
+<?php
+
+$categorias = ControladorCategorias::ctrMostrarCategorias();
+/* echo '<pre class="bg-white">'; print_r($categorias); echo '</pre>'; */
+
+?>  <!-- para listar en select categoria solicito categorias   -->
+
+
 <!--=====================================
 HEADER
 ======================================-->
@@ -37,26 +45,30 @@ HEADER
 				<!--=====================================
 				FORMULARIO DE RESERVAS
 				======================================-->
+                 <!-- nesesito cada vez selecciono una categoria cambie este 2 selecct - primero ponerle los 2 required -->
+				
+			<form  action="<?php echo $ruta;  ?>reservas" method="post"> <!-- al enviar ya tenemos los siguientes variables :  name="id-habitacion" , name="fecha-ingreso" ,    name="fecha-salida"    -->
 
 				<div class="formReservas py-1 py-lg-2 px-4">
-					
+					 <!-- para hacer el primer select dinamico se trata de las categorias  -->
 					<div class="form-group my-4">
-						<select class="form-control form-control-lg">
-							<option>Tipo de habitación</option>
-							<option>Suit</option>
-							<option>Especial</option>
-							<option>Standar</option>
-						</select>
+					 <select class="form-control form-control-lg selectTipoHabitacion " required>
+                           <option>Tipo de habitación</option>  <!-- este necesitamos dejarlo por fuera  -->
+
+					      <?php foreach ($categorias as $key => $value): ?>	
+							<option value="<?php echo $value["ruta"]; ?>" ><?php echo $value["tipo"]; ?></option>	
+							<!-- gracias a la ruta , con el valor de esa  ruta puedo seleccionar toda informacion de ambas tablas  --> <!-- puedo hacer inner join de tabla categoria y tabla habitaciones entoces necesito enviar la ruta  -->
+							<!-- para nos sale los selcct anidado en funccion ed categoria vamos a trabajarlos en reserva.js -->
+						  <?php endforeach ?>			
+					 </select>
+
 					</div>
 
 					<div class="form-group my-4">
-						<select class="form-control form-control-lg">
-							<option>Temática de habitación</option>
-							<option>Oriental</option>
-							<option>Contemporánea</option>
-							<option>Africana</option>
-							<option>Clásica</option>
-							<option>Retro</option>
+						<select class="form-control form-control-lg selectTemaHabitacion" name="id-habitacion" required>
+						
+							<option value="Tipo de habitacion">Temática de habitación</option>
+							 <!-- dejamos solo esta opcion para poder adicionar los demas select de manera dinamica usando peticiones ajax en reservas.js --> <!-- estara depende de evento change en la select de categoria -->
 						</select>
 					</div>
 
@@ -64,7 +76,7 @@ HEADER
 						
 						 <div class="col-6 input-group input-group-lg pr-1">
 						
-							<input type="text" class="form-control datepicker entrada" placeholder="Entrada">
+							<input type="text" class="form-control datepicker entrada" name="fecha-ingreso" placeholder="Entrada" required>
 
 							<div class="input-group-append">
 								
@@ -78,7 +90,7 @@ HEADER
 
 						<div class="col-6 input-group input-group-lg pl-1">
 						
-							<input type="text" class="form-control datepicker salida" placeholder="Salida">
+							<input type="text" class="form-control datepicker salida" name="fecha-salida" placeholder="Salida" required>
 
 							<div class="input-group-append">
 								
@@ -92,10 +104,12 @@ HEADER
 
 					</div>
 
-					<input type="button" class="btn btn-block btn-lg my-4 text-white" value="Ver disponibilidad">
+					<input type="submit" class="btn btn-block btn-lg my-4 text-white" value="Ver disponibilidad">
 					
 
 				</div>
+
+			</form>	 <!-- fin de formulario -->	
 
 			</div>
 

@@ -2,9 +2,9 @@
    /* datos recebidos desde el formulario desde el modulo infos habitaciones  */
 if(isset($_POST["id-habitacion"])){
 
-	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+	/* echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
-    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>'; 
+    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  */
       
 
 
@@ -96,6 +96,13 @@ INFO RESERVAS
 					<!--=====================================
 					MODIFICAR FECHAS
 					======================================	-->
+					 <!-- en caso que no hayya disponible fecha elegida aqui se puede cambiar las fechas en este formulario -->
+					 
+
+
+				<form action="<?php echo $ruta;  ?>reservas" method="post" >  <!-- variables post que seran enviadas :  name="id-habitacion"  name="fecha-ingreso"   name="fecha-salida"     -->
+			                                                      
+			    	<input type="hidden" name="id-habitacion" value="<?php echo $_POST["id-habitacion"]; ?>">  <!-- debe ir  esta varaible $_POST["id-habitacion"] porque sobre este producto voy a busacar nueva fecha --> <!-- es decir sobre el mismo captado -->
 
 					<h6 class="lead pt-4 pb-2">Puede modificar la fecha de acuerdo a los días disponibles:</h6>
 
@@ -105,7 +112,7 @@ INFO RESERVAS
 
 							 <div class="col-6 col-md-3 input-group pr-1">
 							
-								<input type="text" class="form-control datepicker entrada" placeholder="Entrada">
+							 <input type="text" class="form-control datepicker entrada" placeholder="Entrada" name="fecha-ingreso" required> 
 
 								<div class="input-group-append">
 									
@@ -117,7 +124,7 @@ INFO RESERVAS
 
 						 	<div class="col-6 col-md-3 input-group pl-1">
 							
-								<input type="text" class="form-control datepicker salida" placeholder="Salida">
+                             <input type="text" class="form-control datepicker salida" placeholder="Salida" name="fecha-salida" required>
 
 								<div class="input-group-append">
 									
@@ -129,12 +136,13 @@ INFO RESERVAS
 
 							<div class="col-12 col-md-6 mt-2 mt-lg-0 input-group">
 								
-								<a href="<?php echo $ruta;  ?>reservas" class="w-100">
-									<input type="button" class="btn btn-block btn-md text-white" value="Ver disponibilidad" style="background:black">	
-								</a>
+							
+									<input type="submit" class="btn btn-block btn-md text-white" value="Ver disponibilidad" style="background:black">	
+								
 
 							</div>
 
+                    </form>
 						</div>
 
 					</div>
