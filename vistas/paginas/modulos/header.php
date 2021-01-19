@@ -74,9 +74,9 @@ HEADER
 
 					<div class="row">
 						
-						 <div class="col-6 input-group input-group-lg pr-1">
+						 <div class="col-6 input-group input-group-lg pr-1"> 
 						
-							<input type="text" class="form-control datepicker entrada" name="fecha-ingreso" placeholder="Entrada" required>
+							<input type="text" class="form-control datepicker entrada" autocomplete="off" name="fecha-ingreso" placeholder="Entrada" required>  <!--   autocomplete="off"   para que no me agregue historial al seleccionar fechas  -->
 
 							<div class="input-group-append">
 								
@@ -90,7 +90,7 @@ HEADER
 
 						<div class="col-6 input-group input-group-lg pl-1">
 						
-							<input type="text" class="form-control datepicker salida" name="fecha-salida" placeholder="Salida" required>
+							<input type="text" class="form-control datepicker salida"  autocomplete="off"  name="fecha-salida" readonly placeholder="Salida" required> <!-- iniciamos con  readonly paraque no se puede tocar   -->
 
 							<div class="input-group-append">
 								

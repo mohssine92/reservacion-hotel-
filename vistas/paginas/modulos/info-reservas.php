@@ -2,9 +2,9 @@
    /* datos recebidos desde el formulario desde el modulo infos habitaciones  */
 if(isset($_POST["id-habitacion"])){
 
-	/* echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
-    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  */
+    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
       
 
 
@@ -97,6 +97,7 @@ INFO RESERVAS
 					MODIFICAR FECHAS
 					======================================	-->
 					 <!-- en caso que no hayya disponible fecha elegida aqui se puede cambiar las fechas en este formulario -->
+					<!-- con este formulario se puede comprobar la disponiblidad del producto por fecha desde la base de datos  -->
 					 
 
 
@@ -112,7 +113,7 @@ INFO RESERVAS
 
 							 <div class="col-6 col-md-3 input-group pr-1">
 							
-							 <input type="text" class="form-control datepicker entrada" placeholder="Entrada" name="fecha-ingreso" required> 
+							 <input type="text" class="form-control datepicker entrada"  autocomplete="off" placeholder="Entrada" name="fecha-ingreso" value="<?php echo $_POST["fecha-ingreso"] ;?>" required> 
 
 								<div class="input-group-append">
 									
@@ -124,7 +125,7 @@ INFO RESERVAS
 
 						 	<div class="col-6 col-md-3 input-group pl-1">
 							
-                             <input type="text" class="form-control datepicker salida" placeholder="Salida" name="fecha-salida" required>
+                             <input type="text" class="form-control datepicker salida"  autocomplete="off"  placeholder="Salida" name="fecha-salida" value="<?php echo $_POST["fecha-salida"] ;?>" readonly required>
 
 								<div class="input-group-append">
 									

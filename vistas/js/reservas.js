@@ -1,20 +1,23 @@
 /*=============================================
 FECHAS RESERVA
 =============================================*/
-$('.datepicker.entrada').datepicker({
-	startDate: '0d',
-	format: 'dd-mm-yyyy',
+$('.datepicker.entrada').datepicker({  /* este es un plugin que estamos usando  */
+	startDate: '0d',  /* le estamos diciendo que inicie en el dia cual se encuentra  */
+	format: 'yyyy-mm-dd',    /* cambiamos forma de fecha segun el modelo seguido en base de datos  */
 	todayHighlight:true
 });
 
-$('.datepicker.entrada').change(function(){
+$('.datepicker.entrada').change(function(){      /*hasta que no cambie el date picker de entrada no habilitamos el date picker de salida   */
+                                                 /* porque le fecha de entrada la que va dar inicio a la opcion */
+
+  $('.datepicker.salida').attr('readonly',false);  
 
 	var fechaEntrada = $(this).val();
 
 	$('.datepicker.salida').datepicker({
-		startDate: fechaEntrada,
-		datesDisabled: fechaEntrada,
-		format: 'dd-mm-yyyy'
+		startDate: fechaEntrada,                 /* fecha entrada  */ 
+		datesDisabled: fechaEntrada,            /* desabilitaremos dia de entrada eso obliga seleccionar un dia despues  */
+		format: 'yyyy-mm-dd'                   /* seguir forma de fecha en base de datos paraque se guarden correctamente  */ /* paraque podemos comparar  */
 	});
 
 })
