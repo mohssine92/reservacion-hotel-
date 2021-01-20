@@ -19,6 +19,11 @@ a:visited, a:link, a:focus, a:hover, a:active{
 	text-decoration: none;
 }
 
+.fc-today{
+	background:rgba(255,255,255,0) !important;           /* clase del cuadro del dia actual  en el calendario grande  - ponerla en este color para no confundir al cliente */
+}
+
+
 /*=============================================
 HEADER
 =============================================*/

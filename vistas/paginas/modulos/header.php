@@ -67,7 +67,7 @@ HEADER
 					<div class="form-group my-4">
 						<select class="form-control form-control-lg selectTemaHabitacion" name="id-habitacion" required>
 						
-							<option value="Tipo de habitacion">Temática de habitación</option>
+							<option  value="Tipo de habitacion">Temática de habitación</option>
 							 <!-- dejamos solo esta opcion para poder adicionar los demas select de manera dinamica usando peticiones ajax en reservas.js --> <!-- estara depende de evento change en la select de categoria -->
 						</select>
 					</div>
