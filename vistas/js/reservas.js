@@ -81,7 +81,7 @@ $(".selectTipoHabitacion").change(function(){
 })
 
 /*=============================================
-CALENDARIO
+CALENDARIO BLOQUE 
 =============================================*/
 
 $('#calendar').fullCalendar({

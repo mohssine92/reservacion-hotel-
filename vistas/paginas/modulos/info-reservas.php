@@ -1,11 +1,30 @@
 <?php
-   /* datos recebidos desde el formulario desde el modulo infos habitaciones  */
-if(isset($_POST["id-habitacion"])){
+   /* datos recebidos desde el formulario desde el modulo infos habitaciones  o desde el formulario de la pagina de inicio en el modulo de header : objetivo verificar la disponiblidad del producto a rentar */
+
+
+   /* esto es id del producto a rentar  comprobamos si nos acaba de llegar  */
+   if(isset($_POST["id-habitacion"])){
 
 	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
-      
+	 
+
+
+
+	$valor = $_POST["id-habitacion"] ;  /* con id_habitacion ya es suficiente para darnos cuenta si la reservas hechas para este producto o no  */
+	/* este proceso en que ya tenemos el producto elegido con fechas - vamos a comprobar su disponiblidad , usando su id para saber primero si esta registrado en tabla de reservas - sabemos que no puede estar registrado en tablas reservas hasta que 
+	  ya se ha efectuado el pago eso segnifica que ya ha pasado por varios procesos por tener este id_habitacion registrado en esta tabla  */
+ 
+	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /* obtengo toda informacion acerca de del producto a alquilar , tada informacions en tabla habitacion + toda informacion en tabla categoria + toda informacion en tabla reserva   */
+	/* echo '<pre class="bg-white">'; print_r($reservas); echo '</pre><br>';  
+ */
+	
+
+
+
+
+
 
 
 
@@ -68,9 +87,19 @@ INFO RESERVAS
 				======================================	-->
 
 				<div class="bg-white p-4 calendarioReservas">
+				
+				<!-- Mensaje dinamico de la disponiblidad  -->
+				<?php if (!$reservas): ?> <!-- si el objeto de $reservas viene vacio es decir que el id de habitacion no tiene coincidencia en tabla de reservas  -->                                               
+																									 
+                <h1 class="pb-5 float-left text-success">¡Está Disponible!</h1>    <!-- asi puedo lazar este mensaje que indica que la habitacion esta disponible  -->
 
-					<h1 class="pb-5 float-left">¡Está Disponible!</h1>
+                <?php else: ?> <!-- en caso que arrevez , eso quiere decir que el objeto $reservas me devuelve informacion es decir lleno asi que : lanzo el siguiente linea de  codigo  -->
 
+				<div class="infoDisponibilidad"></div> <!-- pero son informaciones que todavia no sabemos si las fechas se cruzan o no , entonces ponemos este div con esta clase paraque ser rellenads de javascript porque en js donde vamos a compara las fechas
+			                                            de disponiblidad . Donde validamos esa fechas que se cruzan ? - en reservas.js en el bloque de calendario   -->
+                <?php endif ?>																				
+
+				
 					<div class="float-right pb-3">
 							
 						<ul>

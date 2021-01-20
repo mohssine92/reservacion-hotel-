@@ -26,6 +26,9 @@ require_once "controladores/restaurante.controlador.php";
  
 require_once "modelos/habitaciones.modelo.php";                                      
 require_once "controladores/habitaciones.controlador.php";
+
+require_once "controladores/reservas.controlador.php";
+require_once "modelos/reservas.modelo.php";
  
 
 $plantilla = new ControladorPlantilla();  /* Object class */
