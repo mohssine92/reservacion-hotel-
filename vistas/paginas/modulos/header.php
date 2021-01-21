@@ -51,9 +51,9 @@ HEADER
 
 				<div class="formReservas py-1 py-lg-2 px-4">
 					 <!-- para hacer el primer select dinamico se trata de las categorias  -->
-					<div class="form-group my-4">
-					 <select class="form-control form-control-lg selectTipoHabitacion " required>
-                           <option>Tipo de habitación</option>  <!-- este necesitamos dejarlo por fuera  -->
+					<div class="form-group my-4"> 
+					 <select class="form-control form-control-lg selectTipoHabitacion " required>  <!-- como opcion se inicia su value vacio no deja pasar porque el seleccionador es un campo requerido   -->
+                           <option value="">Tipo de habitación</option>  <!-- este necesitamos dejarlo por fuera  -->
 
 					      <?php foreach ($categorias as $key => $value): ?>	
 							<option value="<?php echo $value["ruta"]; ?>" ><?php echo $value["tipo"]; ?></option>	
@@ -65,9 +65,9 @@ HEADER
 					</div>
 
 					<div class="form-group my-4">
-						<select class="form-control form-control-lg selectTemaHabitacion" name="id-habitacion" required>
+						<select class="form-control form-control-lg selectTemaHabitacion" name="id-habitacion" required>  <!-- segnifica no deja pasar cualquier opcion seleccionada su value es vacio value=" " -->
 						
-							<option  value="Tipo de habitacion">Temática de habitación</option>
+							<option value="" >Temática de habitación</option>  <!-- este value vacio en este caso no es importante porque el primero es vacio no deja pasar obliga seleccionar algun categoria , sabemos las categorias tiene value rellenado  -->
 							 <!-- dejamos solo esta opcion para poder adicionar los demas select de manera dinamica usando peticiones ajax en reservas.js --> <!-- estara depende de evento change en la select de categoria -->
 						</select>
 					</div>

@@ -33,19 +33,23 @@ $(".selectTipoHabitacion").change(function(){
   console.log("ruta", ruta);
 
  
-  if(ruta != "Tipo de habitación" ){
+  if(ruta != ""){   /* segnifica : que el value de la opcion seleccionada trae una ruta de base de datos gracias a la peticion al controlador y foreach , gracias al ejecuccion en php que sera de la url hacia abajo , se ejecuta todo,  toda llamadas a conroladores 
+                                 escritas en su  traectoria cada vez actualizamos la pagina  */
 
-    $(".selectTemaHabitacion").html("");  /* se vacia y sigue .... */
+     $(".selectTemaHabitacion").html("");  /* se vacia y sigue .... */
 
-  }else{
 
-    $(".selectTemaHabitacion").html('<option>Temática de habitación</option>')  /* aqui no borro porque estoy usando html y html remplaza no como append agrega */
+  }else{  /* pero si llega vacia la ruta  */
+
+    $(".selectTemaHabitacion").html('<option>Temáticas de habitación</option>')  /* aqui no borro porque estoy usando html y html remplaza no como append agrega */
+
 
   } /* fin de else  */
  
+
   /* vamos a mandar el dato a ajax  */
   var datos = new FormData();
-  datos.append("ruta", ruta);
+  datos.append("ruta", ruta);   /* creamos variable de tipo post par ajax se llama ruta su valor es lo que tarae la variable ruta  */
  
    /* estructura ajax  */
   $.ajax({
@@ -75,9 +79,8 @@ $(".selectTipoHabitacion").change(function(){
 
 
 
-
-
-});
+}); /* fin del evento change en el seleccionador del formulario de header en seleccionar las categorias paraque luego lanza los estilos de habitaciones disponibles en cada categoria . podemos usar la misma tecnica en listar las habiraciones , chales riad , apartamientos
+      disponibles en cada ciudad en marruecos  */
 
 /*=============================================
 CALENDARIO BLOQUE   GRANDE 
