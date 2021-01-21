@@ -3,7 +3,7 @@
 
 /* variables post recbidas desde 3 formularios ; desde modulo header y modulo info habitaciones y modulo info reserva */
 
-if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  comprobamos si nos acaba de llegar  */
+if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  comprobamos si nos acaba de llegar  */  /* son variables de tipo post recebidas de formulario  */
 
 	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
@@ -14,7 +14,7 @@ if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  c
 	  ya se ha efectuado el pago eso segnifica que ya ha pasado por varios procesos por tener este id_habitacion registrado en esta tabla  */
  
 	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /* obtengo toda informacion acerca de del producto alquilado , tada informacions en tabla habitacion + toda informacion en tabla categoria + toda informacion en tabla reserva   */
-    /* echo '<pre class="bg-white">'; print_r($reservas); echo '</pre><br>';  */ 
+    /*  echo '<pre class="bg-white">'; print_r($reservas); echo '</pre><br>';  */ 
  
 	
  

@@ -68,8 +68,9 @@ $(".selectTipoHabitacion").change(function(){
       
      for( var i = 0; i < respuesta.length; i++ ){
 
-       $(".selectTemaHabitacion").append('<option value="'+respuesta[i]["id_h"]+'">'+respuesta[i]["estilo"]+'</option>') /* en value adiciono el id del producto que voy a enviar */
-
+       $(".selectTemaHabitacion").append('<option value="'+respuesta[i]["id_h"]+'">'+respuesta[i]["estilo"]+'</option>') /* en value adiciono el id de la habitacion que voy a enviar */ /* uso append : es decir voy agregando lista tras lista  */
+                                                                                                                                                                                         /* no eso html : html no me agrega se reemplaza escribe lista en lugar de lista */
+ 
      }
 
     }
@@ -89,18 +90,22 @@ CALENDARIO BLOQUE   GRANDE
 if($(".infoReservas").html() != undefined ){       /* este linea de codigo indica que este div de este clase  su html indefinido segnifica que aun no se ha cargado  */                   
                                                                  
   var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */
- /*  console.log("idaHabitacion", idHabitacion ); */
-  var fechaingreso = $(".infoReservas").attr("fechaIngreso");
-/*   console.log("fechaIngreso", fechaingreso ); */
-  var fechaSalida = $(".infoReservas").attr("fechaSalida");
-/*   console.log("fechaSalida", fechaSalida ); */
-  
- /* crearcion de variable datos es variable post que vamos a mandar a ajax para hacer peticiones al controlador  */
- var datos = new FormData();
- datos.append("idHabitacion", idHabitacion); 
-  
+  /*  console.log("idaHabitacion", idHabitacion ); */
+   var fechaingreso = $(".infoReservas").attr("fechaIngreso");
+  /*   console.log("fechaIngreso", fechaingreso ); */
+   var fechaSalida = $(".infoReservas").attr("fechaSalida");
+  /*   console.log("fechaSalida", fechaSalida ); */
 
- /* vamos a hacer una solicitud a ajax  */
+
+   /* iniciamos este array vacio  */  /* uso para eventos del calendario grande   */
+   var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
+
+
+  /* crearcion de variable datos es variable post que vamos a mandar a ajax para hacer peticiones al controlador  */
+  var datos = new FormData();
+  datos.append("idHabitacion", idHabitacion); 
+ 
+  /* vamos a hacer una solicitud a ajax  */
  $.ajax({
 
   url:urlPrincipal+"ajax/reservas.ajax.php",
@@ -110,42 +115,119 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
   contentType: false,
   processData: false,
   dataType:"json",
-  success:function(respuesta){
+  success:function(respuesta){   /* respuesta => va ser un array */
    
     console.log("respuesta",respuesta);   /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
-
+ 
     if(respuesta.length == 0 ){    /* respuesta es un array eso segnifica si viene vacio su length sera igual a zero  */ /* a su vez segnifica que la habitacion esta disponible de primera  */    
-
-      $('#calendar').fullCalendar({  /* calendario grande  */
-        header: {
+                                                                                                                         /* es donde estoy mostrando sin problema y sin duda la disponiblidad  */ /* lo logico  */
+       $('#calendar').fullCalendar({  /* calendario grande  */
+         header: {
             left: 'prev',
             center: 'title',
             right: 'next'
-        },
-        events: [
+         },
+         events: [
           {
-            start: fechaingreso,
-            end: fechaSalida,
-            rendering: 'background',
-            color: '#FFCC29'    /* el background va ser el color que coloreamos que tu reserva esta disponible  */
+             start: fechaingreso,
+             end: fechaSalida,
+             rendering: 'background',
+             color: '#FFCC29'    /* el background va ser el color que coloreamos que tu reserva esta disponible  */
+ 
           }
-        ]
-
+ 
+         ]
+ 
       });  /* fin calendario grande  */
-
+ 
      
+ 
+    }else{ /* en caso al revez si viene con informacion quiere decir mi busqueda en la tabla de reservas me detecto la existencia de este id_habitacion eso quiere decir que la habitacion esta reservada por ciertas fechas es lo que voy a INVISTIGAR APARTIR DE AHORA : */
+           /* asi que se viene con informacion tengo que mostrar al cliente las fechas que me trae la base de datos para informarle al usuario que estas fechas estan occupadas  */
+          
+         
+           /* respuesta => como es un array puede traer varias respuestas es decir varios indices , entonces lo metemos dentro de un cicloFor para su lectura  */
+           for(var i = 0; i < respuesta.length; i++){  /* => por su puesto aqui tengo respuesta.length !=0 es decir me devuelve que hay id_habitacion en tabla reservas : hacemos su lectura */
+            
+             totalEventos.push(  /*a este array le voy a empujar unos indices dentro de su array , es rellenar el array inicializado vacio *//* estos indices van a ser la catidad de eventos que puedan suceder sobre el Calendario grande  */
+              
+                /*index*/ /* "" le ponemos propiedades como se debe escribir propiedad de tipo objeto example 'satart' ... llave , valor */
+                /* 0 */ {  /* este conjunto de evento manipulado dinamicamente por variables que traen fechas de ingreso y salida que selecciona el usuario  */ /* evento usuario */ /* de este conjunto evento usuario vamos a tener una version */
+                           'start': fechaingreso,
+                           'end': fechaSalida,
+                           'rendering': 'background',
+                           'color': '#FFCC29'    /* el background va ser el color que coloreamos que tu reserva esta disponible  */
+                   
+                      }, 
+                /*i*/ {  /* este conjunto de evento de calendario manipulado dinamicamente por fechas de ingreso y salida lograda desde la base de datos de la habitacion encontrada en la seleccion de la tabla de reservas   */ /* evento base de datos  */
+                         /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
+                          'start': respuesta[i]['fecha_ingreso'],
+                          'end': respuesta[i]['fecha_salida'],
+                          'rendering': 'background',
+                          'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tablar reservas ya ha pasado por varios processos   */
+                   
+                     }
+              
+             )  /* a este array le voy a empujar unos indices  es decir agregar unos indices dentro de su array , es rellenar el array inicializado vacio */
+                /* lo mas importante que  totalEventos se convierta en un array  */
+            
+            
+          
+ 
+           } /* Fin de cicloFor ; objetivo lectura del array respuesta */ /* asi si el array respuesta devuelve 2 registros logicamente tendremos 2 dos conjuntos de evento base de datos sobre el calendario  */
+             /* el siguiente paso es la lectura de array totalEventos en eventos a suceder sobre el calendario .. */
 
-    };                                    
+
+            /* ponemos el plugin del calendario grande paraque aparezca en html - sino lo ponemos no aparezca en caso de existir id_habitacion es decir respuesta.length != 0 - eso primero  */  
+            $('#calendar').fullCalendar({  /* calendario grande  */
+              header: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+              },
+              events:totalEventos   /* es un array de evntos sobre el calendario */
+              
+            });  /* fin  calenadario */
+
+
+         
+          
            
-  } /* fin de success la respuesta que obtenemos de ajax  */
 
-       
 
- }); /* fin de ejecuccion de ajax => reservas.ajax  */
 
-  
+
+      
+ 
+    }
+ 
+   
+ 
+  }  /* fin success  */
  
  
-  
+ });  /* fin ajax */
 
-}  /* fin de if  que controla el codigo del modulo de info reserva - donde tenemos el calendario grande  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+};/* end if  infoReservas  */
