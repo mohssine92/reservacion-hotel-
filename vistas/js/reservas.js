@@ -103,7 +103,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
    /* inicializacion de arrays que vamos a estar usando en el escenario de validacion de cruzes de fechas : donde indentificamos que fechas son reservadas y que fechas son libres en el id_habitacion, es decir en la habitacion  */
    var opcion1 = [];  
    var opcion2 = [];
-  
+   var opcion3 = [];
+
    var validarDisponibilidad = false;
 
   /* crearcion de variable datos es variable post que vamos a mandar a ajax para hacer peticiones al controlador  */
@@ -181,9 +182,20 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                 };
                 console.log('opcion2[i]',opcion2[i]);
 
+                /* Validar cruzes de fechas - Opcion3 : Cuando fecha de ingreso sleccionada por usaurio menor que fecha ingreso base de datos y fecha salida seleccionada por usuario mayor que fecha ingreso base de datos aqui produzca otro cruze de fechas  */
+                if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
+
+                  opcion3[i] = false;            
+    
+                }else{
+    
+                  opcion3[i] = true;
+    
+                }
+                console.log('opcion3[i]',opcion3[i]);
 
                  /* Validar disponiblidad */
-                if(opcion1[i] == false || opcion2[i] == false){   /* la invalidez de la disponiblida en cazo de ..... */
+                if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){   /* la invalidez de la disponiblida en cazo de ..... */
               
                   validarDisponibilidad = false; 
               
@@ -193,6 +205,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
               
                 }
                 console.log('validarDisponibilidad', validarDisponibilidad);
+
+                
               
 
                  /* cuando se detecta este unico false , se entra aqui  */
