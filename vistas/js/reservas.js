@@ -101,7 +101,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
    var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
 
    /* inicializacion de arrays que vamos a estar usando en el escenario de validacion de cruzes de fechas : donde indentificamos que fechas son reservadas y que fechas son libres en el id_habitacion, es decir en la habitacion  */
-   var opcion1 = [];
+   var opcion1 = [];  
+   var opcion2 = [];
   
    var validarDisponibilidad = false;
 
@@ -153,8 +154,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
            /* respuesta => como es un array puede traer varias respuestas es decir varios indices , entonces lo metemos dentro de un cicloFor para su lectura  */
            for(var i = 0; i < respuesta.length; i++){  /* => por su puesto aqui tengo respuesta.length !=0 es decir me devuelve que hay id_habitacion en tabla reservas : hacemos su lectura */
              
+
             
-               /* validar cruzes de fechas  */
+               /* validar cruzes de fechas  Opcion1 - cando hay coincidendencia en fechas de ingreso  */
                 if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
               
                   opcion1[i] = false;  /* si alguno de los indice en su propiedad fecha_ingreso coincida con fecha ingreso usuario surge false en este indice */ /* la logica dice va generar un false porque coincidencia es una  */ 
@@ -166,10 +168,22 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                  
                 };  /* con este filtracion ya tenemos dos valores nos indica si la fechas de ingreso coincidan o no  */
                 console.log('opcion1[i]',opcion1[i]);
+                
+                /* validar cruzes de fechas  Opcion2 - cuando la fecha de ingreso seleccionada por ususario esta entre fechas reservadas desde ingreso hasta salida - en un indice en que estamos  por supuesto */
+                if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){ 
+   
+                  opcion2[i] = false;            
+   
+                }else{
+   
+                  opcion2[i] = true;
+   
+                };
+                console.log('opcion2[i]',opcion2[i]);
 
 
                  /* Validar disponiblidad */
-                if(opcion1[i] == false ){   /* en los indices de opcion1[i] se va generar un false por que coincidencia es unica  */
+                if(opcion1[i] == false || opcion2[i] == false){   /* la invalidez de la disponiblida en cazo de ..... */
               
                   validarDisponibilidad = false; 
               
@@ -179,7 +193,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
               
                 }
                 console.log('validarDisponibilidad', validarDisponibilidad);
-
+              
 
                  /* cuando se detecta este unico false , se entra aqui  */
                   if(!validarDisponibilidad){ 
@@ -196,11 +210,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                              }
                      )  
                      
-                     $(".infoDisponibilidad").html('<h5 class="pb-5 float-left ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong>¡Vuelve a intentarlo!</strong></h5>');  
+                     $(".infoDisponibilidad").html('<h3 class="pb-5 float-left text-danger ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
                      
-                     break;  /*romper el ciclo for para no continuar con mas informacion */ /* porque si sigue recorrer todos indices y va seguir con validacion de fechas sabemos que la fecha de coincidencia es una y nosotros nos importa cuando coincidan
-                               paramos el ciclo para el uso de estas informaciones por el que estamos aqui - sino sigua el siclo y pasmos de esta resultado  */
-          
+                     break;  /* para el ciclo fuera del siclo quedamos con todo inf del siclo haste este punto */
 
 
                   }else{ 
@@ -222,7 +234,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                   } /* fin else de validacion de disponiblidad */
 
 
-           };/* Fin de cicloFor ; objetivo lectura del array respuesta */ /* estas es la manera mas facil de tratar con indices de array para validacion etcc -  */
+           };/* Fin de cicloFor ; objetivo lectura del array respuesta */ 
 
            
            if(validarDisponibilidad){  /* si esta variable es true segnifica que se ha aprobado  antes que no hay coincidencia entre fechas de ingreso */
@@ -233,7 +245,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                   "end": fechaSalida,
                   "rendering": 'background',
                   "color": '#FFCC29'
-                }
+               }
             )
 
           }
@@ -246,7 +258,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                 center: 'title',
                 right: 'next'
               },
-              events:totalEventos   /*este es el array de eventos que encarga de manipular el calendario - sus informaciones son dinamicas  depende la validacion sobre el asunto que comunicamos  */
+              events:totalEventos  
               
           });  /* fin  calenadario */
 
