@@ -103,7 +103,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
    /* inicializacion de arrays que vamos a estar usando en el escenario de validacion de cruzes de fechas : donde indentificamos que fechas son reservadas y que fechas son libres en el id_habitacion, es decir en la habitacion  */
    var opcion1 = [];
   
-   var validarDisponibilidad = [];
+   var validarDisponibilidad = false;
 
   /* crearcion de variable datos es variable post que vamos a mandar a ajax para hacer peticiones al controlador  */
   var datos = new FormData();
@@ -152,7 +152,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
          
            /* respuesta => como es un array puede traer varias respuestas es decir varios indices , entonces lo metemos dentro de un cicloFor para su lectura  */
            for(var i = 0; i < respuesta.length; i++){  /* => por su puesto aqui tengo respuesta.length !=0 es decir me devuelve que hay id_habitacion en tabla reservas : hacemos su lectura */
-               
+             
+            
                /* validar cruzes de fechas  */
                 if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
               
@@ -161,92 +162,85 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                
                 }else{
               
-                  opcion1[i] = true;    /* sino no coinciden fechas de ingreso  le damos un valor true  */ /* la logica dice puede generar varios true */
-
+                  opcion1[i] = true;  
                  
                 };  /* con este filtracion ya tenemos dos valores nos indica si la fechas de ingreso coincidan o no  */
                 console.log('opcion1[i]',opcion1[i]);
 
+
                  /* Validar disponiblidad */
                 if(opcion1[i] == false ){   /* en los indices de opcion1[i] se va generar un false por que coincidencia es unica  */
               
-                 validarDisponibilidad[i] = false;  /* eso quiere decir se genera un false en  validarDisponibilidad[i]   */
+                  validarDisponibilidad = false; 
               
                 }else{
               
-                  validarDisponibilidad[i] = true;  /* se generar variso true */
+                  validarDisponibilidad = true;  
               
                 }
-                console.log('validarDisponibilidad[i]', validarDisponibilidad[i]);
+                console.log('validarDisponibilidad', validarDisponibilidad);
+
 
                  /* cuando se detecta este unico false , se entra aqui  */
-                  if(!validarDisponibilidad[i]){ /* es diferente a true segnifica que es falso : se genera en caso que la fechas de ingreso se coincidan  */ /* eso segnifica que la habitacion no esta disponible en la fecha de ingreso  */
+                  if(!validarDisponibilidad){ 
                       
-                     totalEventos.push(  /*a este array le voy a empujar unos indices dentro de su array , es rellenar el array inicializado vacio *//* estos indices van a ser la catidad de eventos que puedan suceder sobre el Calendario grande  */
-                  
-                       /*En este caso solo me muestre las fechas que trae la tabla, no me muestre la fechas seleccionada por usuario  */ /* porque no hay disponiblidad  */
-                
-                       /*index*/ /* "" le ponemos propiedades como se debe escribir propiedad de tipo objeto example 'satart' ... llave , valor */
-                
-                       /*i*/ {  /* este conjunto de evento de calendario manipulado dinamicamente por fechas de ingreso y salida lograda desde la base de datos de la habitacion encontrada en la seleccion de la tabla de reservas   */ /* evento base de datos  */
+                     totalEventos.push(  
+          
+                             {   /* evento base de datos  */
                                 /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
                                  'start': respuesta[i]['fecha_ingreso'],
                                  'end': respuesta[i]['fecha_salida'],
                                  'rendering': 'background',
                                  'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tabla reservas ya ha pasado por varios processos   */
                           
-                            }
-                     )  /* a este array le voy a empujar unos in
+                             }
+                     )  
                      
-                     
-                       dices  es decir agregar unos indices dentro de su array , es rellenar el array inicializado vacio */
-                       /* lo mas importante que  totalEventos se convierta en un array  */
-                
                      $(".infoDisponibilidad").html('<h5 class="pb-5 float-left ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong>¡Vuelve a intentarlo!</strong></h5>');  
                      
-                       break;  /*romper el ciclo for para no continuar con mas informacion */ /* porque si sigue recorrer todos indices y va seguir con validacion de fechas sabemos que la fecha de coincidencia es una y nosotros nos importa cuando coincidan
-                              paramos el ciclo para el uso de esta s informaciones por el que estamos aqui - sino sigua el siclo y pasmos de esta resultado  */
-               
-                  }else{ /* aqui al reves cuando validarDisponibilidad[i]  es true , generado cuando las fechas de ingreso no coincidan , quiere decir que la habitacion esta disponible en el fecha de ingreso  */
+                     break;  /*romper el ciclo for para no continuar con mas informacion */ /* porque si sigue recorrer todos indices y va seguir con validacion de fechas sabemos que la fecha de coincidencia es una y nosotros nos importa cuando coincidan
+                               paramos el ciclo para el uso de estas informaciones por el que estamos aqui - sino sigua el siclo y pasmos de esta resultado  */
+          
 
-                    totalEventos.push(  /*a este array le voy a empujar unos indices dentro de su array , es rellenar el array inicializado vacio *//* estos indices van a ser la catidad de eventos que puedan suceder sobre el Calendario grande  */
-                  
-                      /*index*/ /* "" le ponemos propiedades como se debe escribir propiedad de tipo objeto example 'satart' ... llave , valor */
-                      /* 0 */ {  /* este conjunto de evento manipulado dinamicamente por variables que traen fechas de ingreso y salida que selecciona el usuario  */ /* evento usuario */ /* de este conjunto evento usuario vamos a tener una version */
-                                 'start': fechaingreso,
-                                 'end': fechaSalida,
-                                 'rendering': 'background',
-                                 'color': '#FFCC29'    /* el background va ser el color que coloreamos que tu reserva esta disponible  */
-                         
-                            }, 
-                      /*i*/ {  /* este conjunto de evento de calendario manipulado dinamicamente por fechas de ingreso y salida lograda desde la base de datos de la habitacion encontrada en la seleccion de la tabla de reservas   */ /* evento base de datos  */
-                               /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
+
+                  }else{ 
+
+                    totalEventos.push(   /* aqui pintamos fechas de ingreso que se han validad recientemente : sabemos que no coincidan con fecha de ingreso de usuario  */
+                           {  
+                               
                                 'start': respuesta[i]['fecha_ingreso'],
                                 'end': respuesta[i]['fecha_salida'],
                                 'rendering': 'background',
-                                'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tablar reservas ya ha pasado por varios processos   */
+                                'color': '#847059' 
                          
                            }
-                    )  /* a este array le voy a empujar unos indices  es decir agregar unos indices dentro de su array , es rellenar el array inicializado vacio */
-                      /* lo mas importante que  totalEventos se convierta en un array  */
-               
-                      $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');     
-               
+                    ) 
+
+                    $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');     
                
                
                   } /* fin else de validacion de disponiblidad */
 
-           
-
-             
-              
-              
 
            };/* Fin de cicloFor ; objetivo lectura del array respuesta */ /* estas es la manera mas facil de tratar con indices de array para validacion etcc -  */
+
+           
+           if(validarDisponibilidad){  /* si esta variable es true segnifica que se ha aprobado  antes que no hay coincidencia entre fechas de ingreso */
+
+            totalEventos.push(
+               {
+                  "start": fechaingreso,
+                  "end": fechaSalida,
+                  "rendering": 'background',
+                  "color": '#FFCC29'
+                }
+            )
+
+          }
             
 
           /* este es calendario sus eventos van depende de Validacion que debemos hacer antes entre eventos ususario y comparacion con evento tabla reservas   */ 
-          $('#calendar').fullCalendar({  /* calendario grande  */
+          $('#calendar').fullCalendar({ 
               header: {
                 left: 'prev',
                 center: 'title',
@@ -275,26 +269,5 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
  
  });  /* fin ajax */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-};/* end if  infoReservas  */
+        
+}; /* end if  infoReservas  */
