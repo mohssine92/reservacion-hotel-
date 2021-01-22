@@ -87,7 +87,7 @@ INFO RESERVAS
 				    <?php else: ?> <!-- en caso que arrevez , eso quiere decir que el objeto $reservas me devuelve informacion es decir lleno asi que : lanzo el siguiente linea de  codigo  -->
 																					 
 				    <div class="infoDisponibilidad"></div> <!-- pero son informaciones que todavia no sabemos si las fechas se cruzan o no , entonces ponemos este div con esta clase paraque ser rellenads de javascript porque en js donde vamos a compara las fechas
-																																			 de disponiblidad . Donde validamos esa fechas que se cruzan ? - en reservas.js en el bloque de calendario   -->
+															   de disponiblidad . Donde validamos esa fechas que se cruzan ? - en reservas.js en el bloque de calendario   -->
 				    <?php endif ?>
 
 					<div class="float-right pb-3">
