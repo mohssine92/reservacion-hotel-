@@ -146,7 +146,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
  
       });  /* fin calendario grande  */
  
-     
+      $(".colDerReservas").show();   
  
     }else{ /* en caso al revez si viene con informacion quiere decir mi busqueda en la tabla de reservas me detecto la existencia de este id_habitacion eso quiere decir que la habitacion esta reservada por ciertas fechas es lo que voy a INVISTIGAR APARTIR DE AHORA : */
            /* asi que se viene con informacion tengo que mostrar al cliente las fechas que me trae la base de datos para informarle al usuario que estas fechas estan occupadas  */
@@ -226,6 +226,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                      
                      $(".infoDisponibilidad").html('<h3 class="pb-5 float-left text-danger ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
                      
+                     $(".colDerReservas").hide();   
+                    
+
                      break;  /* para el ciclo fuera del siclo quedamos con todo inf del siclo haste este punto */
 
 
@@ -242,7 +245,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                            }
                     ) 
 
-                    $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');     
+                    $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');  
+                   
+                    $(".colDerReservas").show();   
                
                
                   } /* fin else de validacion de disponiblidad */
@@ -250,8 +255,72 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
 
            };/* Fin de cicloFor ; objetivo lectura del array respuesta */ 
 
+           for(var i = 0; i < respuesta.length; i++){ 
+             
+
+            if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
+          
+              opcion1[i] = false; 
+             
            
-           if(validarDisponibilidad){  /* si esta variable es true segnifica que se ha aprobado  antes que no hay coincidencia entre fechas de ingreso */
+            }
+           
+            
+         
+            if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){ 
+
+              opcion2[i] = false;            
+
+            }
+           
+
+           
+            if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
+
+              opcion3[i] = false;            
+
+            }
+           
+
+             
+            if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){  
+          
+              validarDisponibilidad = false; 
+          
+            }
+            
+            
+             
+              if(!validarDisponibilidad){ 
+                  
+                 totalEventos.push(  
+      
+                         {   /* evento base de datos  */
+                            /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
+                             'start': respuesta[i]['fecha_ingreso'],
+                             'end': respuesta[i]['fecha_salida'],
+                             'rendering': 'background',
+                             'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tabla reservas ya ha pasado por varios processos   */
+                      
+                         }
+                 )  
+                 
+                 $(".infoDisponibilidad").html('<h3 class="pb-5 float-left text-danger ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
+                 
+                 $(".colDerReservas").hide();   
+                
+
+                 
+
+
+              }
+
+
+          };/* Fin de cicloFor ; este ciclo solo para mostrar otra fechas reservadas  */ 
+         
+
+
+          if(validarDisponibilidad){  /* si esta variable es true segnifica que se ha aprobado  antes que no hay coincidencia entre fechas de ingreso */
 
             totalEventos.push(
                {

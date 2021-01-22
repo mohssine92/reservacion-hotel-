@@ -174,8 +174,8 @@ INFO RESERVAS
 			BLOQUE DER
 			======================================-->
            
-			
-			<div class="col-12 col-lg-4 colDerReservas">
+                                                  <!-- siempre inicie escondido -->			
+			<div class="col-12 col-lg-4 colDerReservas" style="display:none">
 
 				<h4 class="mt-lg-5">Código de la Reserva:</h4>
 				<h2 class="colorTitulos"><strong>K2DRESF34</strong></h2>
