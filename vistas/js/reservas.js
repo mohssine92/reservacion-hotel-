@@ -224,10 +224,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                              }
                      )  
                      
-                     $(".infoDisponibilidad").html('<h3 class="pb-5 float-left text-danger ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
-                     
+                      
                      $(".colDerReservas").hide();   
-                    
+                     $(".infoDisponibilidad").html('<h3 class="pb-5 float-left  text-danger">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
 
                      break;  /* para el ciclo fuera del siclo quedamos con todo inf del siclo haste este punto */
 
@@ -296,7 +295,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                          }
                  )  
                  
-                 $(".infoDisponibilidad").html('<h3 class="pb-5 float-left text-danger ">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
+                 
                  
                  $(".colDerReservas").hide();   
                 
