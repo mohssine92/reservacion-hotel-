@@ -36,7 +36,7 @@ $(".selectTipoHabitacion").change(function(){
   if(ruta != ""){   /* segnifica : que el value de la opcion seleccionada trae una ruta de base de datos gracias a la peticion al controlador y foreach , gracias al ejecuccion en php que sera de la url hacia abajo , se ejecuta todo,  toda llamadas a conroladores 
                                  escritas en su  traectoria cada vez actualizamos la pagina  */
 
-     $(".selectTemaHabitacion").html("");  /* se vacia y sigue .... */
+     $(".selectTemaHabitacion").html("");  /* se remplaza el valor por vacio  */
 
 
   }else{  /* pero si llega vacia la ruta  */
@@ -146,10 +146,10 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
  
       });  /* fin calendario grande  */
  
-      $(".colDerReservas").show();   
+     
+      colDerReservas()   
  
-    }else{ /* en caso al revez si viene con informacion quiere decir mi busqueda en la tabla de reservas me detecto la existencia de este id_habitacion eso quiere decir que la habitacion esta reservada por ciertas fechas es lo que voy a INVISTIGAR APARTIR DE AHORA : */
-           /* asi que se viene con informacion tengo que mostrar al cliente las fechas que me trae la base de datos para informarle al usuario que estas fechas estan occupadas  */
+    }else{ 
           
          
            /* respuesta => como es un array puede traer varias respuestas es decir varios indices , entonces lo metemos dentro de un cicloFor para su lectura  */
@@ -247,7 +247,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
 
                     $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');  
                    
-                    $(".colDerReservas").show();   
+                   
+                    colDerReservas(); 
                
                
                   } /* fin else de validacion de disponiblidad */
@@ -255,38 +256,28 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
 
            };/* Fin de cicloFor ; objetivo lectura del array respuesta */ 
 
+
+
            for(var i = 0; i < respuesta.length; i++){ 
              
 
             if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
-          
-              opcion1[i] = false; 
-             
+              opcion1[i] = false;
+            }
            
+          
+            if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){
+              opcion2[i] = false;            
+            }
+           
+
+            if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
+              opcion3[i] = false;            
             }
            
             
-         
-            if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){ 
-
-              opcion2[i] = false;            
-
-            }
-           
-
-           
-            if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
-
-              opcion3[i] = false;            
-
-            }
-           
-
-             
             if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){  
-          
               validarDisponibilidad = false; 
-          
             }
             
             
@@ -296,11 +287,11 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                  totalEventos.push(  
       
                          {   /* evento base de datos  */
-                            /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
+                            
                              'start': respuesta[i]['fecha_ingreso'],
                              'end': respuesta[i]['fecha_salida'],
                              'rendering': 'background',
-                             'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tabla reservas ya ha pasado por varios processos   */
+                             'color': '#847059' /* color fecha occupada */
                       
                          }
                  )  
@@ -309,14 +300,11 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                  
                  $(".colDerReservas").hide();   
                 
-
-                 
-
-
               }
 
 
           };/* Fin de cicloFor ; este ciclo solo para mostrar otra fechas reservadas  */ 
+         
          
 
 
@@ -334,7 +322,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
           }
             
 
-          /* este es calendario sus eventos van depende de Validacion que debemos hacer antes entre eventos ususario y comparacion con evento tabla reservas   */ 
+          /* Clendario grande  */ 
           $('#calendar').fullCalendar({ 
               header: {
                 left: 'prev',
@@ -344,17 +332,12 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
               events:totalEventos  
               
           });  /* fin  calenadario */
-
-
-         
-          
-           
-
-
-
-
-      
  
+
+
+
+
+
     }; /* fin else  */
  
    
@@ -364,5 +347,106 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
  
  });  /* fin ajax */
 
-        
+
+
 }; /* end if  infoReservas  */
+
+
+
+/*=============================================
+CODIGO ALEATORIO _ Uso en  COL.DERECHA RESERVAS
+=============================================*/
+var chars = "0123456789ABCDEFGHIJKLMOPQRSTUVWXYZ";  /* caracteres alfanumericos  */ 
+
+function codigoAleatorio(chars, length) {
+ 
+  codigo = "";
+
+  for(var i = 0; i < length ; i++ ){
+                                         
+     rand = Math.floor(Math.random()*chars.length);   /* returna un numero */      
+     console.log("rand", rand);                                       
+     codigo += chars.substr(rand, 1);    /* seleccina posicion *//* ver consola */ /* 9 veces me va incrementar aqui mas igual */  
+     console.log("codigo", codigo);    
+  }
+
+   return codigo;
+  
+
+};
+/*=============================================
+FUNCIÓN COL.DERECHA RESERVAS
+=============================================*/
+
+function colDerReservas(){
+
+    $(".colDerReservas").show();
+
+    var codigoReserva = codigoAleatorio(chars,9);  /* LENGTH CATIDAD DE CARACTERES A DEVOLVER  */
+  
+
+     console.log("codigo_reserva", codigoReserva); /* realmente yo necesito el ultimo por supuesto */
+                                                      /* este ese el codigo de reserva que voy a mandar a base de datos pero ojo tenemos que consultar la tabla resrevas si hay similar puede suceder  */
+                                                      /* es dificil tener coincidencia pero nunca se sabe - entonces para no tener dos codigos de reserva iguales en base de  datos   es facil: */
+                                                      /* hacemos peticion ajax a la tabla principal reserva y comparamos ultimo codico reserva con los que estan en columna codigo reserva en tabla reserva  */
+        
+    /* Estructura ajax*/
+    var datos = new FormData();
+    datos.append("codigoReserva", codigoReserva);
+ 
+   $.ajax({
+ 
+    url:urlPrincipal+"ajax/reservas.ajax.php",
+    method: "POST",
+    data: datos,
+    cache: false,
+    contentType: false,
+    processData: false,
+    dataType:"json",
+    success:function(respuesta){
+      console.log("RespuestaCoindenciaCodigoReserva", respuesta); /* cuando no encuentra coincidencia en tabla la base de datos manda respuesta falsa  */
+
+      if(!respuesta){  /* false */
+ 
+        $(".codigoReserva").html(codigoReserva);
+    
+      }else{
+    
+         $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));  
+      }
+    
+      
+    
+       
+
+
+
+ 
+
+    } /* Fin respuesta peticion ajax  */
+ 
+   }) /* fin ejecuccion ajax  */
+
+
+
+
+};  /* fin funccion  colDerReservas  */
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

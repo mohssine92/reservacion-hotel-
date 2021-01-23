@@ -7,10 +7,10 @@ require_once "../modelos/reservas.modelo.php";
 class AjaxReservas{
 
 	/*=============================================
-	Traer Reserva Habitación
+	Traer Reserva Habitación - atraves id_habitacion
 	=============================================*/
 
-	public $idHabitacion;        /* la busqueda sera por id_habitacion */
+	public $idHabitacion;      
 
 	public function ajaxTraerReserva(){
 
@@ -23,13 +23,27 @@ class AjaxReservas{
 	}
 
 
+	/*=============================================
+	Traer Reserva a través de Código_reserva
+	=============================================*/
 
-	
+	public $codigoReserva;
 
-	
-	
+	public function ajaxTraerCodigoReserva(){
+
+		$valor = $this->codigoReserva;
+
+		$respuesta = ControladorReservas::ctrMostrarCodigoReserva($valor);
+
+		echo json_encode($respuesta);
+
+	}
+
+
 
 } /* clase  AjaxReservas  */
+
+
 
 /*=============================================
 Traer Reserva Habitación       de aqui mandamos orden a la clase de ajax que es lo que se va ejecutar para devolver resultado a la function de success
@@ -42,4 +56,17 @@ if(isset($_POST["idHabitacion"])){      /* la variable post que hemos creado y l
 	$idHabitacion -> ajaxTraerReserva();      /* ejecutar un metodo */
 
 }
+
+/*=============================================
+Traer Reserva a través de Código_reserva
+=============================================*/
+
+if(isset($_POST["codigoReserva"])){
+
+	$codigoReserva = new AjaxReservas();
+	$codigoReserva -> codigoReserva = $_POST["codigoReserva"];
+	$codigoReserva -> ajaxTraerCodigoReserva();
+
+}
+
 
