@@ -156,7 +156,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
            for(var i = 0; i < respuesta.length; i++){  /* => por su puesto aqui tengo respuesta.length !=0 es decir me devuelve que hay id_habitacion en tabla reservas : hacemos su lectura */
              
 
-            
+                /* se puede meter estas condiciones dentro una condicion se ejecuta apartir del dia actual  */
                /* validar cruzes de fechas  Opcion1 - cando hay coincidendencia en fechas de ingreso  */
                 if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
               
@@ -384,10 +384,7 @@ function colDerReservas(){
     var codigoReserva = codigoAleatorio(chars,9);  /* LENGTH CATIDAD DE CARACTERES A DEVOLVER  */
   
 
-     console.log("codigo_reserva", codigoReserva); /* realmente yo necesito el ultimo por supuesto */
-                                                      /* este ese el codigo de reserva que voy a mandar a base de datos pero ojo tenemos que consultar la tabla resrevas si hay similar puede suceder  */
-                                                      /* es dificil tener coincidencia pero nunca se sabe - entonces para no tener dos codigos de reserva iguales en base de  datos   es facil: */
-                                                      /* hacemos peticion ajax a la tabla principal reserva y comparamos ultimo codico reserva con los que estan en columna codigo reserva en tabla reserva  */
+     console.log("codigo_reserva", codigoReserva); 
         
     /* Estructura ajax*/
     var datos = new FormData();
