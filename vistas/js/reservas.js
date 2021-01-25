@@ -89,13 +89,13 @@ CALENDARIO BLOQUE   GRANDE
   /* este if porque este fichero de js se ejecuta siempre yo no quiero que se ejecute este bloque de codigo  hasta que se carga el div que contiene codigo de info-reserva  */        
 if($(".infoReservas").html() != undefined ){       /* este linea de codigo indica que este div de este clase  su html indefinido segnifica que aun no se ha cargado  */                   
                                                                  
-  var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */
-  /*  console.log("idaHabitacion", idHabitacion ); */
-   var fechaingreso = $(".infoReservas").attr("fechaIngreso");
-  /*   console.log("fechaIngreso", fechaingreso ); */
-   var fechaSalida = $(".infoReservas").attr("fechaSalida");
-  /*   console.log("fechaSalida", fechaSalida ); */
+  var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */ /*  console.log("idaHabitacion", idHabitacion ); */
+  var fechaingreso = $(".infoReservas").attr("fechaIngreso"); /*   console.log("fechaIngreso", fechaingreso ); */
+  var fechaSalida = $(".infoReservas").attr("fechaSalida"); /*   console.log("fechaSalida", fechaSalida ); */
+  var dias = $(".infoReservas").attr("dias");
+  
 
+ 
 
    /* iniciamos este array vacio  */  /* uso para eventos del calendario grande   */
    var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
@@ -411,9 +411,75 @@ function colDerReservas(){
          $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));  
       }
     
-      
-    
+      /*=============================================
+        CAMBIO DE PLAN  : en el selector se aumenta el precio antes de confirmar la reserva 
+      =============================================*/
+
+        $(".elegirPlan").change(function(){    /* siempre halla cambio en planes es decir : el Usuario habia hecho un change en este select  */
+          
+           /* convertir un cadena de texto separada por comin en un array - en javascript se hace con split */
+          /*   $(this).val().split(",");   */                          
+           /*  var  precio =  ($(this).val().split(",")[0]*dias); */    /*  console.log("$(this).val().split(\",\")", precio );*/
+          
+           $(".precioReserva span").html($(this).val().split(",")[0]*dias);                   /* jquery number es un plugin nos permite sacar formato de precios como hace format_number en php  */  
+           $(".precioReserva span").number(true);   /*  $(".precioReserva span").number(true,2);  */       /* coger el mismo span y le aplicas la funccio del plugin  */    
+         
+        })
+
+        /*=============================================
+        CAMBIO DE PERSONAS
+        =============================================*/
+
+        $(".cantidadPersonas ").change(function(){ 
+
+            /* En caso teber una variables que su valor va tener muchos valores en funccion de la selaccion como en este caso mejor uso un switch */
+            switch($(this).val()){
+            
+              case "2":
+          
+                 $(".precioReserva span").html($(".elegirPlan").val().split(",")[0]*dias);
+                 $(".precioReserva span").number(true);
+          
+              break;
+          
+              case "3":                              /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
+                                                 /* meto las cifras en function Number paraque javascript lo considera como numero no como string */
+               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias); /* en caso de tres personas pagara 25% mas */
+               $(".precioReserva span").number(true);
+          
+              break;
+          
+              case "4":
+          
+               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias); /* 50+ a pagar */
+               $(".precioReserva span").number(true);
+          
+              break;
+          
+              case "5":
+          
+               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* 0.75% aparag sobre precio que pagara una persona o dos  */
+               $(".precioReserva span").number(true);
+          
+              break;
+          
+            }
+
+
+
+
+        })
        
+
+
+
+
+
+
+
+
+
+
 
 
 

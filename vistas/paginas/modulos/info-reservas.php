@@ -255,22 +255,22 @@ INFO RESERVAS
 
 				<div class="form-group">
 				 <label><a href="#infoPlanes" data-toggle="modal">Escoge tu Plan:</a> <small>(Precio sugerido para 2 personas)</small></label>
-				  <select class="form-control">
-				  	
-				    <option value="americano">Plan Continental $ 1 día 1 noche</option>
-					<option value="americano">Plan Americano $<?php echo number_format($precioAmericano); ?> 1 día 1 noche</option>
-					<option value="romantico">Plan Romántico $<?php echo number_format($precioRomantico); ?> 1 día 1 noche</option>
-					<option value="lunademiel">Plan Luna de Miel $<?php echo number_format($precioLunaDeMiel); ?> 1 día 1 noche</option>
-					<option value="aventura">Plan Aventura $<?php echo number_format($precioAventura); ?> 1 día 1 noche</option>
-					<option value="spa">Plan SPA $<?php echo number_format($precioSPA); ?> 1 día 1 noche</option>
+				  <select class="form-control elegirPlan">  <!-- su value es value de la opcion seleccionada -->
+
+					<option value="<?php echo $precioContinental;?>,Plan Continental">Plan Continental $<?php echo number_format($precioContinental); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioAmericano;?>,Plan Americano">Plan Americano $<?php echo number_format($precioAmericano); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioRomantico;?>,Plan Romantico">Plan Romántico $<?php echo number_format($precioRomantico); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioLunaDeMiel;?>,Plan Luna de Miel">Plan Luna de Miel $<?php echo number_format($precioLunaDeMiel); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioAventura;?>,Plan Aventura">Plan Aventura $<?php echo number_format($precioAventura); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioSPA;?>,Plan SPA">Plan SPA $<?php echo number_format($precioSPA); ?> 1 día 1 noche</option>
 
 				  </select>
 				</div>
 				
 				<div class="form-group">
 				  <label>Personas:</label>
-				  <select class="form-control">
-				  	
+				  <select class="form-control cantidadPersonas"> <!--en clase ponemos  cantidadPersonas : para poder seleccionar el selecctor en javascript para obtener su value y agregar precio en funccion de persona    -->
+				                                                  <!-- logica : manipular precio final de manera asincrona gracias a javascript  -->  	
 					<option value="2">2</option>
 					<option value="3">3</option>
 					<option value="4">4</option>
@@ -283,7 +283,7 @@ INFO RESERVAS
 
 					<div class="col-12 col-lg-6 col-xl-7 text-center text-lg-left"> 
 						<!-- esto lo que viene por defecto al no cambiar el paln  --> <!-- Logica: valores obtenidas por ejeciccion desde la Url hacia abajo php puro  -->
-						<h1 class="precioReserva"><span><?php echo number_format($precioContinental*$dias); ?></span> <span>MAD</span></h1> <!-- le ponemos una clase para manipular atraves de javascript en caso de : -que se surga algun cambio en el selecctor
+						<h1 class="precioReserva"><span><?php echo number_format($precioContinental*$dias); ?></span><br> MAD</h1> <!-- le ponemos una clase para manipular atraves de javascript en caso de : -que se surga algun cambio en el selecctor
 					                                                                                                                           Lanzamos evento de javascript para manipular precio de una manera asincrona  -->
 
 					</div>
