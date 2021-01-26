@@ -1,17 +1,48 @@
 
 <?php
 
-/* variables post recbidas desde 3 formularios ; desde modulo header y modulo info habitaciones y modulo info reserva */
 
-if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  comprobamos si nos acaba de llegar  */  /* son variables de tipo post recebidas de formulario  */
+  
+if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - informaciones recibidas vienen atraves de value de inputs tanto alcanse de usuario o por inputs ocultos */  
 
-	echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+    echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
-    echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
+	echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
+	echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
 	 
 	$valor = $_POST["id-habitacion"] ;  
 	
-	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /*Recuerda objeto reservas trea 3 tablas */ /* trea todo tipo de informacion acerca de la habitacion a alquiler  */
+	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /*Recuerda objeto reservas trea 3 tablas */ /* trea todo tipo de informacion acerca de la habitacion a alquiler  */ /* es factor imporatant en validacion de fechas  */
+	                                                              /* lo hemos usado en manipular precio de reserva  */
+   
+	$indice = 0;  /* lo uso en precio en caso  de que reservas devuelve resultado  */
+
+	/* este habitacion nunca se reservo , asi pido al controladore de habitaciones que me traega informacion de id_habitacion que necesito   */
+	/* tambien en el proyecto de mobilaria puedo seleccionar por agrupamiento sql , aprevecho las relaciones entre tablas , y cogo las prepiedades que me intereza  */  /* IMPORTANT */ /* tenemos la opcion de orm en Laravel */
+	if(!$reservas){   
+
+		$valor= $_POST["ruta"];   /* necesito recibir desde los formularios este valor ruta  si o si . asi la paso de manera occulta  */
+
+		 $reservas = ControladorHabitaciones::ctrMostrarHabitaciones($valor);    /* devuelva groupo de habitaciones en  este categoria  */  /* aqui podemos cubrir nuestras necesidades pero si enotro caso podremos crear otro controlador y modelo donde 
+																			   aplicamos un buen agrupamiento  */
+        /*  echo '<pre class="bg-white">'; print_r($reservas); echo '</pre><br>';	 */																   
+      
+		foreach ($reservas as $key => $value) {       /* validacion me detecta el indice de habitacion en este grupo por categoria */
+			                                          /* los datos que seleccionamos se ordenan por key ,  */
+			if($value["id_h"] == $_POST["id-habitacion"]){
+
+				$indice = $key;
+
+			}
+		}   /* aqui cuando hacemos la seleccion con rutas sabemos cada categoria tiene ruta propia , asi me va devolver todas habitaciones de esta ruta es decir todas habitaciones de esta categoria y lo ordena en un array es decir lo datos 
+			relacionados con tadas tablas relacionadas , asi hacemos lecturas buscamos el id_habitacion que estamos comunicando cuando se detecta - captamos su indice , pues atraves de su idices logramos acceder a toda informacion recuperada 
+			gracias a las relaciones entre tablas    */
+	}
+
+
+
+
+
 	$planes = ControladorPlanes::ctrMostrarPlanes(); /* tala planes */
 
 	
@@ -20,40 +51,40 @@ if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  c
 	=============================================*/
 
 	date_default_timezone_set("Africa/Casablanca");  /* Definir Zona Horaria */ 
-	$hoy = getdate();  /* aqui tengo hora actual de me zona , ami me interesa los dias ,   */
-	echo '<pre class="bg-white">'; print_r($hoy); echo '</pre><br>';      /* siempre cuando quier filtra uso el print para no fallar en escritura de propiedad */
+	$hoy = getdate();  /* aqui tengo hora actual de me zona , ami me interesa los dias , */
+/* 	echo '<pre class="bg-white">'; print_r($hoy); echo '</pre><br>' */;      /* siempre cuando quier filtra uso el print para no fallar en escritura de propiedad */
 
      /* asi empiezo a filtrar - lo que para el hotel va ser temporada alta */
      if($hoy["mon"] == 12 && $hoy["mday"] >= 15 && $hoy["mday"] <= 31 ||  $hoy["mon"] == 1 && $hoy["mday"] >= 1 && $hoy["mday"] <= 15 ||  $hoy["mon"] == 6 && $hoy["mday"] >= 15 && $hoy["mday"] <= 31 ||   $hoy["mon"] == 7 && $hoy["mday"] >= 1 && $hoy["mday"] <= 15){
      
 	     /* depende de id_habitacion */ /* solo estoy traendo de tablas habitaciones Reservas Categorias */
-          $precioContinental = $reservas[0]["continental_alta"];
-	      $precioAmericano = $reservas[0]["americano_alta"];
+          $precioContinental = $reservas[$indice]["continental_alta"];
+	      $precioAmericano = $reservas[$indice]["americano_alta"];
 	      /*debo emvocar con otro objeto la traeda de planes */
-          $precioRomantico = $reservas[0]["americano_alta"] + $planes[0]["precio_alta"];
-          $precioLunaDeMiel = $reservas[0]["americano_alta"] + $planes[1]["precio_alta"];
-          $precioAventura = $reservas[0]["americano_alta"] + $planes[2]["precio_alta"];
-          $precioSPA = $reservas[0]["americano_alta"] + $planes[3]["precio_alta"];
+          $precioRomantico = $reservas[$indice]["americano_alta"] + $planes[0]["precio_alta"];
+          $precioLunaDeMiel = $reservas[$indice]["americano_alta"] + $planes[1]["precio_alta"];
+          $precioAventura = $reservas[$indice]["americano_alta"] + $planes[2]["precio_alta"];
+          $precioSPA = $reservas[$indice]["americano_alta"] + $planes[3]["precio_alta"];
 	
        
-     }else{
+     }else{   
 
-	      $precioContinental = $reservas[0]["continental_baja"];
-	      $precioAmericano = $reservas[0]["americano_baja"];
-	      $precioRomantico = $reservas[0]["americano_baja"] + $planes[0]["precio_baja"];
-	      $precioLunaDeMiel = $reservas[0]["americano_baja"] + $planes[1]["precio_baja"];
-	      $precioAventura = $reservas[0]["americano_baja"] + $planes[2]["precio_baja"];
-	      $precioSPA = $reservas[0]["americano_baja"] + $planes[3]["precio_baja"];
+	      $precioContinental = $reservas[$indice]["continental_baja"];
+	      $precioAmericano = $reservas[$indice]["americano_baja"];
+	      $precioRomantico = $reservas[$indice]["americano_baja"] + $planes[0]["precio_baja"];
+	      $precioLunaDeMiel = $reservas[$indice]["americano_baja"] + $planes[1]["precio_baja"];
+	      $precioAventura = $reservas[$indice]["americano_baja"] + $planes[2]["precio_baja"];
+	      $precioSPA = $reservas[$indice]["americano_baja"] + $planes[3]["precio_baja"];
 
      } /* end else */
 
     /*=============================================
 	DEFINIR CANTIDAD DE DIAS DE LA RESERVA
 	=============================================*/
-	$fechaIngreso = new DateTime($_POST["fecha-ingreso"]); /* DateTime Object  */                   echo '<pre class="bg-white">'; print_r($fechaIngreso); echo '</pre><br>'; 
-	$fechaSalida = new DateTime($_POST["fecha-salida"]);                                        	echo '<pre class="bg-white">'; print_r($fechaSalida); echo '</pre><br>';  
-	$diff = $fechaIngreso->diff($fechaSalida);  /* DateInterval */                               	echo '<pre class="bg-white">'; print_r($diff); echo '</pre><br>';  
-    $dias = $diff->days; 	                                                                        echo '<pre class="bg-white">'; print_r($diff->days); echo '</pre><br>';  
+    $fechaIngreso = new DateTime($_POST["fecha-ingreso"]);   /* DateTime Object  */                    /*  echo '<pre class="bg-white">'; print_r($fechaIngreso); echo '</pre><br>' */; 
+	$fechaSalida = new DateTime($_POST["fecha-salida"]);                                            	/* echo '<pre class="bg-white">'; print_r($fechaSalida); echo '</pre><br>'; */  
+	$diff = $fechaIngreso->diff($fechaSalida);    /* DateInterval */                                 	/* echo '<pre class="bg-white">'; print_r($diff); echo '</pre><br>'; */  
+    $dias = $diff->days; 	                                                                           /*  echo '<pre class="bg-white">'; print_r($diff->days); echo '</pre><br>';   */
 
 	if($dias == 0){
 
@@ -67,7 +98,7 @@ if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  c
 	
  
 }else{
-    /* en de llegar a este fichero sin fechas o id de habitacion no voy a dejar pasar te mando a pagina ed inicio */  /* asi si no me trare id de producto a reservar no dejo pasar  */
+    /* al intentar accedder a este pagina sin id_habitacion no te dejo pasar - porque no tienes nada que putear aqui coño   */
 	echo '<script> window.location="'.$ruta.'"</script>';
 
 }
@@ -80,9 +111,7 @@ if(isset($_POST["id-habitacion"])){       /* esto es id del producto a rentar  c
 INFO RESERVAS
 ======================================-->
 
-
-<!-- vamos averiguar la existencia de id habitacion en tabla de reservas por javascript . para el tema de la disponiblidad igual como hemos hecho con php , asi que la pregunta como lo vamos hacer  --><!-- voy a utulizar unos atrributos en el div de infoReservas
- que puede capturar en javascript  estos atrributos van a variar informacion imporatante en el proceso de js ,  recient conseguida por peticiones al controlador por php gracias al flujo de jecuccion en php --->  <!-- reservas.js -->
+<!-- en los atributos tenemos captados informaciones obligatorio en este modulo de informacion reserva de habitacion  -->
 <div class="infoReservas container-fluid bg-white p-0 pb-5" idHabitacion="<?php echo $_POST["id-habitacion"]; ?>" fechaIngreso="<?php echo $_POST["fecha-ingreso"]; ?>" fechaSalida="<?php echo $_POST["fecha-salida"]; ?>" dias="<?php echo $dias; ?>">
 	
 	<div class="container">
@@ -127,16 +156,10 @@ INFO RESERVAS
 
 				<div class="bg-white p-4 calendarioReservas">
 
-				   <!-- Mensaje dinamico de la disponiblidad  -->
-				   <?php if (!$reservas): ?> <!-- si el objeto de $reservas viene vacio es decir que el id de habitacion no tiene coincidencia en tabla de reservas  -->                                               
-																									 
-				    <h1 class="pb-5 float-left text-success">¡Está Disponible!</h1>    <!-- asi puedo lazar este mensaje que indica que la habitacion esta disponible  -->
+				
 																					 
-				    <?php else: ?> <!-- en caso que arrevez , eso quiere decir que el objeto $reservas me devuelve informacion es decir lleno asi que : lanzo el siguiente linea de  codigo  -->
-																					 
-				    <div class="infoDisponibilidad"></div> <!-- pero son informaciones que todavia no sabemos si las fechas se cruzan o no , entonces ponemos este div con esta clase paraque ser rellenads de javascript porque en js donde vamos a compara las fechas
-															   de disponiblidad . Donde validamos esa fechas que se cruzan ? - en reservas.js en el bloque de calendario   -->
-				    <?php endif ?>
+				    <div class="infoDisponibilidad"></div> <!-- javascript lo esta rellenado de toda forma -->
+				   
 
 					<div class="float-right pb-3">
 							
@@ -158,7 +181,7 @@ INFO RESERVAS
 
 					<div class="clearfix"></div>
 			
-					<div id="calendar"></div>   <!-- calendario grande es un plugin integrado  -->
+					<div id="calendar"></div>   <!-- calendario grande es un plugin integrado  -->  <!-- con atrrib idhabitacion se capta por javascript y se capta calendario y se manipula depende de disponiblidad -->
 
 					<!--=====================================
 					MODIFICAR FECHAS
@@ -171,6 +194,8 @@ INFO RESERVAS
 					<form action="<?php echo $ruta; ?>reservas" method="post" ><!-- variables post que seran enviadas :  name="id-habitacion"  name="fecha-ingreso"   name="fecha-salida"     -->
 
 					  <input type="hidden" name="id-habitacion" value="<?php echo $_POST["id-habitacion"]; ?>"> <!-- debe ir esta varaible $_POST["id-habitacion"] porque sobre este producto voy a busacar nueva fecha --> <!-- es decir sobre el mismo captado -->
+
+					  <input type="hidden" name="ruta" value="<?php echo $_POST["ruta"]; ?>">
 
 						<div class="container mb-3">
 
@@ -219,8 +244,8 @@ INFO RESERVAS
 		
 		
 			<!--=====================================
-			BLOQUE DER
-			======================================-->
+			BLOQUE DER              esta columna pareze cuando realmente el producto esta disponible a reservar  
+			======================================	-->
            
                                                   <!-- siempre inicie escondido -->			
 			<div class="col-12 col-lg-4 colDerReservas" style="display:none">
@@ -240,15 +265,15 @@ INFO RESERVAS
 
 				<div class="form-group">
 				  <label>Habitación:</label>
-				  <input type="text" class="form-control" value="Habitación <?php echo $reservas[0]["tipo"]." ".$reservas[0]["estilo"]; ?>" readonly>
+				  <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>
 
 				  <?php
 
-				  	$galeria = json_decode($reservas[0]["galeria"], true);  /* echo '<pre class="bg-white">'; print_r($galeria); echo '</pre><br>';  */
+				  	$galeria = json_decode($reservas[$indice]["galeria"], true);  /* echo '<pre class="bg-white">'; print_r($galeria); echo '</pre><br>';  */
 				  
 				  ?>
-
-				  <img src="<?php echo $servidor.$galeria[0]; ?>" class="img-fluid">
+                                                           <!-- 0 - no es necesario indice -->
+				  <img src="<?php echo $servidor.$galeria[$indice]; ?>" class="img-fluid">
 
 
 				</div>

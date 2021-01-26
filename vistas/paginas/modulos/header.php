@@ -72,12 +72,13 @@ HEADER
 						</select>
 					</div>
 
+					<input type="hidden" id="ruta" name="ruta">  <!-- valor por javascript  -->
+
 					<div class="row">
 						
 						 <div class="col-6 input-group input-group-lg pr-1"> 
 						
 							<input type="text" class="form-control datepicker entrada" autocomplete="off" name="fecha-ingreso" placeholder="Entrada" required>  <!--   autocomplete="off"   para que no me agregue historial al seleccionar fechas  -->
-
 							<div class="input-group-append">
 								
 								<span class="input-group-text p-2">
@@ -237,64 +238,66 @@ MENÚ MÓVIL
 		</div>	
 
 	</div>
+	  
 
-	<div class="formReservas py-1 py-lg-2 px-4">
+   <!-- formualrio  -->
+
+   <form  action="<?php echo $ruta;  ?>reservas" method="post">
+	    <div class="formReservas py-1 py-lg-2 px-4">	
+    
+         	<div class="form-group my-4">
+         		<select class="form-control form-control-lg selectTipoHabitacion" required>     
 					
-		<div class="form-group my-4">
-			<select class="form-control form-control-lg">
-				<option>Tipo de habitación</option>
-				<option>Suite</option>
-				<option>Especial</option>
-				<option>Standar</option>
-			</select>
-		</div>
-
-		<div class="form-group my-4">
-			<select class="form-control form-control-lg">
-				<option>Temática de habitación</option>
-				<option>Oriental</option>
-				<option>Contemporánea</option>
-				<option>Africana</option>
-				<option>Clásica</option>
-				<option>Retro</option>
-			</select>
-		</div>
-
-		<div class="row">
+				    <option value="">Tipo de habitación</option> 
+					     
+         			<?php foreach ($categorias as $key => $value): ?>     
+         			<option value="<?php echo $value["ruta"]; ?>"><?php echo $value["tipo"]; ?></option>
+         			<?php endforeach ?>
+         			
+         		</select>
+	    	 </div>  
+	    	    
+         	<div class="form-group my-4">
+         		<select class="form-control form-control-lg selectTemaHabitacion" name="id-habitacion"  required>     
+					 
+				   <option value="">Temática de habitación</option>
+         			
+         		</select>
+	    	 </div>
+	    	       
+	    	 <input type="hidden" id="ruta" name="ruta">   
+	    	   
+         	<div class="row">
+         		
+         		 <div class="col-6 input-group input-group-lg pr-1">
 			
-			 <div class="col-6 input-group input-group-lg pr-1">
-			
-				<input type="text" class="form-control datepicker entrada" placeholder="Entrada">
-
-				<div class="input-group-append">
+					<input type="text" class="form-control datepicker entrada" autocomplete="off" name="fecha-ingreso" placeholder="Entrada" required> 
 					
-					<span class="input-group-text p-2">
-						<i class="far fa-calendar-alt small text-gray-dark"></i>
-					</span>
-				
-				</div>
-
-			</div>
-
-			<div class="col-6 input-group input-group-lg pl-1">
-			
-				<input type="text" class="form-control datepicker salida" placeholder="Salida">
-
-				<div class="input-group-append">
-					
-					<span class="input-group-text p-2">
-						<i class="far fa-calendar-alt small text-gray-dark"></i>
-					</span>
-				
-				</div>
-
-			</div>
-
-		</div>
-
-		<input type="button" class="btn btn-block btn-lg my-4 text-white" value="Ver disponibilidad">
-		
-	</div>
+         			<div class="input-group-append">
+         				
+         				<span class="input-group-text p-2">
+         					<i class="far fa-calendar-alt small text-gray-dark"></i>
+         				</span>
+         			
+         			</div>     
+         		</div>     
+         		<div class="col-6 input-group input-group-lg pl-1">
+         		
+					 <input type="text" class="form-control datepicker salida"  autocomplete="off"  name="fecha-salida" readonly placeholder="Salida" required>     
+         			<div class="input-group-append">
+         				
+         				<span class="input-group-text p-2">
+         					<i class="far fa-calendar-alt small text-gray-dark"></i>
+         				</span>
+         			
+         			</div>     
+         		</div>     
+	    	 </div>
+	    	      
+         	<input type="submit" class="btn btn-block btn-lg my-4 text-white" value="Ver disponibilidad">
+         	
+	     </div>
+	</form>
 
 	<ul class="nav flex-column mt-4 pl-4 mb-5">
 		

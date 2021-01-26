@@ -44,6 +44,7 @@ $(".selectTipoHabitacion").change(function(){
     $(".selectTemaHabitacion").html('<option>Temáticas de habitación</option>')  /* aqui no borro porque estoy usando html y html remplaza no como append agrega */
 
 
+
   } /* fin de else  */
  
 
@@ -63,7 +64,10 @@ $(".selectTipoHabitacion").change(function(){
     dataType:"json",
     success:function(respuesta){   /* manipular select  anidados gracias a peticion ajax nos trae los datos  para manipular de manera asincrona */
 
-     console.log("respuesta", respuesta );  /* solo en prueba  */
+
+      $("input[name='ruta']").val(respuesta[0]["ruta"]); /* porque todas tipos de habitaciones seleccionados pertenecen al msimo crupo de ruta  */ 
+      
+      console.log("respuesta", respuesta );  /* solo en prueba  */
       
       
      for( var i = 0; i < respuesta.length; i++ ){
@@ -146,7 +150,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
  
       });  /* fin calendario grande  */
  
-     
+      $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');  
+      
       colDerReservas()   
  
     }else{ 
@@ -415,60 +420,59 @@ function colDerReservas(){
         CAMBIO DE PLAN  : en el selector se aumenta el precio antes de confirmar la reserva 
       =============================================*/
 
-        $(".elegirPlan").change(function(){    /* siempre halla cambio en planes es decir : el Usuario habia hecho un change en este select  */
-          
-           /* convertir un cadena de texto separada por comin en un array - en javascript se hace con split */
-          /*   $(this).val().split(",");   */                          
-           /*  var  precio =  ($(this).val().split(",")[0]*dias); */    /*  console.log("$(this).val().split(\",\")", precio );*/
-          
-           $(".precioReserva span").html($(this).val().split(",")[0]*dias);                   /* jquery number es un plugin nos permite sacar formato de precios como hace format_number en php  */  
-           $(".precioReserva span").number(true);   /*  $(".precioReserva span").number(true,2);  */       /* coger el mismo span y le aplicas la funccio del plugin  */    
-         
+        $(".elegirPlan").change(function(){    
+
+          cambioPlanesPersonas();  /* por defecto case es 2 => 2personas */
+                 
         })
 
         /*=============================================
         CAMBIO DE PERSONAS
         =============================================*/
 
-        $(".cantidadPersonas ").change(function(){ 
-
-            /* En caso teber una variables que su valor va tener muchos valores en funccion de la selaccion como en este caso mejor uso un switch */
-            switch($(this).val()){
-            
-              case "2":
-          
-                 $(".precioReserva span").html($(".elegirPlan").val().split(",")[0]*dias);
-                 $(".precioReserva span").number(true);
-          
-              break;
-          
-              case "3":                              /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
-                                                 /* meto las cifras en function Number paraque javascript lo considera como numero no como string */
-               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias); /* en caso de tres personas pagara 25% mas */
-               $(".precioReserva span").number(true);
-          
-              break;
-          
-              case "4":
-          
-               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias); /* 50+ a pagar */
-               $(".precioReserva span").number(true);
-          
-              break;
-          
-              case "5":
-          
-               $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* 0.75% aparag sobre precio que pagara una persona o dos  */
-               $(".precioReserva span").number(true);
-          
-              break;
-          
-            }
-
-
-
+        $(".cantidadPersonas").change(function(){ 
+ 
+          cambioPlanesPersonas();    
 
         })
+
+        function cambioPlanesPersonas(){   /* este codigo lo voy a necesitar obligatoriamente en dos eventos separados pero en la logica estos dos eventos son relacionados obligatoriamenete  */
+
+              /* En caso teber una variables que su valor va tener muchos valores en funccion de la selaccion como en este caso mejor uso un switch */
+           switch($('.cantidadPersonas').val()){
+            
+            case "2":
+        
+               $(".precioReserva span").html($(".elegirPlan").val().split(",")[0]*dias);
+               $(".precioReserva span").number(true);
+        
+            break;
+        
+            case "3":                              /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
+                                               /* meto las cifras en function Number paraque javascript lo considera como numero no como string */
+             $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias); /* en caso de tres personas pagara 25% mas */
+             $(".precioReserva span").number(true);
+        
+            break;
+        
+            case "4":
+        
+             $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias); /* 50+ a pagar */
+             $(".precioReserva span").number(true);
+        
+            break;
+        
+            case "5":
+        
+             $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* 0.75% aparag sobre precio que pagara una persona o dos  */
+             $(".precioReserva span").number(true);
+        
+            break;
+    
+           }                                  
+   
+
+        } /* este codico cambia precio apagar en funccion de plan y numero de persona asi que lo incluyo en ddos eventos  */
        
 
 

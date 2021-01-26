@@ -81,6 +81,10 @@ header .formReservas input[type="submit"]{
 	background:black;
 	font-size:16px;
 }
+.menuMovil .formReservas input[type="submit"]{
+	background:black;
+	font-size:16px;
+}
 
 header .fa-user{
 	font-size:25px; 
