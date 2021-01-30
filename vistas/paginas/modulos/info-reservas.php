@@ -1,14 +1,14 @@
 
 <?php
-
+ /* Escenario 2 en variable post capto string de ids , en en contenedor , para javscript */
 
   
 if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - informaciones recibidas vienen atraves de value de inputs tanto alcanse de usuario o por inputs ocultos */  
 
-    echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
-    echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
-	echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
-	echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
+    //  echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+    //  echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
+	//  echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
+	//  echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
 	 
 	$valor = $_POST["id-habitacion"] ;  
 	

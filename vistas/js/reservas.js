@@ -93,7 +93,7 @@ CALENDARIO BLOQUE   GRANDE
   /* este if porque este fichero de js se ejecuta siempre yo no quiero que se ejecute este bloque de codigo  hasta que se carga el div que contiene codigo de info-reserva  */        
 if($(".infoReservas").html() != undefined ){       /* este linea de codigo indica que este div de este clase  su html indefinido segnifica que aun no se ha cargado  */                   
                                                                  
-  var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */ /*  console.log("idaHabitacion", idHabitacion ); */
+  var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */   console.log("idaHabitacion", idHabitacion ); 
   var fechaingreso = $(".infoReservas").attr("fechaIngreso"); /*   console.log("fechaIngreso", fechaingreso ); */
   var fechaSalida = $(".infoReservas").attr("fechaSalida"); /*   console.log("fechaSalida", fechaSalida ); */
   var dias = $(".infoReservas").attr("dias");
@@ -127,7 +127,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
   dataType:"json",
   success:function(respuesta){   /* respuesta => va ser un array */
    
-    console.log("respuesta",respuesta);   /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
+    console.log("respuesta",respuesta);    /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
  
     if(respuesta.length == 0 ){    /* respuesta es un array eso segnifica si viene vacio su length sera igual a zero  */ /* a su vez segnifica que la habitacion esta disponible de primera  */    
                                                                                                                          /* es donde estoy mostrando sin problema y sin duda la disponiblidad  */ /* lo logico  */
@@ -166,14 +166,14 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                 if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
               
                   opcion1[i] = false;  /* si alguno de los indice en su propiedad fecha_ingreso coincida con fecha ingreso usuario surge false en este indice */ /* la logica dice va generar un false porque coincidencia es una  */ 
-                  console.log(fechaingreso, respuesta[i]['fecha_ingreso'], respuesta[i]['fecha_salida']);
+                 /*  console.log(fechaingreso, respuesta[i]['fecha_ingreso'], respuesta[i]['fecha_salida']); */
                
                 }else{
               
                   opcion1[i] = true;  
                  
                 };  /* con este filtracion ya tenemos dos valores nos indica si la fechas de ingreso coincidan o no  */
-                console.log('opcion1[i]',opcion1[i]);
+              /*   console.log('opcion1[i]',opcion1[i]); */
                 
                 /* validar cruzes de fechas  Opcion2 - cuando la fecha de ingreso seleccionada por ususario esta entre fechas reservadas desde ingreso hasta salida - en un indice en que estamos  por supuesto */
                 if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){ 
@@ -185,7 +185,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                   opcion2[i] = true;
    
                 };
-                console.log('opcion2[i]',opcion2[i]);
+               /*  console.log('opcion2[i]',opcion2[i]); */
 
                 /* Validar cruzes de fechas - Opcion3 : Cuando fecha de ingreso sleccionada por usaurio menor que fecha ingreso base de datos y fecha salida seleccionada por usuario mayor que fecha ingreso base de datos aqui produzca otro cruze de fechas  */
                 if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
@@ -197,7 +197,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                   opcion3[i] = true;
     
                 }
-                console.log('opcion3[i]',opcion3[i]);
+                /* console.log('opcion3[i]',opcion3[i]); */
 
                  /* Validar disponiblidad */
                 if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){   /* la invalidez de la disponiblida en cazo de ..... */
@@ -209,8 +209,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
                   validarDisponibilidad = true;  
               
                 }
-                console.log('validarDisponibilidad', validarDisponibilidad);
-
+                /* console.log('validarDisponibilidad', validarDisponibilidad);
+ */
                 
               
 
@@ -369,9 +369,9 @@ function codigoAleatorio(chars, length) {
   for(var i = 0; i < length ; i++ ){
                                          
      rand = Math.floor(Math.random()*chars.length);   /* returna un numero */      
-     console.log("rand", rand);                                       
+    /*  console.log("rand", rand);    */                                    
      codigo += chars.substr(rand, 1);    /* seleccina posicion *//* ver consola */ /* 9 veces me va incrementar aqui mas igual */  
-     console.log("codigo", codigo);    
+    /*  console.log("codigo", codigo);   */  
   }
 
    return codigo;
@@ -389,7 +389,7 @@ function colDerReservas(){
     var codigoReserva = codigoAleatorio(chars,9);  /* LENGTH CATIDAD DE CARACTERES A DEVOLVER  */
   
 
-     console.log("codigo_reserva", codigoReserva); 
+    /*  console.log("codigo_reserva", codigoReserva);  */
         
     /* Estructura ajax*/
     var datos = new FormData();
@@ -405,7 +405,7 @@ function colDerReservas(){
     processData: false,
     dataType:"json",
     success:function(respuesta){
-      console.log("RespuestaCoindenciaCodigoReserva", respuesta); /* cuando no encuentra coincidencia en tabla la base de datos manda respuesta falsa  */
+     /*  console.log("RespuestaCoindenciaCodigoReserva", respuesta); */ /* cuando no encuentra coincidencia en tabla la base de datos manda respuesta falsa  */
 
       if(!respuesta){  /* false */
  
