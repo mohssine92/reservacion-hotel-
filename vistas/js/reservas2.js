@@ -119,11 +119,8 @@ if($(".infoReservas").html() != undefined ){
        /* tambien enviamos a ajax dos variables por post - paraque ajax nos haga el trabajo de buscar coincidencias con la que traegamos de la tabla reservas 2  */
        datos.append("fechaingreso", fechaingreso);      
        datos.append("fechaSalida", fechaingreso);    
-       
+       /* _______________variables post mandadas por peticion ajax  */  
      
-    
-
-   
         /* vamos hacer cruze fechas desde php . paraque php nos devuelva las habitaciones que no se puede usar , asi que  la que sobra si se puede usar   */
          $.ajax({
         
@@ -134,10 +131,106 @@ if($(".infoReservas").html() != undefined ){
           contentType: false,
           processData: false,
           dataType:"json",
-          success:function(respuesta){   
+          success:function(respuesta){    /* respuesta => es todos ids de categoria seleccionada que no se puede reservar en la fechas seleccionadas */ /* que esta reservados  */
            
-             /* en esta peticion . segun la filtracion de la consulta . obtengo los ids que cruzcan con las fechas seleccionadas , es decir la habitaciones que estan occupadas  */
-             console.log("respestaNoDisp", respuesta);
+             console.log("repuesta", respuesta);
+             
+             if(respuesta != ""){   /* si me llega un id  */
+               
+               function quitarHabitaciones (objeto){  /* el objeto comunicadoo en este caso  arrayHabitacion  */
+                  
+                  return objeto == respuesta;  /* cuando un valor en el objeto sera igual al valor respuesta , returnamos este valor donde findIndex coje si index , en el objeto */
+
+               }
+               
+                arrayHabitacion.splice(arrayHabitacion.findIndex(quitarHabitaciones), 1); 
+                /* findInbdex me manda el indice del valor en el objeto donde sera igual a respuesta   */ /* luego splice borra el valor completo de este index en su array  */ /* esto es todo  */
+            
+            } /* con este codigo he borrado todos ids que me indico php que esta reservados y me he quedado con los ids disponibles  */
+
+             console.log("idaHabitacion-array",arrayHabitacion);
+            
+            /* ahora otra peticion para sacar toda informacion de la habitacion disponible para enseñarla al usuario  */
+            var datosHabitacion = new FormData();
+            datosHabitacion.append("idHabitacion", arrayHabitacion[0]);
+           
+
+            $.ajax({   /* => esta peticion para traer datos de la habitacion que presenta  index 0  del arreglo de la habitaciones disponible  */
+        
+              url:urlPrincipal+"ajax/reservas.ajax.php",
+              method: "POST",
+              data: datosHabitacion,
+              cache: false,
+              contentType: false,
+              processData: false,
+              dataType:"json",
+              success:function(respuesta){     /* respuesta => informacion de id habitacion consultada */
+                console.log(respuesta);
+
+                if(respuesta.length != 0){
+   
+                  $(".infoDisponibilidad").html('<h1 class="pb-5 float-left">¡Está Disponible_Escenario 2 !</h1>'); 
+                 
+
+                  /* aqui mostramos el calendario con los dias que selecciono  */ /* porque le hemos encontrado un coche o una habitacion disponible  */
+                  $('#calendar').fullCalendar({
+                   
+                      defaultDate: fechaingreso, /* paraque el calendario nos muestra desde el mes en el que esta la fecha de ingreso por le usuario  */
+                      header: {
+                       left: 'prev',
+                       center: 'title',
+                       right: 'next'
+                      },
+                      events: [{
+                       start: fechaingreso,
+                       end: fechaSalida,
+                       rendering: 'background',
+                       color: '#FFCC29'
+                      }]
+ 
+                  });
+
+                  colDerReservas(respuesta[0]["tipo"],respuesta[0]["estilo"]) /* col derecha nesecita inf del producto dispo asi voy a pasar datos necesarios por parameteros */  /* en este caso estilo otro caso sera 303 en planta 3 , matricula coche ,,, */
+                  
+ 
+
+                }else{
+                  
+                  $('#calendar').html("");
+                  $(".colDerReservas").hide();
+                  $(".infoDisponibilidad").html('<h1 class="pb-5 float-left">¡No hay coches disponibles en esta marca_Escenario 2 !</h1>'); 
+                 
+
+                }
+                
+
+
+
+    
+                          
+              }  /* fin success  */
+             
+             
+            });  /* fin ajax */
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                       
           }  /* fin success  */
@@ -149,11 +242,14 @@ if($(".infoReservas").html() != undefined ){
 
     } /* este ciclo se va ejuctando hasta pasar todos ids de habitaciones que tenemso en una categoria   */
     
+   
 
 }; /* end if  infoReservas  */
   
   
   
+
+
   /*=============================================
   CODIGO ALEATORIO _ Uso en  COL.DERECHA RESERVAS
   =============================================*/
@@ -179,9 +275,10 @@ if($(".infoReservas").html() != undefined ){
   FUNCIÓN COL.DERECHA RESERVAS
   =============================================*/
   
-  function colDerReservas(){
+  function colDerReservas(tipo, estilo){
   
-      $(".colDerReservas").show();
+
+     
   
       var codigoReserva = codigoAleatorio(chars,9);  /* LENGTH CATIDAD DE CARACTERES A DEVOLVER  */
     
@@ -202,7 +299,7 @@ if($(".infoReservas").html() != undefined ){
       processData: false,
       dataType:"json",
       success:function(respuesta){
-       /*  console.log("RespuestaCoindenciaCodigoReserva", respuesta); */ /* cuando no encuentra coincidencia en tabla la base de datos manda respuesta falsa  */
+       
   
         if(!respuesta){  /* false */
    
@@ -211,7 +308,9 @@ if($(".infoReservas").html() != undefined ){
         }else{
       
            $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));  
+
         }
+        
       
         /*=============================================
           CAMBIO DE PLAN  : en el selector se aumenta el precio antes de confirmar la reserva 
@@ -266,19 +365,23 @@ if($(".infoReservas").html() != undefined ){
           
               break;
       
-             }                                  
-     
-  
+             }   
+             
+            
           } /* este codico cambia precio apagar en funccion de plan y numero de persona asi que lo incluyo en ddos eventos  */
          
+         
+          /* este codigo no debe jamas ejecutarse antes de terminar la compilacion del codigo tatal sino parece al usuario resultados difrente al resultado final */
+          /* fijate si hablamos en produccion en de 30 millones de registros  */  /* eso hace que el ciclo taradra mucho en terminar resultado final y en camino lanza mensaje con informacion */
+          $(".tituloReserva").val("Habitación "+tipo+" "+estilo);  /* => parametro son info del producto disponible  */
+          $(".colDerReservas").show();
+     s
   
   
   
   
   
-  
-  
-  
+         
   
   
   

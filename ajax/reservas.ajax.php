@@ -89,7 +89,7 @@ class AjaxReservas{
 Traer Reserva Habitación       de aqui mandamos orden a la clase de ajax que es lo que se va ejecutar para devolver resultado a la function de success
 =============================================*/
 
-if(isset($_POST["idHabitacion"])){      /* la variable post que hemos creado y lo hemos mandado a ajax dentro de variable data  */
+if(isset($_POST["idHabitacion"])){     /* Usada por escenarios : 1 y 2  */
 
 	$idHabitacion = new AjaxReservas();
 	$idHabitacion -> idHabitacion = $_POST["idHabitacion"];   /* asignar valor a la propiedad de la clase ajax  */
