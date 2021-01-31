@@ -1,10 +1,31 @@
+<!-- este pagina donde muestro  un coche o un habitacion a quien voy a busacar si hay alguna disponible de en esta gategoria seleccionada ,  luego el systema de reserva seguida en este codigo me tiene que devolver solo una de estas que 
+estan disponible -->
+
 <?php
      
-   $valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabla categorias   */
+$valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabla categorias   */
 							 
 
-   $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria */ 
+  $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria */ 
 	
+
+/*=============================================
+ESCENARIO 2 - 3  DE RESERVAS : en este escenario el usuario solo selecciona categoria : porque categoria tiene mismo habitacion varias veces , las habitacion se clasifican por numeros , enn este caso el systema tiene que detectar que habitacion esta 
+                            disponible en este categoria , pues ..... por form de disponiblidad tengo que mandar todos ids de estos habitaciones que pertenecen a la  categoria seleccionada 
+                 
+=============================================*/
+      $arrayHabitaciones = array();   /* iniciamos este variable como array para empujarle varios datos y lo ordena como array con indices  */
+     
+      foreach ($habitaciones as $key => $value) {
+     
+      	array_push($arrayHabitaciones, $value["id_h"]);   /* en cada indice empujo solo su id en el array iniciado  */ /* porque a mi solo el id que me interesa */
+     
+	  }
+	  
+	 /*  echo '<pre class="bg-white">'; print_r($arrayHabitaciones); echo '</pre>'; */     /* estos son los ids que tengo que inviar por este formulario de ver diponiblidad  */ 
+	
+	  $nuevoArrayHab = implode("," , $arrayHabitaciones);                           /* pues para poder inviarlos por variable de formulario los convierto en string */
+    /*  echo '<pre class="bg-white">'; print_r($nuevoArrayHab); echo '</pre>';  */
 ?>
 
 <!--=====================================
@@ -159,15 +180,16 @@ INFO HABITACIÓN
 					
 					</div>
  
-                <!-- Ecenario 1 : necesito mandar solo un id ,del producto a veridicar su disponiblida , nada mas  -->
+
                 <form action="<?php echo $ruta;  ?>reservas" method="post" > <!-- metodo que voy a usar varables post , variables occultas -->
-				
-					 <input type="hidden" name="id-habitacion" value="<?php echo $habitaciones[0]["id_h"]; ?>" > <!-- index indica que habitacion de la categoria estamos  gracias a peticiones ajax al mismo controlador -->
-										                                                                         <!-- gracias a ajax en habitaciones.js vamos actualizando datos segun seleccionamos de manera asincrona -->
+
+				    <!-- Input de escenario dos donde pasamos ids de habitaciones de la categorias seleccionada -->
+				    <input type="hidden" name="id-habitacion" value="<?php echo $nuevoArrayHab; ?>" > <!-- Escenario 2 --> <!--o parecen todos los ref de carros que pertenecen a esa subcat en escenario 3  pues esto el que se manda a pagina reservas  -->
 
 					<input type="hidden" name="ruta" value="<?php echo $habitaciones[0]["ruta"]; ?>" >																							
 				 
-				 	<div class="container">     
+				 	<div class="container">     <!-- formulario de comprobar la disponiblidad : sabemos para comprobar la disponiblidad de algun producto necesitaremos el id del producto a que queremos ver la disponiblidad  -->
+                                                <!-- en estre caso el producto es la habitacion -->
 
 						<div class="row py-2" style="background:#509CC3">
 

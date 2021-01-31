@@ -1,6 +1,8 @@
+ <!-- este codigo que estoy usando en iformacion de reserva en escenario dos donde el systema me devuelva un producto disponible de los productos que pertenezcan a una categoria de habitaciones 
+esta parte la puede usar tambien en inforamciones de reserva para choche disponible  a alquiler -->
 
 <?php
-
+ /* Escenario 2 en variable post capto string de ids , en en contenedor , para javscript */
 
   
 if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - informaciones recibidas vienen atraves de value de inputs tanto alcanse de usuario o por inputs ocultos */  
@@ -251,7 +253,7 @@ INFO RESERVAS
 			<div class="col-12 col-lg-4 colDerReservas" style="display:none">
 
 				<h4 class="mt-lg-5">Código de la Reserva:</h4>
-				<h2 class="colorTitulos"><strong class="codigoReserva"></strong></h2> <!-- codigo se mete por javascript  -->
+				<h2 class="colorTitulos"><strong class="codigoReserva"></strong></h2> <!-- codigo se meto por javascript  -->
 
 				<div class="form-group">
 				  <label>Ingreso 3:00 pm: </label>
@@ -265,17 +267,10 @@ INFO RESERVAS
 
 				<div class="form-group">
 				  <label>Habitación:</label>
-				    <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>    <!-- especialidad - nombre medico  -->   <!-- cuando hablamos de agenda -->
-				    <?php      /* foto medico  */  /* => cuando hablamos de agenda */
-
-				  	 $galeria = json_decode($reservas[$indice]["galeria"], true); 
-				  
-					 /* echo '<pre class="bg-white">'; print_r($galeria); echo '</pre><br>';   */ 
-				   ?> 
-				 
-				 
-				    <img src="<?php echo $servidor.$galeria[$indice]; ?>" class="img-fluid">
-			
+				
+				 <!-- ESCENARIO 2 Y 3 DE RESERVAS -->
+				 <input type="text" class="form-control tituloReserva" value="" readonly> <!-- aqui mostramos solo titulo de reserva o numero de gabitacion en un planta o matricula del coche etc , no mostramos ni foto ni nada  --> 
+                  <!-- readonly input iditable -->
 				</div>
 
 				<div class="form-group">

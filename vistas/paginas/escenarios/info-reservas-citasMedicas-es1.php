@@ -1,16 +1,14 @@
- <!-- este codigo que estoy usando en iformacion de reserva en escenario dos donde el systema me devuelva un producto disponible de los productos que pertenezcan a una categoria de habitaciones 
-esta parte la puede usar tambien en inforamciones de reserva para choche disponible  a alquiler -->
 
 <?php
- /* Escenario 2 en variable post capto string de ids , en en contenedor , para javscript */
+
 
   
 if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - informaciones recibidas vienen atraves de value de inputs tanto alcanse de usuario o por inputs ocultos */  
 
-    //  echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
-    //  echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
-	//  echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
-	//  echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
+      /* echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
+      echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
+	  echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
+	  echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  */ 
 	 
 	$valor = $_POST["id-habitacion"] ;  
 	
@@ -253,24 +251,33 @@ INFO RESERVAS
 			<div class="col-12 col-lg-4 colDerReservas" style="display:none">
 
 				<h4 class="mt-lg-5">Código de la Reserva:</h4>
-				<h2 class="colorTitulos"><strong class="codigoReserva"></strong></h2> <!-- codigo se meto por javascript  -->
+				<h2 class="colorTitulos"><strong class="codigoReserva"></strong></h2> <!-- codigo se mete por javascript  -->
 
 				<div class="form-group">
-				  <label>Ingreso 3:00 pm: </label>
-				  <input type="date" class="form-control" value="<?php echo $_POST["fecha-ingreso"]; ?>" readonly>
+				  <label>Ingreso 3:00 pm: </label>  <!-- en citas medicas esto sobraria -->
+				<!--   <input type="date" class="form-control" value="<?php echo $_POST["fecha-ingreso"]; ?>" readonly> -->
+				  <input type="text" class="form-control" value="<?php echo $_POST["fecha-ingreso"]; ?>" readonly>   <!-- cita medicas , formato como fecha hora viene de  base de datos en text ..  -->
 				</div>
 
-				<div class="form-group">
+				<div class="form-group"> <!-- en citas medicas esto sobraria -->
 				  <label>Salida: 1:00 pm: </label>
-				  <input type="date" class="form-control" value="<?php echo $_POST["fecha-salida"]; ?>"  readonly>
+				 <!--  <input type="date" class="form-control" value="<?php echo $_POST["fecha-salida"]; ?>"  readonly> -->
+				  <input type="text" class="form-control" value="<?php echo $_POST["fecha-salida"]; ?>"  readonly>    <!-- cita medicas , formato como fecha hora ed base de datos en text ..  -->
 				</div>
 
 				<div class="form-group">
 				  <label>Habitación:</label>
-				
-				 <!-- ESCENARIO 2 Y 3 DE RESERVAS -->
-				 <input type="text" class="form-control tituloReserva" value="" readonly> <!-- aqui mostramos solo titulo de reserva o numero de gabitacion en un planta o matricula del coche etc , no mostramos ni foto ni nada  --> 
-                  <!-- readonly input iditable -->
+				    <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>    <!-- especialidad - nombre medico  -->   <!-- cuando hablamos de agenda -->
+				    <?php      /* foto medico  */  /* => cuando hablamos de agenda */
+
+				  	 $galeria = json_decode($reservas[$indice]["galeria"], true); 
+				  
+					 /* echo '<pre class="bg-white">'; print_r($galeria); echo '</pre><br>';   */ 
+				   ?> 
+				 
+				 
+				    <img src="<?php echo $servidor.$galeria[$indice]; ?>" class="img-fluid">
+			
 				</div>
 
 				<div class="form-group">

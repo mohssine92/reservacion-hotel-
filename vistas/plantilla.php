@@ -179,9 +179,9 @@ include "paginas/modulos/modal.php";
 <!-- <script src="js/reservas.js"></script> -->   <!-- Escenario 1 - donde el usuario ver dipo y selecciona habita o coche etcc -->
 <!-- <script src="js/reservas2.js"></script>  --> <!-- segunda opcion escenario 2  - user sslect cat o sub cat - systema devuelve - la hab o coche dispo en la cat o subcat seleccionada  -->
 
-<script src="js/agendas.js"></script>    <!-- selccionar dia de cita y hora : cita medical : donde paciente ve la dispo de los medicos en la cat y selecciona el que quiera depende de disponiblidad -->
-<!-- <script src="js/agendas2.js"></script>  -->  <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
-<!-- ------------- -->
+<!-- <script src="js/agendas.js"></script> -->    <!-- selccionar dia de cita y hora : cita medical : donde paciente ve la dispo de los medicos en la cat y selecciona el que quiera depende de disponiblidad -->
+<script src="js/agendas2.js"></script>   <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
+<!--------------- -->
 	
 </body>
 </html>

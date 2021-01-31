@@ -3,7 +3,7 @@
 require_once "conexion.php";
  
 Class ModeloReservas{                                                                         /* la tabla principal aqui es la labla a 1 es decir a ella se hace la condicion el where   $tabla1 = "habitaciones";    
-                                                                                                                                                                                         $tabla2 = "reservas";  
+                                                                                                                                                                                         $tabla2 = "reservas";  agenda
                                                                                                                                                                                          $tabla3 = "categorias";
                                                                                                  */
                                             

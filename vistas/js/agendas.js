@@ -7,12 +7,12 @@
 /*=============================================
 FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fecha y la hora - se cambia depende del plugin
 =============================================*/
-   $.datetimepicker.setLocale('es');   /* para trabajar con este plug primer pongo que idioma voy a trabajar  */
+   $.datetimepicker.setLocale('fr');   /* para trabajar con este plug primer pongo que idioma voy a trabajar  */
 
    $('.datepicker.entrada').datetimepicker({    /* cambiamos la funccionalidad : datepicker => datetimepicker */
       format:'Y-m-d H:00:00', /* trabajamos el formato como lo va guardar base de datos - como no trabajamos min dejemos 00 00 */  
       minDate: 0,   /* empieze por dia actual  */
-      defaultTime:(new Date().getHours()+1)+":00",  /* indicar la hora desde el que voy a comenzar a seleccionar  */  /* lo miramos en detalle despues  */
+      defaultTime:(new Date().getHours()+1)+":00", /* indicar la hora desde el que voy a comenzar a seleccionar  */  /* lo miramos en detalle despues  */
       allowTimes:[
         '08:00',
         '09:00',
@@ -36,21 +36,25 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
       $('.datepicker.salida').attr('readonly',false);   /* => pasa a ser habilita la fecha de salida */ 
     
       var fechaEntrada = $(this).val().split(" ");  /* fecha de entrada en string separado por espacio . le aplico split convierta todo seperado a array con indexes */
+     
+    
 
+    
+      console.log(valorEntrada);
       console.log("fechaRntrada",fechaEntrada);
 
       var fechaEscogida = new Date($(this).val());  /* => me convierta la fecha seleccionada en modelo de fecha de javascript  */
       console.log(fechaEscogida);   /* => mira consola para entender  */  /* si queremos manipular por minutos lo agregamos desde el principio asi con get min empezemos a agregar */
 
-      $('.datepicker.salida').val(fechaEntrada[0] +" "+(fechaEscogida.getHours()+1)+":00:00"); /* ver plugin de hora javascript , getear hora o minutos y agregarle lo que dure la cita  */
-     
-
-     
-
+      var valorEntrada =  $(this).val(); /* => si viene vacio reescribimos mismo valor  */
+      if(valorEntrada == ""){
+         $('.datepicker.salida').val("Salida");
+      }else{
+        $('.datepicker.salida').val(fechaEntrada[0] +" "+(fechaEscogida.getHours()+1)+":00:00"); /* ver plugin de hora javascript , getear hora o minutos y agregarle lo que dure la cita  */ /* se quieres incrementar minutos lo haces de la misma forma */
+        /* Recuerda para saber mas sobre la propiedad de new date de javascript ver :   */    /*  https://www.w3schools.com/js/js_dates.asp*/ 
+      }
+      
     });
-
-
-  
   /*=============================================
   SELECTS ANIDADOS  - esta es la parte donde seleccionamos una categoria y nos devuelve opciones de cada categortia , Aplicado sobre formulario de Header 
   =============================================*/
@@ -119,21 +123,22 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
     /* este if porque este fichero de js se ejecuta siempre yo no quiero que se ejecute este bloque de codigo  hasta que se carga el div que contiene codigo de info-reserva  */        
   if($(".infoReservas").html() != undefined ){       /* este linea de codigo indica que este div de este clase  su html indefinido segnifica que aun no se ha cargado  */                   
                                                                    
-    var idHabitacion = $(".infoReservas").attr("idHabitacion");   /* voy a pedirle a ajax que haga una peticon al controlador y me busque si existe este id de esta habitacion  */   console.log("idaHabitacion", idHabitacion ); 
-    var fechaingreso = $(".infoReservas").attr("fechaIngreso"); /*   console.log("fechaIngreso", fechaingreso ); */
-    var fechaSalida = $(".infoReservas").attr("fechaSalida"); /*   console.log("fechaSalida", fechaSalida ); */
-    var dias = $(".infoReservas").attr("dias");
+    var idHabitacion = $(".infoReservas").attr("idHabitacion");       /* => id medico */  console.log("id_madico", idHabitacion ); 
+    var fechaingreso = $(".infoReservas").attr("fechaIngreso");     /* => fecha y hora a coger cita */ console.log("dia-hora-cita", fechaingreso ); 
+    var fechaSalida =  $(".infoReservas").attr("fechaSalida");       /*  => una hora despues de le seleccion  */  console.log("dia-hora-fin-cita",  fechaSalida ); 
     
-  
-   
-  
+    var fechaEscogida = new Date(fechaingreso);     console.log("fechaIngreso-En-formato-jacascript :",fechaEscogida); 
+    /* var dias = $(".infoReservas").attr("dias"); */
+
+    var nombreMedico = "";
+    
+
      /* iniciamos este array vacio  */  /* uso para eventos del calendario grande   */
      var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
-  
-     /* inicializacion de arrays que vamos a estar usando en el escenario de validacion de cruzes de fechas : donde indentificamos que fechas son reservadas y que fechas son libres en el id_habitacion, es decir en la habitacion  */
+
+     /* inicializacion de un array vacio  en espera pasarle valores  */
      var opcion1 = [];  
-     var opcion2 = [];
-     var opcion3 = [];
+  
   
      var validarDisponibilidad = false;
   
@@ -152,8 +157,8 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
     processData: false,
     dataType:"json",
     success:function(respuesta){   /* respuesta => va ser un array */
-     
-      console.log("respuesta",respuesta);    /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
+       
+      console.log("respuesta",respuesta);    
    
       if(respuesta.length == 0 ){    /* respuesta es un array eso segnifica si viene vacio su length sera igual a zero  */ /* a su vez segnifica que la habitacion esta disponible de primera  */    
                                                                                                                            /* es donde estoy mostrando sin problema y sin duda la disponiblidad  */ /* lo logico  */
@@ -187,69 +192,37 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
              for(var i = 0; i < respuesta.length; i++){  /* => por su puesto aqui tengo respuesta.length !=0 es decir me devuelve que hay id_habitacion en tabla reservas : hacemos su lectura */
                
   
-                  /* se puede meter estas condiciones dentro una condicion se ejecuta apartir del dia actual  */
-                 /* validar cruzes de fechas  Opcion1 - cando hay coincidendencia en fechas de ingreso  */
+                 
                   if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
                 
-                    opcion1[i] = false;  /* si alguno de los indice en su propiedad fecha_ingreso coincida con fecha ingreso usuario surge false en este indice */ /* la logica dice va generar un false porque coincidencia es una  */ 
-                   /*  console.log(fechaingreso, respuesta[i]['fecha_ingreso'], respuesta[i]['fecha_salida']); */
+                    opcion1[i] = false;
+                 
                  
                   }else{
                 
                     opcion1[i] = true;  
                    
-                  };  /* con este filtracion ya tenemos dos valores nos indica si la fechas de ingreso coincidan o no  */
-                /*   console.log('opcion1[i]',opcion1[i]); */
-                  
-                  /* validar cruzes de fechas  Opcion2 - cuando la fecha de ingreso seleccionada por ususario esta entre fechas reservadas desde ingreso hasta salida - en un indice en que estamos  por supuesto */
-                  if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){ 
-     
-                    opcion2[i] = false;            
-     
-                  }else{
-     
-                    opcion2[i] = true;
-     
                   };
-                 /*  console.log('opcion2[i]',opcion2[i]); */
-  
-                  /* Validar cruzes de fechas - Opcion3 : Cuando fecha de ingreso sleccionada por usaurio menor que fecha ingreso base de datos y fecha salida seleccionada por usuario mayor que fecha ingreso base de datos aqui produzca otro cruze de fechas  */
-                  if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
-  
-                    opcion3[i] = false;            
-      
-                  }else{
-      
-                    opcion3[i] = true;
-      
-                  }
-                  /* console.log('opcion3[i]',opcion3[i]); */
-  
-                   /* Validar disponiblidad */
-                  if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){   /* la invalidez de la disponiblida en cazo de ..... */
-                
+
+                  if(opcion1[i] == false ){  
+
                     validarDisponibilidad = false; 
-                
+
                   }else{
-                
-                    validarDisponibilidad = true;  
-                
+                 
+                    validarDisponibilidad = true; 
+
                   }
-                  /* console.log('validarDisponibilidad', validarDisponibilidad);
-   */
-                  
-                
   
                    /* cuando se detecta este unico false , se entra aqui  */
                     if(!validarDisponibilidad){ 
                         
                        totalEventos.push(  
             
-                               {   /* evento base de datos  */
-                                  /* puede que un id_habitacion  lanza varios eventos es decir un id_habitacion tendra varias fechas reservadas para varios usuarios diferentes , cada usuarios diferente puede reservar una fechas cuanda sera disponibles  */
+                               {   
+                                   "title": respuesta[i]["estilo"],   /* estilo equvale nombre de medico  */ /* qui se muestra el nombre del medico  */
                                    'start': respuesta[i]['fecha_ingreso'],
                                    'end': respuesta[i]['fecha_salida'],
-                                   'rendering': 'background',
                                    'color': '#847059' /* aqui este color indica las fechas occupadas que indica este id_habitacion desde la base de datos desde la tabla reservas : sabemos paraque este id_habitacion en tabla reservas ya ha pasado por varios processos   */
                             
                                }
@@ -257,23 +230,24 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
                        
                         
                        $(".colDerReservas").hide();   
-                       $(".infoDisponibilidad").html('<h3 class="pb-5 float-left  text-danger">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Eliga Otra Fecha !</strong></h3>');  
+                       $(".infoDisponibilidad").html('<h3 class="pb-5 float-left  text-danger">¡Lo sentimos, no hay disponibilidad para esa fecha!<br><br><strong class ="text-dark">¡Selecciona otra hora !</strong></h3>');  
   
                        break;  /* para el ciclo fuera del siclo quedamos con todo inf del siclo haste este punto */
   
   
                     }else{ 
   
-                      totalEventos.push(   /* aqui pintamos fechas de ingreso que se han validad recientemente : sabemos que no coincidan con fecha de ingreso de usuario  */
+                      totalEventos.push(  /* aunque no hay cruze de citas quiero ver la cita occupada apartir de mi dia actual   */
                              {  
-                                 
+                                  "title": respuesta[i]["estilo"],   /* estilo equvale nombre de medico  */ /* qui se muestra el nombre del medico  */
                                   'start': respuesta[i]['fecha_ingreso'],
                                   'end': respuesta[i]['fecha_salida'],
-                                  'rendering': 'background',
                                   'color': '#847059' 
                            
                              }
                       ) 
+
+                      nombreMedico = respuesta[i]["estilo"]; /* aqui aprovecho la memoria temporal de compilacion */
   
                       $(".infoDisponibilidad").html('<h1 class="pb-5 float-left text-success">¡Está Disponible! _</h1> ');  
                      
@@ -287,64 +261,14 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
              };/* Fin de cicloFor ; objetivo lectura del array respuesta */ 
   
   
-  
-             for(var i = 0; i < respuesta.length; i++){ 
-               
-  
-              if(fechaingreso == respuesta[i]['fecha_ingreso'] ){
-                opcion1[i] = false;
-              }
-             
-            
-              if(fechaingreso > respuesta[i]["fecha_ingreso"] && fechaingreso < respuesta[i]["fecha_salida"]){
-                opcion2[i] = false;            
-              }
-             
-  
-              if(fechaingreso  < respuesta[i]["fecha_ingreso"] && fechaSalida > respuesta[i]["fecha_ingreso"]){
-                opcion3[i] = false;            
-              }
-             
-              
-              if(opcion1[i] == false || opcion2[i] == false ||opcion3[i] == false ){  
-                validarDisponibilidad = false; 
-              }
-              
-              
-               
-                if(!validarDisponibilidad){ 
-                    
-                   totalEventos.push(  
-        
-                           {   /* evento base de datos  */
-                              
-                               'start': respuesta[i]['fecha_ingreso'],
-                               'end': respuesta[i]['fecha_salida'],
-                               'rendering': 'background',
-                               'color': '#847059' /* color fecha occupada */
-                        
-                           }
-                   )  
-                   
-                   
-                   
-                   $(".colDerReservas").hide();   
-                  
-                }
-  
-  
-            };/* Fin de cicloFor ; este ciclo solo para mostrar otra fechas reservadas  */ 
-           
-           
-  
-  
             if(validarDisponibilidad){  /* si esta variable es true segnifica que se ha aprobado  antes que no hay coincidencia entre fechas de ingreso */
   
               totalEventos.push(
                  {
+                    /* "title": respuesta[0]["estilo"], */   /* estilo equvale nombre de medico  */ /* qui se muestra el nombre del medico  */ /* esta opcion tambien funcciona  */
+                    "title": nombreMedico,  
                     "start": fechaingreso,
                     "end": fechaSalida,
-                    "rendering": 'background',
                     "color": '#FFCC29'
                  }
               )
@@ -352,13 +276,23 @@ FECHAS RESERVA  - esta parte del plugin presenta la forma de seleccionar la fech
             }
               
   
-            /* Clendario grande  */ 
+            /* Vista Calendario _ aqui nesitamoos vista por horas no porer dias   */  /* https://fullcalendar.io/docs/  */
             $('#calendar').fullCalendar({ 
+                defaultDate:  fechaingreso,  /* => el primer dia a parecer en calendario por default es el fecha de ingreso */
+                defaultView: 'agendaFourDay',
+                allDaySlot:false,
+                scrollTime:fechaEscogida.getHours()+":00:00",  /* => vamos a decirle el scroll de ese calendario parezca en la fecha escogida  */
                 header: {
                   left: 'prev',
                   center: 'title',
                   right: 'next'
                 },
+                views: {
+                    agendaFourDay: {
+                       type: 'agenda',
+                       duration: { days: 5 }   
+                    }
+                }, /*  => va parecer 5 dias en el calendario apartir del dia escogido */
                 events:totalEventos  
                 
             });  /* fin  calenadario */

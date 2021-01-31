@@ -1,10 +1,3 @@
-<!--  este es el controlador que estoy usando para verificar disponiblidad de habitaciones o cita medicas  -->
-						   <!-- 			/* habitaciones  */       /* tabla reserva => escenario1   , tabla reserva2 => escenario 2  -->  <!-- $tablas2 -->
-							<!-- 			/* citas medicas    */    /* tabla agendas => escenario1   , tabla reserva2 => escenario 2  -->  <!-- $tabla2 -->																										
-
-
-
-
 <?php
 
 Class ControladorReservas{
