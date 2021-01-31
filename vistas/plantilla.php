@@ -35,6 +35,9 @@ $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de
 	<!-- bootstrap datepicker -->
 	<link rel="stylesheet" href="css/plugins/bootstrap-datepicker.standalone.min.css">
 
+	<!-- datetimepicker --> <!-- estilos de calendario medical  -->
+	<link rel="stylesheet" href="css/plugins/jquery.datetimepicker.css">
+
 	<!-- jdSlider -->
 	<link rel="stylesheet" href="css/plugins/jquery.jdSlider.css">
 
@@ -66,6 +69,10 @@ $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de
 	<!-- bootstrap datepicker -->
 	<!-- https://bootstrap-datepicker.readthedocs.io/en/latest/ -->
 	<script src="js/plugins/bootstrap-datepicker.min.js"></script>
+
+    <!-- datetimepicker -->  <!-- calendario medical  -->
+	<!-- https://xdsoft.net/jqplugins/datetimepicker/ -->
+	<script src="js/plugins/jquery.datetimepicker.full.min.js"></script>
 
 	<!-- https://easings.net/es# -->
 	<script src="js/plugins/jquery.easing.js"></script>
@@ -168,9 +175,13 @@ include "paginas/modulos/modal.php";
 <script src="js/menu.js"></script>
 <script src="js/idiomas.js"></script>
 <script src="js/habitaciones.js"></script>
-<!-- <script src="js/reservas.js"></script> -->
-<script src="js/reservas2.js"></script>  <!-- segunda opcion escenario 2  -->
+<!-- ficheros de consultar filtrar disponiblida valen para habitaciones , coches etc depende del proyecto  -->
+<!-- <script src="js/reservas.js"></script> -->   <!-- Escenario 1 - donde el usuario ver dipo y selecciona habita o coche etcc -->
+<!-- <script src="js/reservas2.js"></script>  --> <!-- segunda opcion escenario 2  - user sslect cat o sub cat - systema devuelve - la hab o coche dispo en la cat o subcat seleccionada  -->
 
+<script src="js/agendas.js"></script>    <!-- selccionar dia de cita y hora : cita medical : donde paciente ve la dispo de los medicos en la cat y selecciona el que quiera depende de disponiblidad -->
+<!-- <script src="js/agendas2.js"></script>  -->  <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
+<!-- ------------- -->
 	
 </body>
 </html>

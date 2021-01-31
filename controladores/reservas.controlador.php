@@ -1,3 +1,10 @@
+<!--  este es el controlador que estoy usando para verificar disponiblidad de habitaciones o cita medicas  -->
+						   <!-- 			/* habitaciones  */       /* tabla reserva => escenario1   , tabla reserva2 => escenario 2  -->  <!-- $tablas2 -->
+							<!-- 			/* citas medicas    */    /* tabla agendas => escenario1   , tabla reserva2 => escenario 2  -->  <!-- $tabla2 -->																										
+
+
+
+
 <?php
 
 Class ControladorReservas{
@@ -9,7 +16,7 @@ Class ControladorReservas{
 	static public function ctrMostrarReservas($valor){
 
 		$tabla1 = "habitaciones"; 
-		$tabla2 = "reservas2";     /* reservas , reservas2 , son tablas donde buscamos la disponiblidad  */
+		$tabla2 = "agenda";     /* sustituir con la tabla donde vamos a buscar la disponiblidad  */
 		$tabla3 = "categorias";    
 
 		$respuesta = ModeloReservas::mdlMostrarReservas($tabla1, $tabla2, $tabla3, $valor);
