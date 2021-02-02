@@ -29,6 +29,8 @@ require_once "controladores/habitaciones.controlador.php";
 
 require_once "controladores/reservas.controlador.php";
 require_once "modelos/reservas.modelo.php";
+
+/* require_once "extensiones/vendor/autoload.php";  */   /* => autoload se encarga de encontrar la clase que necesito en las sdk (librerias que instalo en mi proyecto como mailer , mercado de pago etc ....) */
  
 
 $plantilla = new ControladorPlantilla();  /* Object class */

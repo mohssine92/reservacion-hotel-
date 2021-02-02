@@ -9,7 +9,7 @@ Class ControladorReservas{
 	static public function ctrMostrarReservas($valor){
 
 		$tabla1 = "habitaciones"; 
-		$tabla2 = "agenda";     /* sustituir con la tabla donde vamos a buscar la disponiblidad  */
+		$tabla2 = "reservas";     /* sustituir con la tabla donde vamos a buscar la disponiblidad  */ /* reservas - reservas2 - agenda */
 		$tabla3 = "categorias";    
 
 		$respuesta = ModeloReservas::mdlMostrarReservas($tabla1, $tabla2, $tabla3, $valor);

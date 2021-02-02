@@ -95,9 +95,7 @@ if($(".infoReservas").html() != undefined ){
                                                  
     
     var idHabitacion = $(".infoReservas").attr("idHabitacion");     console.log("idaHabitacion", idHabitacion );    /* los ids captados como string seperados por comin */
-
-    var arrayHabitacion = JSON.parse("["+idHabitacion +"]");    console.log("idaHabitacion-array", arrayHabitacion ); /*Todos ids_producto de habitaciones existen en una categorias*/
-
+    var arrayHabitacion = JSON.parse("["+idHabitacion +"]");    console.log("idaHabitacion-array", arrayHabitacion ); /* estos ids vienen como string convertidos en array*/
     var fechaingreso = $(".infoReservas").attr("fechaIngreso");   /*son las fechas que ingresa ususarios en formularios  */    console.log("fechaIngreso",  fechaingreso  ); 
     var fechaSalida = $(".infoReservas").attr("fechaSalida");                                                                  console.log("fechaSalida", fechaSalida ); 
     var dias = $(".infoReservas").attr("dias");   /* calculo de la diferencias de dias a resrevar - total dia a reservar */
@@ -115,11 +113,10 @@ if($(".infoReservas").html() != undefined ){
      
        
        var datos = new FormData();
-       datos.append("idHabitaciones", arrayHabitacion[i]); 
-       /* tambien enviamos a ajax dos variables por post - paraque ajax nos haga el trabajo de buscar coincidencias con la que traegamos de la tabla reservas 2  */
-       datos.append("fechaingreso", fechaingreso);      
-       datos.append("fechaSalida", fechaingreso);    
-       /* _______________variables post mandadas por peticion ajax  */  
+       datos.append("idHabitaciones", arrayHabitacion[i]);  /* => en la peticion ajax , mandamos id por id  */
+       datos.append("fechaingreso", fechaingreso);   /*  => paraque ajax busca coincidencia de lo que ttaegamos de la tabla de db  */     
+       datos.append("fechaSalida", fechaingreso);  /*   => paraque ajax busca coincidencia de lo que ttaegamos de la tabla de db */  
+     
      
         /* vamos hacer cruze fechas desde php . paraque php nos devuelva las habitaciones que no se puede usar , asi que  la que sobra si se puede usar   */
          $.ajax({
@@ -131,7 +128,7 @@ if($(".infoReservas").html() != undefined ){
           contentType: false,
           processData: false,
           dataType:"json",
-          success:function(respuesta){    /* respuesta => es todos ids de categoria seleccionada que no se puede reservar en la fechas seleccionadas */ /* que esta reservados  */
+          success:function(respuesta){    /* respuesta => es todos ids de categoria seleccionada que no se puede reservar en la fechas seleccionadas */ /* surgido cruze de fechas con la tabla reservas 2    */
            
              console.log("repuesta", respuesta);
              

@@ -99,8 +99,6 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
   var dias = $(".infoReservas").attr("dias");
   
 
- 
-
    /* iniciamos este array vacio  */  /* uso para eventos del calendario grande   */
    var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
 
@@ -127,7 +125,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
   dataType:"json",
   success:function(respuesta){   /* respuesta => va ser un array */
    
-    console.log("respuesta",respuesta);    /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
+    console.log("respuesta1",respuesta);    /* me devuelve una colleccion vacia si no encuentra ningun habitacion atraves de su id en tabla de reservas  */
  
     if(respuesta.length == 0 ){    /* respuesta es un array eso segnifica si viene vacio su length sera igual a zero  */ /* a su vez segnifica que la habitacion esta disponible de primera  */    
                                                                                                                          /* es donde estoy mostrando sin problema y sin duda la disponiblidad  */ /* lo logico  */

@@ -267,10 +267,14 @@ INFO RESERVAS
 
 				<div class="form-group">
 				  <label>Habitación:</label>
-				
-				 <!-- ESCENARIO 2 Y 3 DE RESERVAS -->
-				 <input type="text" class="form-control tituloReserva" value="" readonly> <!-- aqui mostramos solo titulo de reserva o numero de gabitacion en un planta o matricula del coche etc , no mostramos ni foto ni nada  --> 
-                  <!-- readonly input iditable -->
+				  <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>
+				  <?php
+
+                   $galeria = json_decode($reservas[$indice]["galeria"], true);
+                   
+                   ?>
+                   
+                   <img src="<?php echo $servidor.$galeria[0]; ?>" class="img-fluid">
 				</div>
 
 				<div class="form-group">
@@ -315,9 +319,9 @@ INFO RESERVAS
 						</a>
 
 					</div>
-			
 				</div>
-
+			   
+             
 			</div> <!-- Col de derecha -->
 			
 			

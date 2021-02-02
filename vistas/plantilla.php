@@ -97,8 +97,10 @@ $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de
 	<!-- JQUERY NUMBER -->	
 	<!-- https://plugins.jquery.com/df-number-format/ -->
 	<script src="js/plugins/jquerynumber.js"></script>
-
-
+   
+     <!-- Paypal -->
+    <!-- https://developer.paypal.com/docs/checkout/ -->
+	<script src="https://www.paypal.com/sdk/js?client-id=AZFERy-A4VTt6ORuWKly7c2Gd7IDIWzwA5fy10J02c2bdiEOyd6UbXkeifkuLXuzLW24ZxX_8rSN2Ktv"></script>
 
 </head>
 <body>
@@ -176,11 +178,12 @@ include "paginas/modulos/modal.php";
 <script src="js/idiomas.js"></script>
 <script src="js/habitaciones.js"></script>
 <!-- ficheros de consultar filtrar disponiblida valen para habitaciones , coches etc depende del proyecto  -->
-<!-- <script src="js/reservas.js"></script> -->   <!-- Escenario 1 - donde el usuario ver dipo y selecciona habita o coche etcc -->
+ <script src="js/reservas.js"></script>    <!-- Escenario 1 - donde el usuario ver dipo y selecciona habita o coche etcc -->
 <!-- <script src="js/reservas2.js"></script>  --> <!-- segunda opcion escenario 2  - user sslect cat o sub cat - systema devuelve - la hab o coche dispo en la cat o subcat seleccionada  -->
 
+<!-- formulario seleccionar por horas  -->
 <!-- <script src="js/agendas.js"></script> -->    <!-- selccionar dia de cita y hora : cita medical : donde paciente ve la dispo de los medicos en la cat y selecciona el que quiera depende de disponiblidad -->
-<script src="js/agendas2.js"></script>   <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
+<!-- <script src="js/agendas2.js"></script> -->   <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
 <!--------------- -->
 	
 </body>

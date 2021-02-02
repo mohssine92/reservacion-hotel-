@@ -1,19 +1,16 @@
- <!-- este codigo que estoy usando en iformacion de reserva en escenario dos donde el systema me devuelva un producto disponible de los productos que pertenezcan a una categoria de habitaciones 
-esta parte la puede usar tambien en inforamciones de reserva para choche disponible  a alquiler -->
 
 <?php
- /* Escenario 2 en variable post capto string de ids , en en contenedor , para javscript */
-
-  
-if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - informaciones recibidas vienen atraves de value de inputs tanto alcanse de usuario o por inputs ocultos */  
+ 
+if(isset($_POST["id-habitacion"])){             /* escenario 1 => llega valor id del producto  */     /* escenario 2 => llega valor ids de loa productos en string de la categoria seleccionada  */   
 
     //  echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     //  echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
 	//  echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
 	//  echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
 	 
-	$valor = $_POST["id-habitacion"] ;  
-	
+	$valor = $_POST["id-habitacion"] ;  /* recibo ids en string  */
+	                                    /* convertir en array ids => seleccionar uno de ellos y mandarlo como id para la siguiente consulta  */ /* porque habitaciones de misma categoria o coches similares  */
+
 	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /*Recuerda objeto reservas trea 3 tablas */ /* trea todo tipo de informacion acerca de la habitacion a alquiler  */ /* es factor imporatant en validacion de fechas  */
 	                                                              /* lo hemos usado en manipular precio de reserva  */
    

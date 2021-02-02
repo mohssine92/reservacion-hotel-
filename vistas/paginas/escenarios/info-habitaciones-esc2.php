@@ -3,15 +3,16 @@ estan disponible -->
 
 <?php
      
-$valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabla categorias   */
+$valor = $_GET["pagina"];  /* captura ruta de categoria , propiedad de una categoria , es clave para rederigir usuario a pagina donde tendra toda inforrmacion perteneze a esta categoria , es clave para sacar registro de toda habitaciones agrupadas
+                            por la categoria seleccionada , lo que denominamos en sql group by   */
 							 
 
-  $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria */ 
+  $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria => Gruup by Categori : usar propiedad clave   */ 
 	
 
 /*=============================================
-ESCENARIO 2 - 3  DE RESERVAS : en este escenario el usuario solo selecciona categoria : porque categoria tiene mismo habitacion varias veces , las habitacion se clasifican por numeros , enn este caso el systema tiene que detectar que habitacion esta 
-                            disponible en este categoria , pues ..... por form de disponiblidad tengo que mandar todos ids de estos habitaciones que pertenecen a la  categoria seleccionada 
+ESCENARIO 2 - 3  DE RESERVAS : (en este caso tengo habitaciones o coches similares )
+   - todos habitaciones o coches agrupados por una categoria , voy a sacar sus ids , les pongo en string = cadena texto , ... para mandarlos por post atraves del form                         
                  
 =============================================*/
       $arrayHabitaciones = array();   /* iniciamos este variable como array para empujarle varios datos y lo ordena como array con indices  */
@@ -183,11 +184,9 @@ INFO HABITACIÓN
 
                 <form action="<?php echo $ruta;  ?>reservas" method="post" > <!-- metodo que voy a usar varables post , variables occultas -->
 				
-					<!-- <input type="hidden" name="id-habitacion" value="<?php echo $habitaciones[0]["id_h"]; ?>" >  --> <!-- el indice es el que indica en que habitacion de que  categoria estamos comprobando gracias a peticiones ajax al mismo controlador  -->
-										                                                          <!-- gracias a ajax en habitaciones.js vamos actualizando datos segun seleccionamos de manera asincrona -->
-
-				    <!-- Input de escenario dos donde pasamos ids de habitaciones de la categorias seleccionada -->
-				    <input type="hidden" name="id-habitacion" value="<?php echo $nuevoArrayHab; ?>" > <!-- Escenario 2 --> <!--o parecen todos los ref de carros que pertenecen a esa subcat en escenario 3  pues esto el que se manda a pagina reservas  -->
+				
+				
+				    <input type="hidden" name="id-habitacion" value="<?php echo $nuevoArrayHab; ?>" > <!-- Escenario 2 --> <!--Mandamos ids de los productos de la categoria seleccionada como string  -->
 
 					<input type="hidden" name="ruta" value="<?php echo $habitaciones[0]["ruta"]; ?>" >																							
 				 
