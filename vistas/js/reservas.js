@@ -360,6 +360,7 @@ CODIGO ALEATORIO _ Uso en  COL.DERECHA RESERVAS
 =============================================*/
 var chars = "0123456789ABCDEFGHIJKLMOPQRSTUVWXYZ";  /* caracteres alfanumericos  */ 
 
+/* funccion que se ancarga de generar codigo de reserva aleatoriamente  */
 function codigoAleatorio(chars, length) {
  
   codigo = "";
@@ -376,6 +377,7 @@ function codigoAleatorio(chars, length) {
   
 
 };
+
 /*=============================================
 FUNCIÓN COL.DERECHA RESERVAS
 =============================================*/
@@ -406,12 +408,15 @@ function colDerReservas(){
      /*  console.log("RespuestaCoindenciaCodigoReserva", respuesta); */ /* cuando no encuentra coincidencia en tabla la base de datos manda respuesta falsa  */
 
       if(!respuesta){  /* false */
- 
-        $(".codigoReserva").html(codigoReserva);
+         
+        $(".codigoReserva").html(codigoReserva);  /* valor codigoReserva remplazada en html codigoReserva */
+        $(".pagarReserva").attr("codigoReserva",codigoReserva );  /* es forma de dar valor a un atrributo .*/
+
     
       }else{
     
          $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));  
+         $(".pagarReserva").attr("codigoReserva",codigoReserva+codigoAleatorio(chars, 3));
       }
     
       /*=============================================
@@ -420,7 +425,7 @@ function colDerReservas(){
 
         $(".elegirPlan").change(function(){    
 
-          cambioPlanesPersonas();  /* por defecto case es 2 => 2personas */
+          cambioPlanesPersonas();   /* se ejecuta cuando hacemos algun cambio en algun plan */
                  
         })
 
@@ -430,7 +435,7 @@ function colDerReservas(){
 
         $(".cantidadPersonas").change(function(){ 
  
-          cambioPlanesPersonas();    
+          cambioPlanesPersonas();      /* se ejecuta cuando hacemos algun cambio en numeros de personas  */
 
         })
 
@@ -441,15 +446,26 @@ function colDerReservas(){
             
             case "2":
         
-               $(".precioReserva span").html($(".elegirPlan").val().split(",")[0]*dias);
+               $(".precioReserva span").html($(".elegirPlan").val().split(",")[0]*dias);  /* => split(,) convierta en array todo separado por , y cogo inidex 0 que es el precio  */ 
                $(".precioReserva span").number(true);
+
+               /* => Actualizar valor de atrributos que voy a mandar infor-perfil */
+               $(".pagarReserva").attr("pagoReserva",$(".elegirPlan").val().split(",")[0]*dias)  /* => se repite en todos los casos lo que cambia la operacion matematica */
+               $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);
+               $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());
+        
+
         
             break;
         
-            case "3":                              /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
+            case "3":                           /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
                                                /* meto las cifras en function Number paraque javascript lo considera como numero no como string */
-             $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias); /* en caso de tres personas pagara 25% mas */
-             $(".precioReserva span").number(true);
+             $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias ); /* en caso de tres personas pagara 25% mas */
+             $(".precioReserva span").number(true);  /* es elprecio de un dia sacar su 25% + precio de un dia por cantidad de dias a reservar  */
+
+             $(".pagarReserva").attr("pagoReserva",Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* actualizar atributo a mandar inf-perfil */
+             $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);  /* => split() poner string en array accesible */
+             $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());  
         
             break;
         
@@ -457,35 +473,31 @@ function colDerReservas(){
         
              $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias); /* 50+ a pagar */
              $(".precioReserva span").number(true);
+
+             $(".pagarReserva").attr("pagoReserva",Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* actualizar atributo a mandar inf-perfil */
+             $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);
+             $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());
+           
         
             break;
         
-            case "5":
-        
+            
+            case "5": /* => entra aqui cuando value de cantidadPersonas es 5  */
+               
              $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* 0.75% aparag sobre precio que pagara una persona o dos  */
              $(".precioReserva span").number(true);
-        
+
+             $(".pagarReserva").attr("pagoReserva",Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* actualizar atributo a mandar inf-perfil */
+             $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);
+             $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());
+      
             break;
     
            }                                  
-   
+           
 
         } /* este codico cambia precio apagar en funccion de plan y numero de persona asi que lo incluyo en ddos eventos  */
        
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 
     } /* Fin respuesta peticion ajax  */
  
@@ -495,7 +507,43 @@ function colDerReservas(){
 
 
 };  /* fin funccion  colDerReservas  */
+
+
+/*=============================================
+CAPTURAR DATOS DE LA RESERVA : para uso en  info-perfil
+=============================================*/
+/* VAMOS A UTULIZAR  UNA HERRAMIENTA QUE LOS NAVIGADORES NOS FACILITA EL TRSALADO DE INFORMACIONES ENTRE PAGINAS O ENTRE ARCHIVOS Y  ESAS HERRAMIENTAS SON LAS COOKIES   */  /* Codigo de procerso de pago   */
+/* => entoces vamos a crear unas cookies apartir de javascript */ /* => capturar esas cookies en info-perfil.php , y poderlas meter en los datos que se van inviar a la tabla reservas en la base de datos */
+$(".pagarReserva").click(function(){
+
+  var idHabitacion = $(this).attr("idHabitacion");
+  console.log('idHabitacion', idHabitacion );
+  var imgHabitacion = $(this).attr("imgHabitacion");
+  console.log('imgHabitacion',imgHabitacion);
+  var infoHabitacion = $(this).attr("infoHabitacion")+" - "+$(this).attr("plan")+" - "+$(this).attr("personas")+" personas";
+  console.log('infoHabitacion',infoHabitacion);
+  var pagoReserva = $(this).attr("pagoReserva");
+  console.log('pagoReserva',pagoReserva);
+  var codigoReserva = $(this).attr("codigoReserva");
+  console.log('codigoReserva ',codigoReserva);
+  var fechaIngreso = $(this).attr("fechaIngreso");
+  console.log('fechaIngreso',fechaIngreso);
+  var fechaSalida = $(this).attr("fechaSalida");  
+  console.log('fechaSalida',fechaSalida);
+
+  /* => ahora lo que vamos a hacer es convertir estos datos a variables de tipo cookies  , para poder utulizarlas luego en archivo de info-perfil */
+  // crearCookie("idHabitacion", idHabitacion, 1);
+  // crearCookie("imgHabitacion", imgHabitacion, 1);
+  // crearCookie("infoHabitacion", infoHabitacion, 1);
+  // crearCookie("pagoReserva", pagoReserva, 1);
+  // crearCookie("codigoReserva", codigoReserva, 1);
+  // crearCookie("fechaIngreso", fechaIngreso, 1);
+  // crearCookie("fechaSalida", fechaSalida, 1);
+
  
+
+})
+
 
 
 

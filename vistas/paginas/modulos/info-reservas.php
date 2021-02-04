@@ -14,9 +14,8 @@ if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - in
 	 
 	$valor = $_POST["id-habitacion"] ;  
 	
-	$reservas = ControladorReservas::ctrMostrarReservas($valor);  /*Recuerda objeto reservas trea 3 tablas */ /* trea todo tipo de informacion acerca de la habitacion a alquiler  */ /* es factor imporatant en validacion de fechas  */
-	                                                              /* lo hemos usado en manipular precio de reserva  */
-   
+	$reservas = ControladorReservas::ctrMostrarReservas($valor);  
+
 	$indice = 0;  /* lo uso en precio en caso  de que reservas devuelve resultado  */
 
 	/* este habitacion nunca se reservo , asi pido al controladore de habitaciones que me traega informacion de id_habitacion que necesito   */
@@ -33,7 +32,7 @@ if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - in
 			                                          /* los datos que seleccionamos se ordenan por key ,  */
 			if($value["id_h"] == $_POST["id-habitacion"]){
 
-				$indice = $key;
+				$indice = $key;   /* este indice es clave de detectar el registro completo de la habitacion */
 
 			}
 		}   /* aqui cuando hacemos la seleccion con rutas sabemos cada categoria tiene ruta propia , asi me va devolver todas habitaciones de esta ruta es decir todas habitaciones de esta categoria y lo ordena en un array es decir lo datos 
@@ -86,7 +85,8 @@ if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - in
     $fechaIngreso = new DateTime($_POST["fecha-ingreso"]);   /* DateTime Object  */                    /*  echo '<pre class="bg-white">'; print_r($fechaIngreso); echo '</pre><br>' */; 
 	$fechaSalida = new DateTime($_POST["fecha-salida"]);                                            	/* echo '<pre class="bg-white">'; print_r($fechaSalida); echo '</pre><br>'; */  
 	$diff = $fechaIngreso->diff($fechaSalida);    /* DateInterval */                                 	/* echo '<pre class="bg-white">'; print_r($diff); echo '</pre><br>'; */  
-    $dias = $diff->days; 	                                                                           /*  echo '<pre class="bg-white">'; print_r($diff->days); echo '</pre><br>';   */
+	$dias = $diff->days; 
+		                                                                           /*  echo '<pre class="bg-white">'; print_r($diff->days); echo '</pre><br>';   */
 
 	if($dias == 0){
 
@@ -270,8 +270,8 @@ INFO RESERVAS
 				  <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>
 				  <?php
 
-                   $galeria = json_decode($reservas[$indice]["galeria"], true);
-                   
+                   $galeria = json_decode($reservas[$indice]["galeria"], true);  /* => convierte una colleccion a un  array con indexes    */
+				 /*   echo '<pre class="bg-white">'; print_r($galeria); echo '</pre><br>';  */
                    ?>
                    
                    <img src="<?php echo $servidor.$galeria[0]; ?>" class="img-fluid">
@@ -282,7 +282,7 @@ INFO RESERVAS
 				  <select class="form-control elegirPlan">  <!-- su value es value de la opcion seleccionada -->
 
 					<option value="<?php echo $precioContinental;?>,Plan Continental">Plan Continental $<?php echo number_format($precioContinental); ?> 1 día 1 noche</option>
-					<option value="<?php echo $precioAmericano;?>,Plan Americano">Plan Americano $<?php echo number_format($precioAmericano); ?> 1 día 1 noche</option>
+					<option value="<?php echo $precioAmericano;?>,Plan Americano">Plan Americano $<?php echo number_format ($precioAmericano); ?> 1 día 1 noche</option>
 					<option value="<?php echo $precioRomantico;?>,Plan Romantico">Plan Romántico $<?php echo number_format($precioRomantico); ?> 1 día 1 noche</option>
 					<option value="<?php echo $precioLunaDeMiel;?>,Plan Luna de Miel">Plan Luna de Miel $<?php echo number_format($precioLunaDeMiel); ?> 1 día 1 noche</option>
 					<option value="<?php echo $precioAventura;?>,Plan Aventura">Plan Aventura $<?php echo number_format($precioAventura); ?> 1 día 1 noche</option>
@@ -306,17 +306,30 @@ INFO RESERVAS
 				<div class="row py-4">
 
 					<div class="col-12 col-lg-6 col-xl-7 text-center text-lg-left"> 
-						<!-- esto lo que viene por defecto al no cambiar el paln  --> <!-- Logica: valores obtenidas por ejeciccion desde la Url hacia abajo php puro  -->
+			
 						<h1 class="precioReserva"><span><?php echo number_format($precioContinental*$dias); ?></span><br> MAD</h1> <!-- le ponemos una clase para manipular atraves de javascript en caso de : -que se surga algun cambio en el selecctor
-					                                                                                                                           Lanzamos evento de javascript para manipular precio de una manera asincrona  -->
-
+					                                                                                                                
+																																	Lanzamos evento de javascript para manipular precio de una manera asincrona  -->
 					</div>
 					
-					<div class="col-12 col-lg-6 col-xl-5">
-				
-						<a href="<?php echo $ruta;  ?>perfil">
-							<button class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button>
-						</a>
+					<div class="col-12 col-lg-6 col-xl-5"> <!-- antes hemos visto como pasar informacion segun necesidad de una pagina a otra pagiina usando un formulario usan metodo post y inputs hidden , en este caso vamos a ver como pasar
+					 todas informaciones de la reserva que nos hara falta en la pagina del perfil para ajecutar la transaccion bancaria . -->
+				  
+				                                            <!-- para detectar elemento a  en Js -->
+					 <a href="<?php echo $ruta;  ?>perfil" class="pagarReserva"
+					 	idHabitacion="<?php echo $reservas[$indice]["id_h"];?>"
+						imgHabitacion="<?php echo $servidor.$galeria[0]; ?>" 
+					    infoHabitacion="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" 
+						pagoReserva="<?php echo ($precioContinental*$dias);?>"
+						codigoReserva=""
+						fechaIngreso="<?php echo $_POST["fecha-ingreso"];?>"
+						fechaSalida="<?php echo $_POST["fecha-salida"];?>"
+						plan="Plan Continental" 
+						personas="2"	>
+						<!-- recuerda que pagoReserva tendremos que cambiarlo por Js de acuerdo a las modificaciones que hagan al select 
+					    	codigoReserva todavia no la tenemos en la primer instancia   --><!-- Todos estos atributos de elemento a los voy a capturar en js para almacenarlos y llevarlos a archivo de php : info-perfil.php  -->
+					 	<button  type="button" class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button> <!--  =>  type="button" paraque no haga ningun evento de botones  -->
+					 </a>
 
 					</div>
 				</div>
