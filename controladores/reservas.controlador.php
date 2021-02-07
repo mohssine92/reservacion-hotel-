@@ -33,5 +33,20 @@ Class ControladorReservas{
 
 	}
 
+	/*=============================================
+	Guardar Reserva
+	=============================================*/
+	
+	static public function ctrGuardarReserva($id_habitacion,$id_usuario,$pago_reserva,$numero_transaccion,$codigo_reserva,$descripcion_reserva,$fecha_ingreso,$fecha_Salida){   
+
+		$tabla = "reservas";
+
+		$respuesta = ModeloReservas::mdlGuardarReserva($tabla,$id_habitacion,$id_usuario,$pago_reserva,$numero_transaccion,$codigo_reserva,$descripcion_reserva,$fecha_ingreso,$fecha_Salida);
+
+		return $respuesta;  /* => esta la respuesta que nos traega modelo la retornamos  */
+
+	}
+
+
 
 }

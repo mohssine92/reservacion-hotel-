@@ -1,5 +1,5 @@
 /*=============================================
-FECHAS RESERVA
+FECHAS RESERVA  : selector de fechas
 =============================================*/
 $('.datepicker.entrada').datepicker({  /* este es un plugin que estamos usando  */
   startDate: '0d',  /* le estamos diciendo que inicie en el dia cual se encuentra  */ 
@@ -24,7 +24,7 @@ $('.datepicker.entrada').change(function(){      /*hasta que no cambie el date p
 });
 
 /*=============================================
-SELECTS ANIDADOS
+SELECTS ANIDADOS : selector categorias
 =============================================*/
 
 $(".selectTipoHabitacion").change(function(){
@@ -410,13 +410,13 @@ function colDerReservas(){
       if(!respuesta){  /* false */
          
         $(".codigoReserva").html(codigoReserva);  /* valor codigoReserva remplazada en html codigoReserva */
-        $(".pagarReserva").attr("codigoReserva",codigoReserva );  /* es forma de dar valor a un atrributo .*/
+       /* $(".pagarReserva").attr("codigoReserva",codigoReserva ); */  /* es forma de dar valor a un atrributo .*/
 
     
       }else{
     
          $(".codigoReserva").html(codigoReserva+codigoAleatorio(chars, 3));  
-         $(".pagarReserva").attr("codigoReserva",codigoReserva+codigoAleatorio(chars, 3));
+        /*  $(".pagarReserva").attr("codigoReserva",codigoReserva+codigoAleatorio(chars, 3)); */
       }
     
       /*=============================================
@@ -425,8 +425,8 @@ function colDerReservas(){
 
         $(".elegirPlan").change(function(){    
 
-          cambioPlanesPersonas();   /* se ejecuta cuando hacemos algun cambio en algun plan */
-                 
+           var ok = cambioPlanesPersonas();   /* se ejecuta cuando hacemos algun cambio en algun plan */
+            console.log(ok);       
         })
 
         /*=============================================
@@ -436,8 +436,10 @@ function colDerReservas(){
         $(".cantidadPersonas").change(function(){ 
  
           cambioPlanesPersonas();      /* se ejecuta cuando hacemos algun cambio en numeros de personas  */
-
+          
         })
+
+
 
         function cambioPlanesPersonas(){   /* este codigo lo voy a necesitar obligatoriamente en dos eventos separados pero en la logica estos dos eventos son relacionados obligatoriamenete  */
 
@@ -453,9 +455,9 @@ function colDerReservas(){
                $(".pagarReserva").attr("pagoReserva",$(".elegirPlan").val().split(",")[0]*dias)  /* => se repite en todos los casos lo que cambia la operacion matematica */
                $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);
                $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());
-        
-
-        
+              
+              
+               
             break;
         
             case "3":                           /* Logica : sacarle al precio un porcentaje y lo agrega encima del precio total asi logramos precio total Final  */
@@ -487,13 +489,15 @@ function colDerReservas(){
              $(".precioReserva span").html(  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* 0.75% aparag sobre precio que pagara una persona o dos  */
              $(".precioReserva span").number(true);
 
-             $(".pagarReserva").attr("pagoReserva",Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* actualizar atributo a mandar inf-perfil */
+             $(".pagarReserva").attr("pagoReserva", Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias);  /* actualizar atributo a mandar inf-perfil */
              $(".pagarReserva").attr("plan",$(".elegirPlan").val().split(",")[1]);
              $(".pagarReserva").attr("personas",$(".cantidadPersonas").val());
       
             break;
-    
-           }                                  
+            
+           }    
+           
+           return ok = "Hola";
            
 
         } /* este codico cambia precio apagar en funccion de plan y numero de persona asi que lo incluyo en ddos eventos  */
@@ -510,39 +514,136 @@ function colDerReservas(){
 
 
 /*=============================================
+FUNCIÓN PARA GENERAR COOKIES 
+=============================================*/
+ /*diasExpedicion es la cantidad de dias que voy a permitir que  esta variable quede viva para ser usada */ /* => es decir le vas a peremitir cuanto tiempo al usuario va tener la reserva alli habilitada para pagarla */
+ /* el profesor aconseja que le dejamos al usuario un dia ,paraque el usuario el siguiente dia efectua el pago , igual se la habitacion ha sido reservada por otro usuario igual vamos a validar nuevamente antes de guardar en base de datos   */
+ /* si el usuario llega a este proceso y se ha ido a commer antes de terminar el pago  gracias a las cookies le damos vida a su paquete de iformacion  de reserva , pero si la misma habitacion se ha resevado en este periodo para otra persona nosotros 
+ no vamos a preocupar porque volvemos a validar antes de guardar en base de datos asi da cuenta se todavia disponible la fecha o lo halla perdido   */
+ 
+ function crearCookie(nombre, valor, diasExpedicion){    /* nombre = nombre de la variable cookie */ /* valor presenta el valor que porta esta variable cookie */
+  
+  var hoy = new Date();   /* => forma de capturar fecha de hoy en javascript */
+  
+
+  hoy.setTime(hoy.getTime() + (diasExpedicion * 24 * 60 * 60 * 1000));  /* stearle por esta forma setTime getTime obtener horas minutos segundos milisegundos  */
+
+  var fechaExpedicion = "expires=" + hoy.toUTCString();
+
+  document.cookie = nombre + "=" + valor + "; " + fechaExpedicion; /* => es la sintaxis como se crea una cookie en Javascript  */ /* ; => tener cuidado hay que dejar un espacio despues del comin */
+
+}
+
+
+/*=============================================
 CAPTURAR DATOS DE LA RESERVA : para uso en  info-perfil
 =============================================*/
 /* VAMOS A UTULIZAR  UNA HERRAMIENTA QUE LOS NAVIGADORES NOS FACILITA EL TRSALADO DE INFORMACIONES ENTRE PAGINAS O ENTRE ARCHIVOS Y  ESAS HERRAMIENTAS SON LAS COOKIES   */  /* Codigo de procerso de pago   */
 /* => entoces vamos a crear unas cookies apartir de javascript */ /* => capturar esas cookies en info-perfil.php , y poderlas meter en los datos que se van inviar a la tabla reservas en la base de datos */
-$(".pagarReserva").click(function(){
+  $(".pagarReserva").click(function(){
+     
+          
+         function PrecioPagar(){  
+            
+            switch($('.cantidadPersonas').val()){
+             
+             case "2":
 
-  var idHabitacion = $(this).attr("idHabitacion");
-  console.log('idHabitacion', idHabitacion );
-  var imgHabitacion = $(this).attr("imgHabitacion");
-  console.log('imgHabitacion',imgHabitacion);
-  var infoHabitacion = $(this).attr("infoHabitacion")+" - "+$(this).attr("plan")+" - "+$(this).attr("personas")+" personas";
-  console.log('infoHabitacion',infoHabitacion);
-  var pagoReserva = $(this).attr("pagoReserva");
-  console.log('pagoReserva',pagoReserva);
-  var codigoReserva = $(this).attr("codigoReserva");
-  console.log('codigoReserva ',codigoReserva);
-  var fechaIngreso = $(this).attr("fechaIngreso");
-  console.log('fechaIngreso',fechaIngreso);
-  var fechaSalida = $(this).attr("fechaSalida");  
-  console.log('fechaSalida',fechaSalida);
+                Price = $(".elegirPlan").val().split(",")[0]*dias;
+                
+             break;
+         
+             case "3":                          
+              
+              Price = Number($(".elegirPlan").val().split(",")[0]*0.25) + Number($(".elegirPlan").val().split(",")[0])*dias;
+            
+              break;
+         
+             case "4":
+      
+              Price = Number($(".elegirPlan").val().split(",")[0]*0.50) + Number($(".elegirPlan").val().split(",")[0])*dias;
 
-  /* => ahora lo que vamos a hacer es convertir estos datos a variables de tipo cookies  , para poder utulizarlas luego en archivo de info-perfil */
-  // crearCookie("idHabitacion", idHabitacion, 1);
-  // crearCookie("imgHabitacion", imgHabitacion, 1);
-  // crearCookie("infoHabitacion", infoHabitacion, 1);
-  // crearCookie("pagoReserva", pagoReserva, 1);
-  // crearCookie("codigoReserva", codigoReserva, 1);
-  // crearCookie("fechaIngreso", fechaIngreso, 1);
-  // crearCookie("fechaSalida", fechaSalida, 1);
+             break;
+         
+             
+             case "5": 
+                
+              Price =  Number($(".elegirPlan").val().split(",")[0]*0.75) + Number($(".elegirPlan").val().split(",")[0])*dias;
+       
+             break;
+             
+            }    
+            
+            return Price; 
+         
+    
+        } /* Fin  cambioPlanesPersonas */
+      
+        function Presonas(){  
+            
+            switch($('.cantidadPersonas').val()){
+             
+             case "2":
+  
+               Personas = 2;
+                
+             break;
+         
+             case "3":                          
+              
+               Personas =3;
+            
+              break;
+         
+             case "4":
+      
+               Personas =4;
+  
+             break;
+         
+             
+             case "5": 
+                
+               Personas = 5;
+       
+             break;
+             
+            }    
+            
+            return  Personas; 
+       
+  
+        } /* Fin  Personas */
+
+        var precioPagar =  PrecioPagar();   /* se ejecuta cuando hacemos algun cambio en algun plan */ /*  console.log(PrecioPagar);*/
+        var personas =  Presonas();  /*  console.log(personas); */  
+        var infoHabitacion = $("#planHabitacion").val()+" - "+$(".elegirPlan").val().split(",")[1]+" - "+personas+" Personas";   console.log(infoHabitacion);
+        var CodigoReserva =  $(".codigoReserva").html(); 
+        var idHabitacion = $(this).attr("idHabitacion");
+        var imgHabitacion = $(this).attr("imgHabitacion");
+        var fechaIngreso = $(this).attr("fechaIngreso");  console.log('fechaIngreso',fechaIngreso);  
+        var fechaSalida = $(this).attr("fechaSalida");       console.log('fechaSalida',fechaSalida);  
+        
+      
+     /* => pasar informaciones a variables de tipo cookies , que nos ofrece los navigadores  */  
+    
+       crearCookie("idHabitacion", idHabitacion, 1);  /* console.log(ids);  */      /* a la funccion le pasamos sus parametros , 1 => referimos a 1 dia  */
+       crearCookie("imgHabitacion", imgHabitacion, 1);
+       crearCookie("infoHabitacion", infoHabitacion, 1);
+       crearCookie("pagoReserva", precioPagar, 1);   /* => el precio que viene por attributos actualizado por el switch */
+       crearCookie("codigoReserva",  CodigoReserva, 1);
+       crearCookie("fechaIngreso", fechaIngreso, 1);
+       crearCookie("fechaSalida", fechaSalida, 1);
+
+
+      
+
+   
+ 
+  })
+
 
  
-
-})
 
 
 

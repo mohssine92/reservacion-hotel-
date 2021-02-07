@@ -1,4 +1,4 @@
--=====================================
+<!--=====================================
 INFO PERFIL
 ======================================-->
 
@@ -151,61 +151,64 @@ INFO PERFIL
 						<h4 class="float-left">Hola Juan</h4>
 
 					</div>
+
 					<!-- Paypal -->
 					<!--=====================================
 					MERCADO PAGO
 					======================================-->					
                     <div class="col-12">
 
-					<div id="paypal-button-container"></div>
+					<?php if (isset($_COOKIE["codigoReserva"])): ?>  <!-- => si no llega la variable cookies no debe parecer smart button of paypal  -->
+					
+                         <div class="card">
 
-                    <script>
-                    paypal.Buttons({
-					   
-						createOrder: function(data, actions) {  /* => primer ecenario crear la orden  */ /* lo unico que tengo que traerle total de la transaccion */  /* esta parte encarga de efectuar la transaccion */
-						  // This function sets up the details of the transaction, including the amount and line item details.
-                          return actions.order.create({ 
-                            purchase_units: [{
-                              amount: {
-                                  value: '300'  /* => ojo con esta parte la forma de pasara la cifra tiene que ser resepecto a la moneda que usamos si dhms o dolares o euros  */
-                              }
-                            }]
-                          });
-						},
-						onApprove: function(data, actions) {   /* => esta parte encarga de dar respuesta de esta  transaccion  */ /* => lo que suceda despues de aprobar una transaccion */
-						   // This function captures the funds from the transaction.
-                        return actions.order.capture().then(function(details) {
-                            // This function shows a transaction success message to your buyer.
-					  	      /*alert('Transaction completed by ' + details.payer.name.given_name); */ /* => */
-						    console.log("Detailes",details);  /* => detail es objeto de informacion de la transaccion  */ /* => lo que me interesa la prop status  */
-						    if(details.status == 'COMPLETED'){   
-								/* Generar la orden en la base de datos */  /* si la transaccion esta aprobada ya puedo comenzar a guardar la  informaciones en base ed datos */ /* guardamos la informacion de la reserva despues de haber pagado */
-								
-							}
+                         <div class="card-header">
+                         
+                         <h4>Tienes una reserva pendiente por pagar:</h4> 
+                        
+						 </div>
+                          
+                          <div class="card-body text-center">
+                         
+                           	 <figure>
+                         
+                         	   <img src="<?php echo $_COOKIE["imgHabitacion"]; ?>" class="img-thumbnail w-50">
+                         
+                         	  </figure>
+                         
+                         	  <h5><strong><?php echo $_COOKIE["infoHabitacion"]; ?></strong></h5>
+                         
+                         	  <h6> Fechas <?php echo $_COOKIE["fechaIngreso"]; ?> - <?php echo $_COOKIE["fechaSalida"]; ?></h6>
+                         
+                         	  <h4 id="totalOrder"total="<?php echo ($_COOKIE["pagoReserva"]);?>"><?php echo number_format($_COOKIE["pagoReserva"],2);?> MAD</h4> <!--seguridad Imporante! se puede manipular en herramienta desarollador valor precio antes de mandarlo a cookies  -->
+                         
+                         
+                           </div>
+                         
+                           <div class="card-footer d-flex bg-white">
+
+						   <!-- <figure>
+								 			
+							  <img src="img/paypal.png" class="img-fluid w-50">
+											 
+							</figure> -->
+                         
+                            <div class="col-12 col-l-8"> 
 						    
-						     
-						     return false;
-                        });
-						},
-						onCancel: function(data) {
-						 
-						  fncSweetAlert("error", "The transaccion has been canceled ",null); /* => cuando el usuario cancela la transaccion devolvemos una alerta suave  */
+							 <div id="paypal-button-container" class="pt-3"></div>   <!-- smart button of paypal -->
+							 
+							 <div class="alert alert-success d-none" id="alerta" role="alert"> </div> <!-- Alerta  de exito de transaccion -->
+						    </div> 
+					
+                           </div>
+                           
+                         
+                             
+                         </div>  <!--  => Fin card  -->
+					
+					<?php endif ?>   <!-- => Fin isset($_COOKIE["codigoReserva"])  -->
 
-						  return false;
-
-						},
-						onError: function(err){
-							
-						   fncSweetAlert("error", "An error occurred while making the transaction",null); /* => cuando se produsca un error en la transaccion  */
-
-                           return false;
-							
-						}
-
-					}).render('#paypal-button-container');
-                      // This function displays Smart Payment Buttons on your web page.
-                    </script>			
-
+					
 					</div>
 
 					<div class="col-6 d-none d-lg-block"></div>

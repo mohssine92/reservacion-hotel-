@@ -80,6 +80,35 @@ class AjaxReservas{
 	}
 
 
+	public $id_habitacion;
+	public $id_usuario;
+	public $pago_reserva;
+	public $numero_transaccion;
+	public $codigo_reserva;
+	public $descripcion_reserva;
+	public $fecha_ingreso;
+	public $fecha_Salida;
+
+	public function ajaxInsertarDatosReserva(){
+
+		
+		$id_habitacion = $this->id_habitacion;
+		$id_usuario = $this->id_usuario;
+		$pago_reserva = $this->pago_reserva;
+		$numero_transaccion = $this->numero_transaccion;
+		$codigo_reserva = $this->codigo_reserva;
+		$descripcion_reserva = $this->descripcion_reserva;
+		$fecha_ingreso = $this->fecha_ingreso;
+		$fecha_Salida = $this->fecha_Salida;
+		
+
+		$respuesta = ControladorReservas::ctrGuardarReserva($id_habitacion,$id_usuario,$pago_reserva,$numero_transaccion,$codigo_reserva,$descripcion_reserva,$fecha_ingreso,$fecha_Salida);
+
+		echo json_encode($respuesta);   /* llave: valor Json */
+
+	}
+
+
 
 } /* clase  AjaxReservas  */
 
@@ -123,5 +152,23 @@ if(isset($_POST["idHabitaciones"])){
 	$idHabitaciones -> ajaxTraerReservas();
 
 }
+
+
+if(isset($_POST["id_habitacion"])){
+   
+  $datosReserva = new AjaxReservas();	
+  $datosReserva-> id_habitacion = $_POST["id_habitacion"];
+  $datosReserva-> id_usuario =  $_POST["id_usuario"];
+  $datosReserva-> pago_reserva =  $_POST["pago_reserva"];
+  $datosReserva-> numero_transaccion =  $_POST["numero_transaccion"];
+  $datosReserva-> codigo_reserva =  $_POST["codigo_reserva"];
+  $datosReserva-> descripcion_reserva =  $_POST["info_habitacion"];
+  $datosReserva-> fecha_ingreso =  $_POST["fecha_ingreso"];
+  $datosReserva-> fecha_Salida =  $_POST["fecha_salida"];
+  $datosReserva-> ajaxInsertarDatosReserva();
+	
+   
+}
+
 
 

@@ -10,7 +10,8 @@ if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - in
     //  echo '<pre class="bg-white">'; print_r($_POST["id-habitacion"]); echo '</pre><br>'; 
     //  echo '<pre class="bg-white">'; print_r($_POST["fecha-ingreso"]); echo '</pre><br>'; 
 	//  echo '<pre class="bg-white">'; print_r($_POST["fecha-salida"]); echo '</pre><br>';  
-	//  echo '<pre class="bg-white">'; print_r($_POST["ruta"]); echo '</pre><br>';  
+	
+
 	 
 	$valor = $_POST["id-habitacion"] ;  
 	
@@ -267,7 +268,7 @@ INFO RESERVAS
 
 				<div class="form-group">
 				  <label>Habitación:</label>
-				  <input type="text" class="form-control" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>
+				  <input type="text" class="form-control" id="planHabitacion" value="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" readonly>
 				  <?php
 
                    $galeria = json_decode($reservas[$indice]["galeria"], true);  /* => convierte una colleccion a un  array con indexes    */
@@ -319,13 +320,10 @@ INFO RESERVAS
 					 <a href="<?php echo $ruta;  ?>perfil" class="pagarReserva"
 					 	idHabitacion="<?php echo $reservas[$indice]["id_h"];?>"
 						imgHabitacion="<?php echo $servidor.$galeria[0]; ?>" 
-					    infoHabitacion="Habitación <?php echo $reservas[$indice]["tipo"]." ".$reservas[$indice]["estilo"]; ?>" 
-						pagoReserva="<?php echo ($precioContinental*$dias);?>"
-						codigoReserva=""
 						fechaIngreso="<?php echo $_POST["fecha-ingreso"];?>"
 						fechaSalida="<?php echo $_POST["fecha-salida"];?>"
-						plan="Plan Continental" 
-						personas="2"	>
+						  
+					  >
 						<!-- recuerda que pagoReserva tendremos que cambiarlo por Js de acuerdo a las modificaciones que hagan al select 
 					    	codigoReserva todavia no la tenemos en la primer instancia   --><!-- Todos estos atributos de elemento a los voy a capturar en js para almacenarlos y llevarlos a archivo de php : info-perfil.php  -->
 					 	<button  type="button" class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button> <!--  =>  type="button" paraque no haga ningun evento de botones  -->

@@ -185,6 +185,7 @@ include "paginas/modulos/modal.php";
 <!-- <script src="js/agendas.js"></script> -->    <!-- selccionar dia de cita y hora : cita medical : donde paciente ve la dispo de los medicos en la cat y selecciona el que quiera depende de disponiblidad -->
 <!-- <script src="js/agendas2.js"></script> -->   <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
 <!--------------- -->
+<script src="js/paypal.js"></script> 
 	
 </body>
 </html>

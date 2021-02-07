@@ -47,5 +47,39 @@ Class ModeloReservas{                                                           
 	
 	}
 
+	/*=============================================
+	Guardar Reserva
+	=============================================*/
+
+	static public function mdlGuardarReserva($tabla, $id_habitacion, $id_usuario, $pago_reserva, $numero_transaccion, $codigo_reserva, $descripcion_reserva, $fecha_ingreso, $fecha_Salida){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_habitacion, id_usuario, pago_reserva, numero_transaccion, codigo_reserva, descripcion_reserva, fecha_ingreso, fecha_salida) VALUES (:id_habitacion, :id_usuario, :pago_reserva, :numero_transaccion, :codigo_reserva, :descripcion_reserva, :fecha_ingreso, :fecha_salida)");
+
+		$stmt->bindParam(":id_habitacion", $id_habitacion, PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_STR);
+		$stmt->bindParam(":pago_reserva", $pago_reserva, PDO::PARAM_STR);
+		$stmt->bindParam(":numero_transaccion", $numero_transaccion, PDO::PARAM_STR);
+		$stmt->bindParam(":codigo_reserva", $codigo_reserva, PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion_reserva", $descripcion_reserva, PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_ingreso", $fecha_ingreso, PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_salida", $fecha_Salida, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+
+
 
 }
