@@ -97,6 +97,15 @@ $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de
 	<!-- JQUERY NUMBER -->	
 	<!-- https://plugins.jquery.com/df-number-format/ -->
 	<script src="js/plugins/jquerynumber.js"></script>
+
+	<!-- SWEET ALERT 2 alerta swave  -->	
+	<!-- https://sweetalert2.github.io/ -->  <!-- gracias a este plugin de alerta suave puedo recagar la pagina  -->
+	<script src="js/plugins/sweetalert2.all.js"></script>
+
+	<!-- Moment js plugin -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
+
    
      <!-- Paypal -->
     <!-- https://developer.paypal.com/docs/checkout/ -->

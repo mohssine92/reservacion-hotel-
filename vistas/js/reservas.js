@@ -98,7 +98,7 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
   var fechaSalida = $(".infoReservas").attr("fechaSalida"); /*   console.log("fechaSalida", fechaSalida ); */
   var dias = $(".infoReservas").attr("dias");
   
-
+  
    /* iniciamos este array vacio  */  /* uso para eventos del calendario grande   */
    var totalEventos = [];  /* aqui se van a meter los eventos del calendario grande , asi puedo hacer sus lecturas dem manera dinamica */
 
@@ -130,7 +130,9 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
     if(respuesta.length == 0 ){    /* respuesta es un array eso segnifica si viene vacio su length sera igual a zero  */ /* a su vez segnifica que la habitacion esta disponible de primera  */    
                                                                                                                          /* es donde estoy mostrando sin problema y sin duda la disponiblidad  */ /* lo logico  */
        $('#calendar').fullCalendar({  /* calendario grande  */
-         header: {
+           
+            defaultDate: fechaingreso,  
+            header: {
             left: 'prev',
             center: 'title',
             right: 'next'
@@ -326,7 +328,8 @@ if($(".infoReservas").html() != undefined ){       /* este linea de codigo indic
 
           /* Clendario grande  */ 
           $('#calendar').fullCalendar({ 
-              header: {
+            defaultDate: fechaingreso,  
+            header: {
                 left: 'prev',
                 center: 'title',
                 right: 'next'
@@ -526,13 +529,15 @@ FUNCIÓN PARA GENERAR COOKIES
   var hoy = new Date();   /* => forma de capturar fecha de hoy en javascript */
   
 
-  hoy.setTime(hoy.getTime() + (diasExpedicion * 24 * 60 * 60 * 1000));  /* stearle por esta forma setTime getTime obtener horas minutos segundos milisegundos  */
-
+ 
+  hoy.setTime(hoy.getTime() + (diasExpedicion  * 24 * 60 * 60 * 1000)); 
   var fechaExpedicion = "expires=" + hoy.toUTCString();
 
   document.cookie = nombre + "=" + valor + "; " + fechaExpedicion; /* => es la sintaxis como se crea una cookie en Javascript  */ /* ; => tener cuidado hay que dejar un espacio despues del comin */
 
 }
+
+
 
 
 /*=============================================

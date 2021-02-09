@@ -152,15 +152,14 @@ INFO PERFIL
 
 					</div>
 
-					<!-- Paypal -->
-					<!--=====================================
-					MERCADO PAGO
-					======================================-->					
+							
                     <div class="col-12">
 
 					<?php if (isset($_COOKIE["codigoReserva"])): ?>  <!-- => si no llega la variable cookies no debe parecer smart button of paypal  -->
-					
-                         <div class="card">
+
+				
+
+                         <div class="card">  <!-- => esto es el card donde mostro informacion de reserva a pagar y el button inteligente de paYPAL -->
 
                          <div class="card-header">
                          
@@ -192,12 +191,24 @@ INFO PERFIL
 							  <img src="img/paypal.png" class="img-fluid w-50">
 											 
 							</figure> -->
-                         
+
+						     <!-- Paypal -->
+					         <!--=====================================
+					         MERCADO PAGO
+					         ======================================-->		
+                                  
                             <div class="col-12 col-l-8"> 
 						    
-							 <div id="paypal-button-container" class="pt-3"></div>   <!-- smart button of paypal -->
-							 
-							 <div class="alert alert-success d-none" id="alerta" role="alert"> </div> <!-- Alerta  de exito de transaccion -->
+							<!-- <a href="javascript:location.reload()">Actualizar</a> -->
+						
+							</form>
+                             
+							<div id="paypal-button-container"></div>
+							
+                            </div>
+                             							
+
+							 <!-- <div class="alert alert-success d-none" id="alerta" role="alert"> </div>  --><!-- Alerta  de exito de transaccion -->
 						    </div> 
 					
                            </div>
@@ -205,8 +216,21 @@ INFO PERFIL
                          
                              
                          </div>  <!--  => Fin card  -->
-					
+
 					<?php endif ?>   <!-- => Fin isset($_COOKIE["codigoReserva"])  -->
+                  
+					<?php if (!isset($_COOKIE["codigoReserva"])): ?> 
+
+                     <div class="alert alert-danger" role="alert">
+					 Lo sentimos, las fechas de la reserva que habías seleccionado han sido ocupadas o tienes que reservar un dia antes 
+				     <a href="<?php echo $ruta; ?>" class="btn btn-danger btn-sm">vuelve a intentarlo </a>
+											
+                     </div>
+					 
+					 
+											
+
+					<?php endif ?>
 
 					
 					</div>
