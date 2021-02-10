@@ -39,7 +39,7 @@ VENTANA MODAL PLANES
 VENTANA MODAL INGRESO
 ======================================-->
 
-<div class="modal" id="modalIngreso">
+<div class="modal formulario" id="modalIngreso">
 
   <div class="modal-dialog">
 
@@ -84,7 +84,7 @@ VENTANA MODAL INGRESO
 
 		<hr class="mt-0">
 
-		<form>
+		<form> 
 
 			<div class="input-group mb-3">
 
@@ -150,7 +150,7 @@ VENTANA MODAL INGRESO
 VENTANA MODAL REGISTRO  
 ======================================-->
 
-<div class="modal" id="modalRegistro">
+<div class="modal formulario" id="modalRegistro">	
 
   <div class="modal-dialog">
 
@@ -194,89 +194,89 @@ VENTANA MODAL REGISTRO
     ======================================-->
     <hr class="mt-0">
 
-     <form    method="post">        <!-- action="<?php $ruta; ?>./paginas/modulos/user.php" -->
-     
-     	 <div class="input-group mb-3">
-      
-     	 	<div class="input-group-prepend">
-      
-     	 	  <span class="input-group-text">
-     	 		  
-     	 		  <i class="far fa-user"></i>
-      
-     	 	  </span>
-      
-     	 	</div>
-      
-     	 	<input type="text" class="form-control" placeholder="Nombre" name="Registrarnombre" required>
-      
-     	   </div>
-     
-     
-     	  <div class="input-group mb-3">
-       
-     	  	<div class="input-group-prepend">
-       
-     	  	  <span class="input-group-text">
-     	  		  
-     	  		  <i class="far fa-envelope"></i>
-       
-     	  	  </span>
-       
-     	  	</div>
-     
-     		<input type="email" class="form-control" placeholder="Email" name="registroEmail" required>
-     
-     	  </div>
-     
-     	  <div class="input-group mb-3">
-     
-     		<div class="input-group-prepend">
-     
-     		  <span class="input-group-text">
-     			  
-     			<i class="fas fa-unlock-alt"></i>
-     
-     		  </span>
-     
-     		</div>
-     
-     		<input type="password" class="form-control" placeholder="Contraseña" name="registroPassword" required>
-     
-     	  </div>
-     	
-     
-     	<input type="submit" class="btn btn-dark btn-block" value="Registrarse">
-     
-     	<?php
-     
-           $registroUsuario = new ControladorUsuarios();
-		   $registroUsuario -> ctrRegistroUsuario();
-	    
-     
-     	?>
-     
-     </form>
+			<form id="ok" method="post">        <!-- action="<?php $ruta; ?>./paginas/modulos/user.php" -->  <!-- => formulario de registro directo  -->
+            
+            	 <div class="input-group mb-3">
+             
+            	 	<div class="input-group-prepend">
+             
+            	 	  <span class="input-group-text">
+            	 		  
+            	 		  <i class="far fa-user"></i>
+             
+            	 	  </span>
+             
+            	 	</div>
+             
+            	 	<input type="text" class="form-control" placeholder="Nombre" name="Registrarnombre" required>
+             
+            	   </div>
+            
+            
+            	  <div class="input-group mb-3">
+              
+            	  	<div class="input-group-prepend">
+              
+            	  	  <span class="input-group-text">
+            	  		  
+            	  		  <i class="far fa-envelope"></i>
+              
+            	  	  </span>
+              
+            	  	</div>
+            
+            		<input type="email" class="form-control" placeholder="Email" name="registroEmail" required>
+            
+            	  </div>
+            
+            	  <div class="input-group mb-3">
+            
+            		<div class="input-group-prepend">
+            
+            		  <span class="input-group-text">
+            			  
+            			<i class="fas fa-unlock-alt"></i>
+            
+            		  </span>
+            
+            		</div>
+            
+            		<input type="password" class="form-control" placeholder="Contraseña" name="registroPassword" required>
+            
+            	  </div>
+            	
+            
+            	<input type="submit" class="btn btn-dark btn-block" value="Registrarse">
+            
+            	<?php
+            
+                  $registroUsuario = new ControladorUsuarios();
+	       	   $registroUsuario -> ctrRegistroUsuario();
+	           
+            
+            	?>
+            
+            </form>
      
      </div>
      
      
      <div class="modal-footer">
      
-     ¿Ya tienes una cuenta registrada? | 
+         ¿Ya tienes una cuenta registrada? | 
      
-     <strong>
+		<strong>
+
+     	  <a href="#modalIngreso" data-toggle="modal" data-dismiss="modal">
+     	     	Ingresar
+          </a>
      
-     	<a href="#modalIngreso" data-toggle="modal" data-dismiss="modal">
-     		Ingresar
-     	</a>
-     
-     </strong>
-     
-     </div>
+        </strong>
      
      </div>
      
-     </div>
+    </div>
      
-     </div>
+   </div>
+     
+</div>
