@@ -117,6 +117,8 @@ $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de
 <?php
 
 include "paginas/modulos/header.php";   /* esto es mi navbar se va estar cargardo en todas paginas   */
+include "paginas/modulos/modal.php"; /* => la subimos arriba para no tener problema con el formulario de registro user  que portan , en general son cajas occultas y fijas asi no van a afectar nuestro html en nada si incluimos aqui
+									  son cajas parecen con reaccion a botones y en posicion fixado ..   */
 
 /*=============================================
 PÁGINAS
@@ -173,7 +175,7 @@ PÁGINAS
 
 include "paginas/modulos/footer.php";
 
-include "paginas/modulos/modal.php";
+
 
 ?>
 
@@ -195,6 +197,7 @@ include "paginas/modulos/modal.php";
 <!-- <script src="js/agendas2.js"></script> -->   <!-- escenario dos de consulta medica , donde el paciente selecciona dia y hora y el systema le devuelva uno de los medicos que estan disponibles en la especialidad seleccionada  -->
 <!--------------- -->
 <script src="js/paypal.js"></script> 
+<script src="js/usuarios.js"></script> 
 	
 </body>
 </html>

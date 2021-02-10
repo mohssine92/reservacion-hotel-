@@ -76,13 +76,28 @@ function contador(){
          document.cookie = "fechaIngreso=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';";
          document.cookie = "fechaSalida=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';";
          
-         if(micookie !=""){
+          if(micookie !=""){
 
-          location.reload();
+          /* location.reload(); */
+                swal({                    /* => alerta suave , me permite recargar la pagina tambien  */ /* ver su documentacion para perfeccionar en dereccionamiento etc */
+                  type:"success",
+                    title: "¡ooops!",
+                    text: "¡por favor reserva con un dia de antelacion !",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    allowOutsideClick: false
+      
+                
+              }).then(function(result){
+      
+                      if(result.value){   
+                          history.back();
+                      } 
+              });
 
 
          }
-         
+          
       
        
       }
@@ -173,7 +188,23 @@ function contador(){
                 document.cookie = "fechaIngreso=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';";
                 document.cookie = "fechaSalida=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';";
                 
-                 location.reload(); 
+                /*  location.reload();  */
+
+                swal({                    /* => alerta suave , me permite recargar la pagina tambien  */ /* ver su documentacion para perfeccionar en dereccionamiento etc */
+                  type:"success",
+                    title: "¡oops!",
+                    text: "¡lo siento has tardado en pagar y la habitacion ha sido reservada por otra parte en el mundo!",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    allowOutsideClick: false
+
+                
+              }).then(function(result){
+
+                      if(result.value){   
+                          history.back();
+                      } 
+              });
                 
                 
                 
@@ -275,7 +306,9 @@ function contador(){
                                    title: "¡CORRECTO!",
                                    text: "¡La reserva ha sido creada con éxito!",
                                    showConfirmButton: true,
-                                 confirmButtonText: "Cerrar" /* => cuando le da click en cerrar recargue la pagina  */ /* regresa a ultima pagina donde estuvo  */ /* esto hace la recarga despues de borrar las cookies lo que es desparece info de reserva ya .. */
+                                   confirmButtonText: "Cerrar",
+                                   allowOutsideClick: false
+
                                
                              }).then(function(result){
          

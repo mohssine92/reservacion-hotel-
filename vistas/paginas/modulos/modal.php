@@ -20,7 +20,7 @@ VENTANA MODAL PLANES
     			<p class="py-3"></p>
        			
        			<div class="text-center">
-        			<a href="#habitaciones" class="btn btn-primary text-center  btnModalPlan" data-dismiss="modal">Separa tu habitacion Dt</a>
+        			<a href="#habitaciones" class="btn btn-primary text-center  btnModalPlan" data-dismiss="modal">Separat tu habitacion Dt</a>
         		</div>
 
       		</div>
@@ -147,7 +147,7 @@ VENTANA MODAL INGRESO
 </div>
 
 <!--=====================================
-VENTANA MODAL REGISTRO
+VENTANA MODAL REGISTRO  
 ======================================-->
 
 <div class="modal" id="modalRegistro">
@@ -188,88 +188,95 @@ VENTANA MODAL REGISTRO
 			</div>
 
       	</div>
+    
+    <!--=====================================
+    REGISTRO DIRECTO
+    ======================================-->
+    <hr class="mt-0">
 
-      	<!--=====================================
-		REGISTRO DIRECTO
-		======================================-->
-
-		<hr class="mt-0">
-
-		<form>
-
-			<div class="input-group mb-3">
-
-			    <div class="input-group-prepend">
-
-			      <span class="input-group-text">
-			      	
-			      	<i class="far fa-user"></i>
-
-			      </span>
-
-			    </div>
-
-			    <input type="text" class="form-control" placeholder="Nombre">
-
-		  	</div>
-
-
-			<div class="input-group mb-3">
-
-			    <div class="input-group-prepend">
-
-			      <span class="input-group-text">
-			      	
-			      	<i class="far fa-envelope"></i>
-
-			      </span>
-
-			    </div>
-
-			    <input type="email" class="form-control" placeholder="Email">
-
-		  	</div>
-
-		  	<div class="input-group mb-3">
-
-			    <div class="input-group-prepend">
-
-			      <span class="input-group-text">
-			      	
-					<i class="fas fa-unlock-alt"></i>
-
-			      </span>
-
-			    </div>
-
-			    <input type="password" class="form-control" placeholder="Contraseña">
-
-		  	</div>
-			
-
-			<input type="submit" class="btn btn-dark btn-block" value="Registrarse">
-
-		</form>
-
-      </div>
-
-
-      <div class="modal-footer">
-        
-		¿Ya tienes una cuenta registrada? | 
-
-		<strong>
-
-			<a href="#modalIngreso" data-toggle="modal" data-dismiss="modal">
-				Ingresar
-			</a>
-
-		</strong>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
+     <form    method="post">        <!-- action="<?php $ruta; ?>./paginas/modulos/user.php" -->
+     
+     	 <div class="input-group mb-3">
+      
+     	 	<div class="input-group-prepend">
+      
+     	 	  <span class="input-group-text">
+     	 		  
+     	 		  <i class="far fa-user"></i>
+      
+     	 	  </span>
+      
+     	 	</div>
+      
+     	 	<input type="text" class="form-control" placeholder="Nombre" name="Registrarnombre" required>
+      
+     	   </div>
+     
+     
+     	  <div class="input-group mb-3">
+       
+     	  	<div class="input-group-prepend">
+       
+     	  	  <span class="input-group-text">
+     	  		  
+     	  		  <i class="far fa-envelope"></i>
+       
+     	  	  </span>
+       
+     	  	</div>
+     
+     		<input type="email" class="form-control" placeholder="Email" name="registroEmail" required>
+     
+     	  </div>
+     
+     	  <div class="input-group mb-3">
+     
+     		<div class="input-group-prepend">
+     
+     		  <span class="input-group-text">
+     			  
+     			<i class="fas fa-unlock-alt"></i>
+     
+     		  </span>
+     
+     		</div>
+     
+     		<input type="password" class="form-control" placeholder="Contraseña" name="registroPassword" required>
+     
+     	  </div>
+     	
+     
+     	<input type="submit" class="btn btn-dark btn-block" value="Registrarse">
+     
+     	<?php
+     
+           $registroUsuario = new ControladorUsuarios();
+		   $registroUsuario -> ctrRegistroUsuario();
+	    
+     
+     	?>
+     
+     </form>
+     
+     </div>
+     
+     
+     <div class="modal-footer">
+     
+     ¿Ya tienes una cuenta registrada? | 
+     
+     <strong>
+     
+     	<a href="#modalIngreso" data-toggle="modal" data-dismiss="modal">
+     		Ingresar
+     	</a>
+     
+     </strong>
+     
+     </div>
+     
+     </div>
+     
+     </div>
+     
+     </div>

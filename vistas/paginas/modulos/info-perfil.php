@@ -219,7 +219,7 @@ INFO PERFIL
 
 					<?php endif ?>   <!-- => Fin isset($_COOKIE["codigoReserva"])  -->
                   
-					<?php if (!isset($_COOKIE["codigoReserva"])): ?> 
+				<!-- 	<?php if (!isset($_COOKIE["codigoReserva"])): ?> 
 
                      <div class="alert alert-danger" role="alert">
 					 Lo sentimos, las fechas de la reserva que habías seleccionado han sido ocupadas o tienes que reservar un dia antes 
@@ -231,7 +231,7 @@ INFO PERFIL
 											
 
 					<?php endif ?>
-
+ -->
 					
 					</div>
 
