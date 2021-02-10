@@ -123,11 +123,11 @@ include "paginas/modulos/modal.php"; /* => la subimos arriba para no tener probl
 /*=============================================
 PÁGINAS
 =============================================*/
-
 if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html debajo del navbar en funccion de de la condicion -> par rederigirnos a paginas  */
 
 	$rutasCategorias = ControladorCategorias::ctrMostrarCategorias(); /* objetivo rutas en tabla categorias */
-    $validarRuta = "";
+	$validarRuta = "";
+	
 	foreach ($rutasCategorias as $key => $value) {
 
 		if($_GET["pagina"] == $value["ruta"]){
@@ -137,6 +137,55 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 		}
 		
 	}
+
+	/*=============================================
+	VALIDAR CORREO  => necesito verificar si ese texto de email encryptado , si ese hash de md5() del correo electronico que viene encryptado existe en la base de datos 
+	=============================================*/
+
+	$item = "email_encriptado";
+	$valor = $_GET["pagina"];    /* => recuerda  $_GET["pagina"] es el primer parametro despues del dominio es donde llega correo en hash de med5()  */ /* relacionado con un usario un registro , una entidad  */
+
+	$validarCorreo = ControladorUsuarios::ctrMostrarUsuario($item, $valor); /* => pongo clase estatica porque espera una respuesta , va almacenar un valor */  /* si existe hash corro entonces ya encontramos al coincidencia */
+
+	if($validarCorreo["email_encriptado"] == $_GET["pagina"]){   /* si coincidan segnifica que el usuario real correo correcto  */
+
+		$id = $validarCorreo["id_u"];
+		$item = "verificacion";
+		$valor = 1; 
+
+		$verificarUsuario = ControladorUsuarios::ctrActualizarUsuario($id, $item, $valor);    /* =>ojo , llegar a este proceso toca cambiar valor de verificacion 0 : no esta verificado , 1 esta verificado ,  */
+
+	 	if($verificarUsuario == "ok"){ 
+
+			echo'<script>
+
+					swal({
+							type:"success",
+						  	title: "¡CORRECTO!",
+						  	text: "¡Su cuenta ha sido verificada, ya puede ingresar al sistema!",
+						  	showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							allowOutsideClick: false
+						  
+					}).then(function(result){
+
+							if(result.value){   
+							    history.back();
+							  } 
+					});
+
+				</script>';
+
+			return;   /* => con return cancelamos cualquier proceso puedo occurir de aqui para abajo .  */
+
+	 	} 
+
+
+	}
+
+	/*=============================================
+	     LISTA BLANCA DE PÁGINAS INTERNAS
+	=============================================*/
 	
 	if($_GET["pagina"] == "habitaciones"){
 
@@ -168,11 +217,10 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 }
 
 
+
 /*=============================================
-PÁGINAS
+     FOOTER => igual para todas paginas , o podemos poner una condicion php , se cambias dinamicamente depende de la ruta etc ....
 =============================================*/
-
-
 include "paginas/modulos/footer.php";
 
 

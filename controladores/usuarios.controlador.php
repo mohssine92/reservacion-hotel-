@@ -13,7 +13,7 @@
 	  REGISTRO DE USUARIO
 	 =============================================*/
 
-	  public function ctrRegistroUsuario(){
+	public function ctrRegistroUsuario(){
   
        if(isset($_POST["Registrarnombre"])){ 
 
@@ -126,7 +126,8 @@
 								  	title: "¡ERROR!",
 								  	text: "¡Ha ocurrido un problema enviando verificación de correo electrónico a '.$_POST["registroEmail"].$mail->ErrorInfo.', por favor inténtelo nuevamente",
 								  	showConfirmButton: true,
-									confirmButtonText: "Cerrar"
+									confirmButtonText: "Cerrar",
+									allowOutsideClick: false
 								  
 							}).then(function(result){
 
@@ -147,7 +148,8 @@
 								  	title: "¡SU CUENTA HA SIDO CREADA CORRECTAMENTE!",
 								  	text: "¡Por favor revise la bandeja de entrada o la carpeta de SPAM de su correo electrónico para verificar la cuenta!",
 								  	showConfirmButton: true,
-									confirmButtonText: "Cerrar"
+									confirmButtonText: "Cerrar",
+									allowOutsideClick: false
 								  
 							}).then(function(result){
 
@@ -161,13 +163,7 @@
 					}
 
                        
-                    
-
-  
-
-
-
-
+                
 
 
                 }
@@ -180,9 +176,10 @@
 					swal({
 							type:"error",
 						  	title: "¡CORREGIR!",
-						  	text: "¡No se permiten caracteres especiales!",
+						  	text: "¡No se permiten caracteres especiales en el nombre!",
 						  	showConfirmButton: true,
-							confirmButtonText: "Cerrar"
+							confirmButtonText: "Cerrar",
+							allowOutsideClick: false
 						  
 					}).then(function(result){
 
@@ -193,29 +190,44 @@
 
 				</script>';
 
-
-
-
-
-
         }
             
 
 
-
-
-
-
-
     }
-  
+    
 
-  
-  
-      }
+	}
+	
+
+    /*=============================================
+	MOSTRAR USUARIO
+	=============================================*/
+
+	static public function ctrMostrarUsuario($item, $valor){
+
+		$tabla = "usuarios";
+
+		$respuesta = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	/*=============================================
+	ACTUALIZAR USUARIO
+	=============================================*/
+	static public function ctrActualizarUsuario($id, $item, $valor){
+
+		$tabla = "usuarios";
+
+		$respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, $id, $item, $valor);
+
+		return $respuesta;
+
+	}
 
 
 
 
-
-  }
+}
