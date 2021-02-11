@@ -15,10 +15,6 @@ $('input[name="registroEmail"]').change(function(){
 
 })
 
-
-
-
-
 /*=============================================
 VALIDAR EMAIL REPETIDO    => para validar , tomar en accion cuando se cambian input de registro de email en formulario registro user 
 =============================================*/

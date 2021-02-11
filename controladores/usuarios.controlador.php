@@ -227,6 +227,141 @@
 
 	}
 
+	/*=============================================
+	INGRESO DE USUARIO DIRECTO
+	=============================================*/
+
+	public function ctrIngresoUsuario(){
+
+		if(isset($_POST["ingresoEmail"])){   /* => cuando lanza el formulario alli justo se crean las variables post */
+           /* 
+			echo $_POST["ingresoEmail"] ;
+			echo "<br>";
+			echo $_POST["ingresoPassword"] ;
+			echo "<br>";
+           */
+
+			if(preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["ingresoEmail"]) && preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingresoPassword"])){
+
+				$encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+				
+				$tabla = "usuarios";
+				$item = "email";
+				$valor = $_POST["ingresoEmail"];
+				
+				$respuesta = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);   /* => recuerda no permitimos repitir email se va traer un registro de un usuario hahahaha  */
+				
+				if($respuesta["email"] ==  $_POST["ingresoEmail"] && $respuesta["password"] == $encriptarPassword){
+				
+					if($respuesta["verificacion"] == 0){
+				
+							echo'<script>
+				
+								swal({
+										type:"error",
+										  title: "¡ERROR!",
+										  text: "¡El correo electrónico aún no ha sido verificado, por favor revise la bandeja de entrada o la carpeta de SPAM de su correo electrónico para verificar la cuenta!",
+										  showConfirmButton: true,
+										confirmButtonText: "Cerrar",
+										allowOutsideClick: false
+				
+								}).then(function(result){
+				
+										if(result.value){   
+											history.back();
+										  } 
+								});
+				
+							</script>';
+				
+							return;   /* => return no deja la maquina compila lo siguiente es decir para la ejecuccion  */ /* cancela cualquier proceso que podra ejecutarse luego  */
+				
+					}else{
+				
+				     	/* 	$_SESSION["validarSesion"] = "ok";      */        /* => si ya esta validado se inicia la session justo de aqui  */
+						/* $_SESSION["id"] = $respuesta["id_u"];
+						$_SESSION["nombre"] = $respuesta["nombre"];
+						$_SESSION["foto"] = $respuesta["foto"];
+						$_SESSION["email"] = $respuesta["email"];
+						$_SESSION["modo"] = $respuesta["modo"];	 */
+				
+						$ruta = ControladorRuta::ctrRuta();
+				  
+						/* => Redireccionar atraves de javascript */
+						echo '<script>
+					
+							window.location = "'.$ruta.'perfil";	
+				
+						</script>';
+				
+					}
+				
+				
+				}else{
+				
+				echo'<script>
+				
+					swal({
+							type:"error",
+							  title: "¡ERROR!",
+							  text: "¡El email o contraseña no coinciden!",
+							  showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						  
+					}).then(function(result){
+				
+							if(result.value){   
+								history.back();
+							  } 
+					});
+				
+				</script>';
+				
+				}
+				
+			}else{
+				
+				echo'<script>
+				
+					swal({
+							type:"error",
+							  title: "¡CORREGIR!",
+							  text: "¡No se permiten caracteres especiales!",
+							  showConfirmButton: true,
+							confirmButtonText: "Cerrar",
+							allowOutsideClick: false
+													  
+					}).then(function(result){
+				
+							if(result.value){   
+								history.back();
+							  } 
+					});
+				
+				</script>';
+			}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+
+	}
+
 
 
 
