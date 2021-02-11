@@ -60,7 +60,7 @@ VENTANA MODAL INGRESO
       		
 			<div class="px-2 flex-fill">
 
-				<p class="p-2 bg-primary text-center text-white">
+				<p class="p-2 bg-primary text-center text-white facebook" style="cursor:pointer">
 					<i class="fab fa-facebook"></i>
 					Ingreso con Facebook
 				</p>
@@ -69,7 +69,7 @@ VENTANA MODAL INGRESO
 
 			<div class="px-2 flex-fill">
 
-				<p class="p-2 bg-danger text-center text-white">
+				<p class="p-2 bg-danger text-center text-white" style="cursor:pointer">
 					<i class="fab fa-google"></i>
 					Ingreso con Google
 				</p>
@@ -178,7 +178,7 @@ VENTANA MODAL REGISTRO
       		
 			<div class="px-2 flex-fill">
 
-				<p class="p-2 bg-primary text-center text-white">
+				<p class="p-2 bg-primary text-center text-white facebook" style="cursor:pointer">
 					<i class="fab fa-facebook"></i>
 					Ingreso con Facebook
 				</p>
@@ -187,7 +187,7 @@ VENTANA MODAL REGISTRO
 
 			<div class="px-2 flex-fill">
 
-				<p class="p-2 bg-danger text-center text-white">
+				<p class="p-2 bg-danger text-center text-white" style="cursor:pointer">
 					<i class="fab fa-google"></i>
 					Ingreso con Google
 				</p>

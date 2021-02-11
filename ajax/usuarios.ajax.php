@@ -26,7 +26,7 @@ class AjaxUsuarios{
 	REGISTRO CON FACEBOOK
 	=============================================*/
 
-	/* public $email;
+    public $email;
 	public $nombre;
 	public $foto;
 
@@ -37,16 +37,19 @@ class AjaxUsuarios{
 					   "foto"=>$this->foto,
 					   "password"=>"null",
 					   "modo"=>"facebook",
-					   "verificacion"=>1,
-					   "email_encriptado"=>"null");
+					   "verificacion"=>1,   /* => 1 porque verificado ya de facebook */
+                       "email_encriptado"=>"null");
 
 		$respuesta = ControladorUsuarios::ctrRegistroRedesSociales($datos);
 
 		echo $respuesta;
 
-	} */
+	}
 
 }
+
+
+
 
 /*=============================================
 VALIDAR EMAIL EXISTENTE
@@ -63,7 +66,7 @@ if(isset($_POST["validarEmail"])){
 REGISTRO CON FACEBOOK
 =============================================*/
 
-/* if(isset($_POST["email"])){
+if(isset($_POST["email"])){
 
 	$regFacebook = new AjaxUsuarios();
 	$regFacebook -> email = $_POST["email"];
@@ -72,4 +75,3 @@ REGISTRO CON FACEBOOK
 	$regFacebook -> ajaxRegistroFacebook();
 
 }
- */

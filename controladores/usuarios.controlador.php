@@ -362,7 +362,62 @@
 
 	}
 
+    /*=============================================
+	REGISTRO CON REDES SOCIALES
+	=============================================*/
 
+	static public function ctrRegistroRedesSociales($datos){
+
+		$tabla = "usuarios";
+		$item = "email";
+		$valor = $datos["email"];
+		$emailRepetido = false;
+		 
+
+		$verificarExistenciaUsuario = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);   /* => verificar si email existe en mi base de datos  */
+
+		if($verificarExistenciaUsuario){    /* => en caso que es verdadero es decir devuelva un registro  */
+
+			$emailRepetido = true;
+			
+		}else{
+
+			$registrarUsuario = ModeloUsuarios::mdlRegistroUsuario($tabla, $datos);   /* => entonces hacemos registro en nuestra base de datos ,coñoo hhh  */
+			
+		}
+
+		if($emailRepetido || $registrarUsuario == "ok"){   /* => no entro aqui esta que me encuentro registrado o me registra el systema con exito  */
+
+			$traerUsuario = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);	  /* => entonces traerme usuario  */
+
+			if($traerUsuario["modo"] == "facebook"){
+
+				/* session_start();          
+			
+				$_SESSION["validarSesion"] = "ok";
+				$_SESSION["id"] = $traerUsuario["id_u"];
+				$_SESSION["nombre"] = $traerUsuario["nombre"];
+				$_SESSION["foto"] = $traerUsuario["foto"];
+				$_SESSION["email"] = $traerUsuario["email"];
+				$_SESSION["modo"] = $traerUsuario["modo"]; */	
+			
+				echo "okfacebook";
+			
+			}else{
+
+              echo "ModoNoEsFacebook";
+
+			}
+
+
+
+		}
+
+		
+
+
+
+	}
 
 
 }

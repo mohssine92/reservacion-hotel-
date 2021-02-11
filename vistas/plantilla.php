@@ -246,6 +246,7 @@ include "paginas/modulos/footer.php";
 <!--------------- -->
 <script src="js/paypal.js"></script> 
 <script src="js/usuarios.js"></script> 
+<script src="js/sdk-connect-session-facebook.js"></script>  <!-- => se indica en la documentacion debe ser cargado  despues del body -->
 	
 </body>
 </html>
