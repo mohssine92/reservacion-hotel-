@@ -117,19 +117,19 @@ function statusChangeCallback(response){
 
     }else{   
               /* => ojo, si el estado no esta connectado , mandamos un mensaje de nuestra aplicacion de eroor al user  */
-		swal({
-			type: "error",
-            title: "¡ERROR!",
-            text: "¡Ocurrió un error al ingresar con Facebook, vuelve a intentarlo!",
-            showConfirmButton: true,
-	        confirmButtonText: "Cerrar"
-	
-		}).then(function(result){
-
-			if(result.value){   
-              	history.back();
-            } 
-      	});
+		   swal({
+		 	type: "error",
+		 	title: "¡ERROR!",
+		 	text: "¡Ocurrió un error al ingresar con Facebook, vuelve a intentarlo!",
+		 	showConfirmButton: true,
+		 	confirmButtonText: "Cerrar"
+	 
+		 }).then(function(result){
+ 
+		 	if(result.value){   
+		 		  history.back();
+		 	} 
+		   });
 
 	} 
 
@@ -188,7 +188,7 @@ function testApi(){    /* => pues esta funccion que nos va traer toda informacio
 
                     console.log("respuesta.ajax.isnert.user=>",respuesta);
 
-                    if(respuesta == "okfacebook"){
+                    if(respuesta == "facebook"){
 
                         window.location = urlPrincipal+"perfil";
                     

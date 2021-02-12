@@ -4,7 +4,6 @@ $categorias = ControladorCategorias::ctrMostrarCategorias();
 
 ?>
 
-
 <!--=====================================
 HABITACIONES
 ======================================-->

@@ -401,23 +401,51 @@
 				$_SESSION["email"] = $traerUsuario["email"];
 				$_SESSION["modo"] = $traerUsuario["modo"]; */	
 			
-				echo "okfacebook";
+				return "facebook";
 			
+			}else if($traerUsuario["modo"] == "google"){
+
+				/* $_SESSION["validarSesion"] = "ok";
+				$_SESSION["id"] = $traerUsuario["id_u"];
+				$_SESSION["nombre"] = $traerUsuario["nombre"];
+				$_SESSION["foto"] = $traerUsuario["foto"];
+				$_SESSION["email"] = $traerUsuario["email"];
+				$_SESSION["modo"] = $traerUsuario["modo"];	 */
+
+				return "google-connect";
+
 			}else{
 
-              echo "ModoNoEsFacebook";
-
+				echo "";
 			}
 
-
-
+            
 		}
-
-		
-
 
 
 	}
 
+	/*=============================================
+	  COMPROBAR SI EMAIL RECIEN REGISTRADO POR OTRO METODO - AL MOMENTO DE CONECTAR CON GOOGLE
+	=============================================*/
+	
+	static public function ctrvVerificaccionEmailMode($datos){
+
+        $tabla = "usuarios";
+		$item = "email";
+		$valor = $datos["email"];
+		
+		 
+		$verificarExistenciaUsuario = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);   /* => verificar si email existe en mi base de datos  */
+
+		if($verificarExistenciaUsuario){    /* => en caso que es verdadero es decir devuelva un registro  */
+
+			 return "existe";
+			
+		}
+
+
+
+	}
 
 }

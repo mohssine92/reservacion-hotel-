@@ -4,6 +4,9 @@ $planes = ControladorPlanes::ctrMostrarPlanes();  /* obtengo colleccion de objet
 
 ?>
 
+
+
+
 <!--=====================================
 PLANES
 ======================================-->

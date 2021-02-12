@@ -54,7 +54,7 @@ if(isset($_POST["id-habitacion"])){    /* llego aqui atraves de formularios - in
 
 	date_default_timezone_set("Africa/Casablanca");  /* Definir Zona Horaria */ 
 	$hoy = getdate();  /* aqui tengo hora actual de me zona , ami me interesa los dias , */
-/* 	echo '<pre class="bg-white">'; print_r($hoy); echo '</pre><br>' */;      /* siempre cuando quier filtra uso el print para no fallar en escritura de propiedad */
+/* 	echo '<pre class="bg-white">'; print_r($hoy); echo '</pre><br>';   */    /* siempre cuando quier filtra uso el print para no fallar en escritura de propiedad */
 
      /* asi empiezo a filtrar - lo que para el hotel va ser temporada alta */
      if($hoy["mon"] == 12 && $hoy["mday"] >= 15 && $hoy["mday"] <= 31 ||  $hoy["mon"] == 1 && $hoy["mday"] >= 1 && $hoy["mday"] <= 15 ||  $hoy["mon"] == 6 && $hoy["mday"] >= 15 && $hoy["mday"] <= 31 ||   $hoy["mon"] == 7 && $hoy["mday"] >= 1 && $hoy["mday"] <= 15){
