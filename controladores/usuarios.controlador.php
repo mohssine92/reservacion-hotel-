@@ -440,8 +440,11 @@
 
 		if($verificarExistenciaUsuario){    /* => en caso que es verdadero es decir devuelva un registro  */
 
-			 return "existe";
+			 return true;
 			
+		}else{
+
+			return false;
 		}
 
 

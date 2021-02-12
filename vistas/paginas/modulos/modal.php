@@ -38,18 +38,16 @@ if($cliente->getAccessToken()){  /* => si es verdadero permitimos almacenar dato
 	$item = $cliente->verifyIdToken();   /* => este metedo me traega toda la verificacion de este token  */   /* => en $item  tengo toda informacion que necesito , paraque un usuario podra iniciar seesion en mi aplicacion ... */
 
 	$datos = array("nombre"=>$item["name"],    /* => capto solo datos que me hacen falta , los organizo respecto al modelo de insert atraves de reder sociales , asi la validacion una validacion para redes sociales me vale ,  */
-				   "email"=>$item["email"],
-				   "foto"=>$item["picture"],
-				   "password"=>"null",
-				   "modo"=>"google",
-				   "verificacion"=>1,
-				   "email_encriptado"=>"null");
+		"email"=>$item["email"],
+		"foto"=>$item["picture"],
+		"password"=>"null",
+		"modo"=>"google",
+		"verificacion"=>1,
+		"email_encriptado"=>"null");
 
-	$respuesta = ControladorUsuarios::ctrRegistroRedesSociales($datos);
+	$verificarExistenciaUsuario = ControladorUsuarios::ctrvVerificaccionEmailMode($datos); 
 
-	$verificarExistenciaUsuario = ControladorUsuarios:: ctrvVerificaccionEmailMode($datos); 
-
-	if($verificarExistenciaUsuario == "existe"){
+	if($verificarExistenciaUsuario == true){
 
 		echo ' <script>
 		swal({
@@ -82,6 +80,10 @@ if($cliente->getAccessToken()){  /* => si es verdadero permitimos almacenar dato
 
 
 
+	}else{
+
+        $respuesta = ControladorUsuarios::ctrRegistroRedesSociales($datos);
+
 	}
 
 
@@ -89,11 +91,10 @@ if($cliente->getAccessToken()){  /* => si es verdadero permitimos almacenar dato
 
 			echo '<script>
 
-			setTimeout(function(){
+		
 				
 				window.location = "'.$ruta.'perfil";
 
-			},1000);
 
 			</script>';
 
