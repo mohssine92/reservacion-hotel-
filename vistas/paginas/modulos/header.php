@@ -118,7 +118,47 @@ HEADER
 
 			<div class="grid-item d-none d-lg-block mt-2">
 
-				<a href="#modalIngreso" data-toggle="modal"><i class="fas fa-user"></i></a>
+			<?php if (isset($_SESSION["validarSesion"])): ?>
+				
+				<?php if ($_SESSION["validarSesion"] == "ok"): ?>
+
+                  <a href="<?php echo $ruta.'perfil'; ?>">   <!-- el aconr que llevario al user A LAPAGINA DE PERFIL  -->
+				      
+				    <?php if ($_SESSION["foto"] == ""): ?>
+					
+				     	<i class="fas fa-user"></i>  <!-- => poner este icomo de imagen por defecto si el suario logeado no consta de ruta foto -->
+
+			          <?php else: ?>
+
+					    <?php if ($_SESSION["modo"] == "directo"): ?>  <!-- preguntamos ahora en que modo esta logueado , porque : si viene por redes sociales no necisitamos concatenar la ruta foto con ruta de nuestro servidos , viene ruta completa 
+					                                                   desde un servidopr externo de redes sociales  -->
+
+						 <img src="<?php echo $servidor.$_SESSION["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px"> 
+					
+					    <?php else: ?>
+						
+						 <img src="<?php echo $_SESSION["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px">  <!-- modo red social , ruta externa ,  -->
+
+				
+					    <?php endif ?>	  <!-- end $_SESSION["modo"] == "directo" -->
+
+					<?php endif ?>	 <!-- enf $_SESSION["foto"] == "" -->
+
+				  
+
+                 </a>   <!-- Fin  -->
+
+				<?php endif ?>	     <!--  $_SESSION["validarSesion"] == "ok" -->
+
+			<?php else: ?>      <!--isset($_SESSION["validarSesion"]) -->
+              
+			  <a href="#modalIngreso" data-toggle="modal"><i class="fas fa-user"></i></a>  <!-- => pues que se coloque la foto que viene por defecto  -->
+			   
+		
+            <?php endif ?>	
+				
+            
+			
 
 			</div>
 

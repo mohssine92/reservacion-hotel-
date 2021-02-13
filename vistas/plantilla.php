@@ -1,4 +1,7 @@
 <?php
+session_start();    /*=> Con esta funccion  Disparamos al systema que vamos a usar variable de session  */   /* => atraves de variables de session filtramos tipo de usuarios , porque hay pagina donde no se permmite a usuasrios 
+                    que no estan registrados en systema acceder a ellas */
+
 /* variables de rutas en el proyecto  */  /* esta funcciones se ejecutan de manera statica nada mas arrancar el proyecto  */
 $ruta = ControladorRuta::ctrRuta();  /* simplemente me devuelve ruta raiz del frontend que voy a estar usando en redericcionamiendo y carga de contenido en frontend */
 $servidor = ControladorRuta::ctrServidor();  /* solicito infos al controlador de rootas - me returna  roota del backend   */
@@ -193,9 +196,9 @@ if(isset($_GET["pagina"])){          /* de aqui se va cambiando contenido html d
 		
 	}
 
-	if($_GET["pagina"] == "reservas" || $_GET["pagina"] == "perfil"){
+	if($_GET["pagina"] == "reservas" || $_GET["pagina"] == "perfil" || $_GET["pagina"] == "salir"){
 
-		include "paginas/".$_GET["pagina"].".php";
+		include "paginas/".$_GET["pagina"].".php";  /* => buscalo en carpetra paginas y incluilo */
 	
 
 	}else if ($validarRuta != "" ){

@@ -278,12 +278,12 @@
 				
 					}else{
 				
-				     	/* 	$_SESSION["validarSesion"] = "ok";      */        /* => si ya esta validado se inicia la session justo de aqui  */
-						/* $_SESSION["id"] = $respuesta["id_u"];
+				     	$_SESSION["validarSesion"] = "ok";             /* => si ya esta validado se inicia la session justo de aqui  */
+						$_SESSION["id"] = $respuesta["id_u"];
 						$_SESSION["nombre"] = $respuesta["nombre"];
-						$_SESSION["foto"] = $respuesta["foto"];
+						$_SESSION["foto"] = $respuesta["foto"];       /* => la ruta de foto es depende del modo  */
 						$_SESSION["email"] = $respuesta["email"];
-						$_SESSION["modo"] = $respuesta["modo"];	 */
+						$_SESSION["modo"] = $respuesta["modo"];	    /* => modo como inicio session en el sistema */
 				
 						$ruta = ControladorRuta::ctrRuta();
 				  
@@ -392,25 +392,25 @@
 
 			if($traerUsuario["modo"] == "facebook"){
 
-				/* session_start();          
-			
-				$_SESSION["validarSesion"] = "ok";
+				session_start();  /* => con facebook conectamos atraves ajax , y al crear variables session tenemos quetener dusparada esta funccion si o si , cuestion de forma de ejecuccion entre php y javascript  */
+
+				$_SESSION["validarSesion"] = "ok";             /* => si ya esta validado se inicia la session justo de aqui  */
 				$_SESSION["id"] = $traerUsuario["id_u"];
 				$_SESSION["nombre"] = $traerUsuario["nombre"];
-				$_SESSION["foto"] = $traerUsuario["foto"];
+				$_SESSION["foto"] = $traerUsuario["foto"];       /* => la ruta de foto es depende del modo  */
 				$_SESSION["email"] = $traerUsuario["email"];
-				$_SESSION["modo"] = $traerUsuario["modo"]; */	
+				$_SESSION["modo"] = $traerUsuario["modo"];	    /* => modo como inicio session en el sistema */
 			
-				return "facebook";
+				return "facebook-connect";
 			
 			}else if($traerUsuario["modo"] == "google"){
 
-				/* $_SESSION["validarSesion"] = "ok";
+				$_SESSION["validarSesion"] = "ok";             /* => si ya esta validado se inicia la session justo de aqui  */
 				$_SESSION["id"] = $traerUsuario["id_u"];
 				$_SESSION["nombre"] = $traerUsuario["nombre"];
-				$_SESSION["foto"] = $traerUsuario["foto"];
+				$_SESSION["foto"] = $traerUsuario["foto"];       /* => la ruta de foto es depende del modo  */
 				$_SESSION["email"] = $traerUsuario["email"];
-				$_SESSION["modo"] = $traerUsuario["modo"];	 */
+				$_SESSION["modo"] = $traerUsuario["modo"];	    /* => modo como inicio session en el sistema */
 
 				return "google-connect";
 
@@ -438,9 +438,9 @@
 		 
 		$verificarExistenciaUsuario = ModeloUsuarios::mdlMostrarUsuario($tabla, $item, $valor);   /* => verificar si email existe en mi base de datos  */
 
-		if($verificarExistenciaUsuario){    /* => en caso que es verdadero es decir devuelva un registro  */
+		if($verificarExistenciaUsuario && $verificarExistenciaUsuario['modo'] != "google" ){    /* => en caso que es verdadero es decir devuelva un registro  */
 
-			 return true;
+			 return true;  
 			
 		}else{
 

@@ -1,3 +1,35 @@
+<?php
+
+$item = "id_u";               /* campo */
+$valor = $_SESSION["id"];
+
+$usuario = ControladorUsuarios::ctrMostrarUsuario($item, $valor);
+/* $reservas = ControladorReservas::ctrMostrarReservasUsuario($valor); */
+
+/* $hoy = date("Y-m-d");
+$noVencidas = 0;
+$vencidas = 0; */
+
+/* foreach ($reservas as $key => $value) {
+	
+	if($hoy >= $value["fecha_ingreso"]){
+
+		++$vencidas;		
+	
+	}else{
+
+		++$noVencidas;
+
+	}
+
+}
+ */
+
+
+?>
+
+
+
 <!--=====================================
 INFO PERFIL
 ======================================-->
@@ -15,10 +47,21 @@ INFO PERFIL
 			<div class="col-12 col-lg-4 colIzqPerfil p-0 px-lg-3">
 				
 				<div class="cabeceraPerfil pt-4">
+				
+				    <?php if ($usuario["modo"] == "facebook"): ?>
+      
+                     <a href="#" class="float-left lead text-white pt-1 px-3 mb-4 salir">  <!-- asi desde javascript cuando damos a esta clase salir borramos cookies de facebook y luego y luego rederigimos a la pagina salir.php -->
+                     	<h5><i class="fas fa-chevron-left"></i> Salir</h5>                  <!-- Todo desde javascript -->
+                     </a>
 					
-					<a href="<?php echo $ruta;  ?>reservas" class="float-left lead text-white pt-1 px-3 mb-4">
+
+                    <?php else: ?>  <!-- => cerrar cession en modo directo y google -->
+
+					<a href="<?php echo $ruta;  ?>salir" class="float-left lead text-white pt-1 px-3 mb-4">
 						<h5><i class="fas fa-chevron-left"></i> Salir</h5>
 					</a>
+
+					<?php endif ?>
 
 					<div class="clearfix"></div>
 
@@ -32,9 +75,26 @@ INFO PERFIL
 				<div class="descripcionPerfil">
 					
 					<figure class="text-center imgPerfil">
-							
-						<img src="img/testimonio01.png" class="img-fluid">
+					 
+					<?php if ($usuario["foto"] == ""): ?> <!-- 1 -->
 
+                       <img src="<?php echo $servidor; ?>vistas/img/usuarios/default/default.png" class="img-fluid rounded-circle">
+					     
+                    <?php else: ?>
+                     
+                    <?php if ($usuario["modo"] == "directo"): ?> <!-- 2 -->
+                     
+                     	<img src="<?php echo $servidor.$usuario["foto"]; ?>" class="img-fluid rounded-circle">
+                     
+                    <?php else: ?>	
+                     
+            	       <img src="<?php echo $usuario["foto"]; ?>" class="img-fluid rounded-circle" width="100" height="100">   <!-- foto Redes sociales  -->
+						
+   
+                    <?php endif ?>  <!-- 2 -->
+                     
+                    <?php endif ?>  <!-- 1 -->
+					
 					</figure>
 
 					<div id="accordion">
@@ -115,8 +175,8 @@ INFO PERFIL
 
 									<ul class="list-group">
 										
-										<li class="list-group-item small">Juan Guillermo Osorio</li>
-										<li class="list-group-item small">juangui@correo.com</li>
+										<li class="list-group-item small"><?php echo $usuario["nombre"]; ?></li>
+										<li class="list-group-item small"><?php echo $usuario["email"]; ?></li>
 										<li class="list-group-item small">
 											<button class="btn btn-dark btn-sm">Cambiar Contraseña</button>
 										</li>
@@ -139,17 +199,17 @@ INFO PERFIL
 			</div>
 
 			<!--=====================================
-			BLOQUE DER
+			BLOQUE DER            
 			======================================-->
 
-			<div class="col-12 col-lg-8 colDerPerfil">
-
+			<div class="col-12 col-lg-8 colDerPerfil">                       	<!-- <?php	echo '<pre class="bg-white">'; print_r($usuario); echo '</pre><br>';  ?> -->
+		
 				<div class="row">
 
 					<div class="col-6 d-none d-lg-block">
 						
-						<h4 class="float-left">Hola Juan</h4>
-
+						<h4 class="float-left">Hola <?php echo $usuario["nombre"]; ?></h4>
+					
 					</div>
 
 							
