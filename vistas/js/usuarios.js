@@ -143,7 +143,7 @@ INGRESAMOS A LA API DE FACEBOOK
 
 function testApi(){    /* => pues esta funccion que nos va traer toda informacion del usuario  conectado a facebook  */
 
-	FB.api('/me?fields=id,name,email,picture',function(response){   /* FB.api , es la api de facebook a , ? luego viene como parametro lo que pidemos a la api de facebook , campos id , email .... */
+	FB.api('/me?fields=id,name,email,picture.width(150).height(150)',function(response){   /* FB.api , es la api de facebook a , ? luego viene como parametro lo que pidemos a la api de facebook , campos id , email .... */
 
 		if(response.email == null){
 
@@ -167,11 +167,9 @@ function testApi(){    /* => pues esta funccion que nos va traer toda informacio
 
 			var email = response.email;        
 			var nombre = response.name;
-
-		    /* var foto =  response.picture.data.url;   */   /* http://graph.facebook.com/ => esta es la ruta que tiene Facebook para visualizar fotos  */
-		    var foto = "http://graph.facebook.com/"+response.id+"/picture?type=large"; 
+            var foto = response.picture.data.url;      
+		   
 			
-            
              console.log("resp.email=> ",email );       /* => ya facebook nos esta devolviendo datos que nosostros necesitamos : estos son datos con quien creamos nuevo usurio   */ 
              console.log("resp.nombre=>",nombre);
 			 console.log("resp.foto=>",foto);
@@ -250,11 +248,6 @@ function testApi(){    /* => pues esta funccion que nos va traer toda informacio
 			})
 			
 			
-		   
-		 
-           
-			
-
 		}
 
 	})
@@ -288,12 +281,13 @@ $(".salir").click(function(e){
 
 	 	 		function deleteCookie(name){
 
-			 	 		 document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+					document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+					
 		 	 	}
 
 	 	 }else{
 
-	 	 	setTimeout(function(){
+	 	 	setTimeout(function(){    /* => de igual forma si no esta conectado me saca del systema  */
 
  	 			window.location=urlPrincipal+"salir";
 

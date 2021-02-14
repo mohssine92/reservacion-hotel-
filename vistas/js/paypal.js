@@ -270,7 +270,7 @@ function contador(){
             
                   var datos = new FormData();               /* => insertar datos reserva atraves de peticion ajax  */
                   datos.append("id_habitacion", id_habitacion);
-                  datos.append("id_usuario", 1);
+                 /*  datos.append("id_usuario", 1); */
                   datos.append("pago_reserva", pago_reserva);
                   datos.append("numero_transaccion",details.id);
                   datos.append("codigo_reserva", codigo_Reserva);
@@ -301,25 +301,31 @@ function contador(){
                            document.cookie = "fechaIngreso=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';";
                            document.cookie = "fechaSalida=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='.$ruta.';"; 
                             
-                              swal({                    /* => alerta suave , me permite recargar la pagina tambien  */ /* ver su documentacion para perfeccionar en dereccionamiento etc */
-                                 type:"success",
-                                   title: "¡CORRECTO!",
-                                   text: "¡La reserva ha sido creada con éxito!",
-                                   showConfirmButton: true,
-                                   confirmButtonText: "Cerrar",
-                                   allowOutsideClick: false
-
-                               
-                             }).then(function(result){
-         
-                                     if(result.value){   
-                                         history.back();
-                                     } 
-                             });
-
-                          
-                            
-                         }
+                                      swal({                    /* => alerta suave , me permite recargar la pagina tambien  */ /* ver su documentacion para perfeccionar en dereccionamiento etc */
+                                       type:"success",
+                                         title: "¡CORRECTO!",
+                                         text: "¡La reserva ha sido creada con éxito!",
+                                         showConfirmButton: false,
+                                         confirmButtonText: "Cerrar",
+                                         allowOutsideClick: false
+                                   
+                                     
+                                   }).then(function(result){
+                                   
+                                           if(result.value){   
+                                              /*  history.back(); */
+                                           } 
+                                   });
+                                   
+                                   setTimeout(function(){
+                                   
+                                    window.location=urlPrincipal;   
+                                   
+                                   
+                                   },2000)
+                                     
+                                       
+                        }
     
                   
                       } 

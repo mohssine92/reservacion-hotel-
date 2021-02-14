@@ -1,5 +1,5 @@
 <?php
-
+ 
 require_once "conexion.php";
  
 Class ModeloReservas{                                                                         /* la tabla principal aqui es la labla a 1 es decir a ella se hace la condicion el where   $tabla1 = "habitaciones";    
@@ -51,12 +51,15 @@ Class ModeloReservas{                                                           
 	Guardar Reserva
 	=============================================*/
 
-	static public function mdlGuardarReserva($tabla, $id_habitacion, $id_usuario, $pago_reserva, $numero_transaccion, $codigo_reserva, $descripcion_reserva, $fecha_ingreso, $fecha_Salida){
+	static public function mdlGuardarReserva($tabla, $id_habitacion, $pago_reserva, $numero_transaccion, $codigo_reserva, $descripcion_reserva, $fecha_ingreso, $fecha_Salida){   /*  $id_usuario, */
+
+		session_start(); 
+		$user_id = $_SESSION["id"];  
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_habitacion, id_usuario, pago_reserva, numero_transaccion, codigo_reserva, descripcion_reserva, fecha_ingreso, fecha_salida) VALUES (:id_habitacion, :id_usuario, :pago_reserva, :numero_transaccion, :codigo_reserva, :descripcion_reserva, :fecha_ingreso, :fecha_salida)");
 
 		$stmt->bindParam(":id_habitacion", $id_habitacion, PDO::PARAM_STR);
-		$stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_STR);
+	    $stmt->bindParam(":id_usuario", $user_id, PDO::PARAM_STR);   /*  , */
 		$stmt->bindParam(":pago_reserva", $pago_reserva, PDO::PARAM_STR);
 		$stmt->bindParam(":numero_transaccion", $numero_transaccion, PDO::PARAM_STR);
 		$stmt->bindParam(":codigo_reserva", $codigo_reserva, PDO::PARAM_STR);

@@ -142,11 +142,20 @@ INFO RESERVAS
 
 					<h1 class="float-left text-white p-2 pb-lg-5">RESERVAS</h1>	
 
-					<h6 class="float-right px-3">
+					<h6 class="float-right px-3">  
+					<?php if (isset($_SESSION["validarSesion"])): ?>   <!-- => si existe variable session -->
+						
+						<?php if ($_SESSION["validarSesion"] == "ok"): ?>     <!-- => confirmo la validacion -->
+						  <br>
+						  <a href="<?php echo $ruta;  ?>perfil" style="color:#FFCC29">Ver tus reservas</a>   <!-- redirecciona a perfil -->
+                        <?php endif ?>
 
-						<br>
-						<a href="<?php echo $ruta;  ?>perfil" style="color:#FFCC29">Ver tus reservas</a>
-
+					<?php else: ?>
+					  
+						 <br>
+						 <a href="#modalIngreso" data-toggle="modal" style="color:#FFCC29">Ver tus reservas</a>   <!-- redericciona  a ingresar al systema -->
+					
+                    <?php endif ?>	
 					</h6>
 
 					<div class="clearfix"></div>
@@ -315,19 +324,39 @@ INFO RESERVAS
 					
 					<div class="col-12 col-lg-6 col-xl-5"> <!-- antes hemos visto como pasar informacion segun necesidad de una pagina a otra pagiina usando un formulario usan metodo post y inputs hidden , en este caso vamos a ver como pasar
 					 todas informaciones de la reserva que nos hara falta en la pagina del perfil para ajecutar la transaccion bancaria . -->
-				  
-				                                            <!-- para detectar elemento a  en Js -->
-					 <a href="<?php echo $ruta;  ?>perfil" class="pagarReserva"
-					 	idHabitacion="<?php echo $reservas[$indice]["id_h"];?>"
-						imgHabitacion="<?php echo $servidor.$galeria[0]; ?>" 
-						fechaIngreso="<?php echo $_POST["fecha-ingreso"];?>"
-						fechaSalida="<?php echo $_POST["fecha-salida"];?>"
+
+					
+					<?php if (isset($_SESSION["validarSesion"])): ?>  <!-- gracias a las variables session que hemos creado al iniciar session , hemos puesto el button en privado  -->
+
+						<?php if ($_SESSION["validarSesion"] == "ok"): ?>
+                                                                              <!-- para detectar elemento a  en Js -->  <!-- y rederige al pagina profil donde se fectua el pago  -->
+							<a href="<?php echo $ruta;  ?>perfil" class="pagarReserva"
+					 	        idHabitacion="<?php echo $reservas[$indice]["id_h"];?>"
+						        imgHabitacion="<?php echo $servidor.$galeria[0]; ?>" 
+						        fechaIngreso="<?php echo $_POST["fecha-ingreso"];?>"
+						        fechaSalida="<?php echo $_POST["fecha-salida"];?>"
 						  
-					  >
-						<!-- recuerda que pagoReserva tendremos que cambiarlo por Js de acuerdo a las modificaciones que hagan al select 
-					    	codigoReserva todavia no la tenemos en la primer instancia   --><!-- Todos estos atributos de elemento a los voy a capturar en js para almacenarlos y llevarlos a archivo de php : info-perfil.php  -->
-					 	<button  type="button" class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button> <!--  =>  type="button" paraque no haga ningun evento de botones  -->
-					 </a>
+					            >
+					    	   <!-- recuerda que pagoReserva tendremos que cambiarlo por Js de acuerdo a las modificaciones que hagan al select 
+					    	   codigoReserva todavia no la tenemos en la primer instancia   --><!-- Todos estos atributos de elemento a los voy a capturar en js para almacenarlos y llevarlos a archivo de php : info-perfil.php  -->
+					 	       <button  type="button" class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button> <!--  =>  type="button" paraque no haga ningun evento de botones  -->
+					        </a>
+
+						<?php endif ?>
+
+					<?php else: ?>  
+					                                                       <!-- js capta elemetos inf de reserva y mandar al cliente a iniciar session o registrarse  -->
+					     	<a href="#modalIngreso" data-toggle="modal"   
+							    class="pagarReserva"   
+					 	        idHabitacion="<?php echo $reservas[$indice]["id_h"];?>"
+						        imgHabitacion="<?php echo $servidor.$galeria[0]; ?>" 
+						        fechaIngreso="<?php echo $_POST["fecha-ingreso"];?>"
+						        fechaSalida="<?php echo $_POST["fecha-salida"];?>"
+					            >
+					 	       <button  type="button" class="btn btn-dark btn-lg w-100">PAGAR <br> RESERVA</button> 
+					        </a>
+				  
+					<?php endif ?>
 
 					</div>
 				</div>
