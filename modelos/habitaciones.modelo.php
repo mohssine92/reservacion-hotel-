@@ -24,11 +24,28 @@ Class ModeloHabitaciones{
 
 	}
 
+	/*=============================================
+	Mostrar Habitacion Singular
+	=============================================*/
+
+	static public function mdlMostrarHabitacion($tabla, $valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_h = :id_h");
+
+		$stmt -> bindParam(":id_h", $valor, PDO::PARAM_INT);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+	
+	}
+
+
   
 }
 
-  /* aqui tengo la respuesta : como sabemos que las rutas no deben coincidir cada ruta presenta una categoria del producto en este caso es habitacion , asi que usamos valor ruta en seleccionar el registro correspondiente en tabla categorias 
-    por su puesto se va seleccionar su id .
-    que a su vez es autoincremental es el factor importante que estamos usando en relacionarnos con tabla habitaciones , asi sabemos que este id de categoria tiene varios registros en tabla de habitaciones asi que como ya tenemos el id de categoria 
-	con inner join podemos seleccionar todos registros en tabla de habitaciones con el id que tenemos asi ya ya tendremos respuesta trae todos objetos es decir todos registros en tabla habitaciones con este id seleccionado esto es todo  */
-	/* asi ya tenemos disponible todo el registro de la tabla categoria + registros de la tabla habitaciones de la categoria elegida  */
+ 

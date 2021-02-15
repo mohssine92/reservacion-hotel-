@@ -19,10 +19,21 @@ Class ControladorHabitaciones{
 		return $respuesta;  /* ASI CON ESTA COLLECCION DE INFS PUEDO CONVERTIR EL MODULO INFO-HABITACIONES - EN MODULO DINAMICOS  */
 
 
-
-
-
 	}  
+
+	/*=============================================
+	Mostrar Habitación Singular
+	=============================================*/
+	
+	static public function ctrMostrarHabitacion($valor){
+
+		$tabla = "habitaciones";
+
+		$respuesta = ModeloHabitaciones::mdlMostrarHabitacion($tabla, $valor);
+
+		return $respuesta;
+
+	}
 
 
 }    
