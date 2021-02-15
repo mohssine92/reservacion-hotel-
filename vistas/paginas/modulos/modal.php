@@ -386,7 +386,7 @@ VENTANA MODAL REGISTRO
             	<?php
             
                   $registroUsuario = new ControladorUsuarios();
-	       	   $registroUsuario -> ctrRegistroUsuario();
+	       	      $registroUsuario -> ctrRegistroUsuario();
 	           
             
             	?>
