@@ -1,9 +1,25 @@
 <?php
 
-$categorias = ControladorCategorias::ctrMostrarCategorias();
-/* echo '<pre class="bg-white">'; print_r($categorias); echo '</pre>'; */
+  $categorias = ControladorCategorias::ctrMostrarCategorias();
+   /* echo '<pre class="bg-white">'; print_r($categorias); echo '</pre>'; */
 
-?>  <!-- para listar en select categoria solicito categorias   -->
+   
+    if(isset($_SESSION["validarSesion"])){
+    
+    	if($_SESSION["validarSesion"] == "ok"){ /* => no nosa sirve captar foto user en modo directo desde variable session , en caso de actualizar desde info-perfil , produzca fallo porque variable sessio sigue con valor ruta foto borrado , haste la cierre de session  */
+    
+    		$item = "id_u";
+    		$valor = $_SESSION["id"];
+    
+    		$usuario = ControladorUsuarios::ctrMostrarUsuario($item, $valor);
+    
+    	}
+    
+    }
+
+
+
+?>  
 
 
 <!--=====================================
@@ -133,7 +149,7 @@ HEADER
 					    <?php if ($_SESSION["modo"] == "directo"): ?>  <!-- preguntamos ahora en que modo esta logueado , porque : si viene por redes sociales no necisitamos concatenar la ruta foto con ruta de nuestro servidos , viene ruta completa 
 					                                                   desde un servidopr externo de redes sociales  -->
 
-						 <img src="<?php echo $servidor.$_SESSION["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px"> 
+						 <img src="<?php echo $servidor.$usuario["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px"> 
 					
 					    <?php else: ?>
 						

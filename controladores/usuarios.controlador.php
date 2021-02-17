@@ -10,10 +10,9 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
  Class ControladorUsuarios{
 
 
-	/*=============================================
-	 REGISTRO DE USUARIO
-	=============================================*/
-
+   /*=============================================
+    REGISTRO DE USUARIO
+   =============================================*/
    public function ctrRegistroUsuario(){
  
 	  if(isset($_POST["Registrarnombre"])){ 
@@ -280,7 +279,7 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
 			   
 				   }else{
 			   
-						$_SESSION["validarSesion"] = "ok";             /* => si ya esta validado se inicia la session justo de aqui  */
+					   $_SESSION["validarSesion"] = "ok";             /* => si ya esta validado se inicia la session justo de aqui  */
 					   $_SESSION["id"] = $respuesta["id_u"];
 					   $_SESSION["nombre"] = $respuesta["nombre"];
 					   $_SESSION["foto"] = $respuesta["foto"];       /* => la ruta de foto es depende del modo  */
@@ -342,21 +341,6 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
 			   
 			   </script>';
 		   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -610,4 +594,94 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
         }	
 
    }
+
+   	/*=============================================
+	  CAMBIAR PASSWORD
+	=============================================*/
+
+	public function ctrCambiarPassword(){
+
+		if(isset($_POST["editarPassword"]) &&  $_POST["idUsuarioPassword"] ==  $_SESSION["id"] ){
+
+			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["editarPassword"])){
+
+				$encriptar = crypt($_POST["editarPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+				$tabla = "usuarios";
+				$id = $_POST["idUsuarioPassword"];
+				$item = "password";
+				$valor = $encriptar;
+
+				$actualizarPassword = ModeloUsuarios::mdlActualizarUsuario($tabla, $id, $item, $valor);   /* => este es metodo sirve para actualizar cualquier campo en tabla usuarios , segun item que pasamos */
+
+				if($actualizarPassword == "ok"){
+
+					echo '<script>
+
+						swal({
+							type:"success",
+						  	title: "¡CORRECTO!",
+						  	text: "¡Sus datos han sido actualizados!",
+						  	showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						  
+						}).then(function(result){
+
+								if(result.value){   
+								    history.back();
+								  } 
+						});
+
+					</script>';
+
+				}
+
+			}else{
+
+				echo'<script>
+
+					swal({
+						type:"error",
+					  	title: "¡CORREGIR!",
+					  	text: "¡No se permiten caracteres especiales!",
+					  	showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+					  
+					}).then(function(result){
+
+							if(result.value){   
+							    history.back();
+							  } 
+					});
+
+				</script>';
+
+		 	}
+
+
+		}
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
