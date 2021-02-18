@@ -9,9 +9,16 @@
     	if($_SESSION["validarSesion"] == "ok"){ /* => no nosa sirve captar foto user en modo directo desde variable session , en caso de actualizar desde info-perfil , produzca fallo porque variable sessio sigue con valor ruta foto borrado , haste la cierre de session  */
     
     		$item = "id_u";
-    		$valor = $_SESSION["id"];
+			$valor = $_SESSION["id"];
+
+			
+			
+
     
-    		$usuario = ControladorUsuarios::ctrMostrarUsuario($item, $valor);
+			$usuario = ControladorUsuarios::ctrMostrarUsuario($item, $valor);
+
+			
+
     
     	}
     
@@ -139,28 +146,31 @@ HEADER
 				<?php if ($_SESSION["validarSesion"] == "ok"): ?>
 
                   <a href="<?php echo $ruta.'perfil'; ?>">   <!-- el aconr que llevario al user A LAPAGINA DE PERFIL  -->
+
 				      
-				    <?php if ($_SESSION["foto"] == ""): ?>
+				    <?php if($usuario["foto"] == ""): ?>
+
 					
 				     	<i class="fas fa-user"></i>  <!-- => poner este icomo de imagen por defecto si el suario logeado no consta de ruta foto -->
 
-			          <?php else: ?>
+			        
+					  <?php else: ?>
 
-					    <?php if ($_SESSION["modo"] == "directo"): ?>  <!-- preguntamos ahora en que modo esta logueado , porque : si viene por redes sociales no necisitamos concatenar la ruta foto con ruta de nuestro servidos , viene ruta completa 
+
+					    <?php if($usuario["modo"] == "directo"): ?>  <!-- preguntamos ahora en que modo esta logueado , porque : si viene por redes sociales no necisitamos concatenar la ruta foto con ruta de nuestro servidos , viene ruta completa 
 					                                                   desde un servidopr externo de redes sociales  -->
 
 						 <img src="<?php echo $servidor.$usuario["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px"> 
 					
 					    <?php else: ?>
 						
-						 <img src="<?php echo $_SESSION["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px">  <!-- modo red social , ruta externa ,  -->
+						 <img src="<?php echo $usuario["foto"]; ?>" class="img-fluid rounded-circle" style="width:30px">  <!-- modo red social , ruta externa ,  -->
 
 				
 					    <?php endif ?>	  <!-- end $_SESSION["modo"] == "directo" -->
 
+				
 					<?php endif ?>	 <!-- enf $_SESSION["foto"] == "" -->
-
-				  
 
                  </a>   <!-- Fin  -->
 

@@ -190,57 +190,57 @@ function testApi(){    /* => pues esta funccion que nos va traer toda informacio
 				processData:false,
 				success:function(respuesta){
 			
-					 console.log("respuesta.ajax.isnert.user=>",respuesta);
+					 console.log("isnert",respuesta);
+					 
+					 if(respuesta = "facebook-connect"){
 			
-					 if(respuesta == "facebook-connect"){
-			
-						 window.location = urlPrincipal+"perfil";
-					 
-					 }else{
-			
-						 swal({
-						   type: "error",
-						   title: "¡ERROR!",
-						   text: "¡El correo electrónico "+email+" ya está registrado con un método diferente a Facebook!",				          
-						   showConfirmButton: true,
-						   confirmButtonText: "Cerrar",
-						   allowOutsideClick: false
-					 
-						 }).then(function(result){
-					 
-							 if(result.value){                                /* en caso el email se encuentra registrado antes de otro modo , necesito borrar las cookies de session de facebook que se generaron justo antes  */ 
-					 
-								  FB.getLoginStatus(function(response){	
-					 
-									   if(response.status === 'connected'){     
-					 
-											   FB.logout(function(response){
-					 
-												   deleteCookie("fblo_139453148022040");  /* =>le pasamos identificador de la app que hemos creado en facebook-developper , para borra cookies de session del usuario  */
-																	  
-												   setTimeout(function(){
-					 
-														  window.location=urlPrincipal+"salir";   /* => redericcionana a fichero de salir.php , donde destroce las variables session creadas al connectar con faccebook en nuestra aplicaccion  */
-			
-					 
-													},500)
-					 
-											   });
-					 
-											   function deleteCookie(name){  /* => tambien necesito que me borre toda informacion de esta cookie */
-					 
-													   document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1992 00:00:01 GMT;';
-											  }
-					 
-									   }
-					 
-								  })
-					 
-							 }							
-					 
-						 })
-					 
-					 }
+						window.location = urlPrincipal+"perfil";
+					
+					}else{
+					
+						swal({
+						  type: "error",
+						  title: "¡ERROR!",
+						  text: "¡El correo electrónico "+email+" ya está registrado con un método diferente a Facebook!",				          
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar",
+						  allowOutsideClick: false
+					
+						}).then(function(result){
+					
+							if(result.value){                                /* en caso el email se encuentra registrado antes de otro modo , necesito borrar las cookies de session de facebook que se generaron justo antes  */ 
+					
+								 FB.getLoginStatus(function(response){	
+					
+									  if(response.status === 'connected'){     
+					
+											  FB.logout(function(response){
+					
+												  deleteCookie("fblo_139453148022040");  /* =>le pasamos identificador de la app que hemos creado en facebook-developper , para borra cookies de session del usuario  */
+																	 
+												  setTimeout(function(){
+					
+														 window.location=urlPrincipal+"salir";   /* => redericcionana a fichero de salir.php , donde destroce las variables session creadas al connectar con faccebook en nuestra aplicaccion  */
+					
+					
+												   },500)
+					
+											  });
+					
+											  function deleteCookie(name){  /* => tambien necesito que me borre toda informacion de esta cookie */
+					
+													  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1992 00:00:01 GMT;';
+											 }
+					
+									  }
+					
+								 })
+					
+							}							
+					
+						})
+					
+					}
 					
 				   
 				}
