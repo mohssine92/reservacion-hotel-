@@ -51,12 +51,11 @@ Class ModeloReservas{                                                           
 	Guardar Reserva
 	=============================================*/
 
-	static public function mdlGuardarReserva($tabla, $id_habitacion, $pago_reserva, $numero_transaccion, $codigo_reserva, $descripcion_reserva, $fecha_ingreso, $fecha_Salida){   /*  $id_usuario, */
+	static public function mdlGuardarReserva($tabla, $id_habitacion, $user_id, $pago_reserva, $numero_transaccion, $codigo_reserva, $descripcion_reserva, $fecha_ingreso, $fecha_Salida){   /*  $id_usuario, */
 
-		session_start(); 
-		$user_id = $_SESSION["id"];  
+		$connection = Conexion::conectar();
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_habitacion, id_usuario, pago_reserva, numero_transaccion, codigo_reserva, descripcion_reserva, fecha_ingreso, fecha_salida) VALUES (:id_habitacion, :id_usuario, :pago_reserva, :numero_transaccion, :codigo_reserva, :descripcion_reserva, :fecha_ingreso, :fecha_salida)");
+		$stmt = $connection->prepare("INSERT INTO $tabla(id_habitacion, id_usuario, pago_reserva, numero_transaccion, codigo_reserva, descripcion_reserva, fecha_ingreso, fecha_salida) VALUES (:id_habitacion, :id_usuario, :pago_reserva, :numero_transaccion, :codigo_reserva, :descripcion_reserva, :fecha_ingreso, :fecha_salida)");
 
 		$stmt->bindParam(":id_habitacion", $id_habitacion, PDO::PARAM_STR);
 	    $stmt->bindParam(":id_usuario", $user_id, PDO::PARAM_STR);   /*  , */
@@ -69,7 +68,10 @@ Class ModeloReservas{                                                           
 
 		if($stmt->execute()){
 
-			return "ok";
+			
+			$id = $connection->lastInsertId();  /* => para que nos funccina la funccion que returna last_id , tenemos que pasar la figura de conexion en una variable  */
+
+			return $id;
 
 		}else{
 
@@ -102,6 +104,33 @@ Class ModeloReservas{                                                           
 		
 	}
 
+	/*=============================================
+	Crear testimonio Vacío
+	=============================================*/
+	static public function mdlCrearTestimonio($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(reserva_id, usuario_id, habitacion_id, testimonio, aprobado) VALUES (:id_res, :id_us, :id_hab, :testimonio, :aprobado)");
+
+		$stmt->bindParam(":id_res", $datos["reserva_id"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_us", $datos["usuario_id"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_hab", $datos["habitacion_id"], PDO::PARAM_STR);
+		$stmt->bindParam(":testimonio", $datos["testimonio"], PDO::PARAM_STR);
+		$stmt->bindParam(":aprobado", $datos["aprobado"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok"; 
+
+		}else{
+
+			return "error";
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 
 
 
