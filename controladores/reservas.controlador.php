@@ -80,6 +80,90 @@ Class ControladorReservas{
 		
 	}
 
+	/*=============================================
+	Mostrar Testimonios
+	=============================================*/
+
+	static public function ctrMostrarTestimonios($item, $valor){
+
+		$tabla1 = "testimonios";
+		$tabla2 = "habitaciones";
+		$tabla3 = "reservas";
+		$tabla4 = "usuarios";
+
+		$respuesta = ModeloReservas::mdlMostrarTestimonios($tabla1, $tabla2, $tabla3, $tabla4, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+		/*=============================================
+	Actualizar Testimonio
+	=============================================*/
+
+	public function ctrActualizarTestimonio(){
+
+		if(isset($_POST["actualizarTestimonio"])){
+			/* ?\\¿\\!\\¡\\:\\,\\.\\ */
+
+			if(preg_match('/^[.a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["actualizarTestimonio"])){   /* va permitir pasar solo [] los caracteres declarados dentro */
+
+				$tabla = "testimonios";
+
+				$datos = array("id_test"=>$_POST["idTestimonio"],
+							   "testimonio"=>$_POST["actualizarTestimonio"]);
+
+				$respuesta = ModeloReservas::mdlActualizarTestimonio($tabla, $datos);
+
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+							swal({
+									type:"success",
+								  	title: "¡CORRECTO!",
+								  	text: "El testimonio ha sido actualizado correctamente",
+								  	showConfirmButton: true,
+									confirmButtonText: "Cerrar"
+								  
+							}).then(function(result){
+
+									if(result.value){   
+									    history.back();
+									  } 
+							});
+
+						</script>';
+
+				}
+
+			}else{
+
+				echo'<script>
+
+					swal({
+							type:"error",
+						  	title: "¡CORREGIR!",
+						  	text: "¡No se permiten caracteres especiales!",
+						  	showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						  
+					}).then(function(result){
+
+							if(result.value){   
+							    history.back();
+							  } 
+					});
+
+				</script>';	
+
+			}
+		
+		}
+
+	}
+
+
 
 
 }

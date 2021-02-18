@@ -132,6 +132,58 @@ Class ModeloReservas{                                                           
 
 	}
 
+	/*=============================================
+	Mostrar testimonios
+	=============================================*/
+
+	static public function mdlMostrarTestimonios($tabla1, $tabla2, $tabla3, $tabla4, $item, $valor){
+
+
+		$tabla1 = "testimonios";
+		$tabla2 = "habitaciones";
+		$tabla3 = "reservas";
+		$tabla4 = "usuarios";
+
+		$stmt = Conexion::conectar()->prepare("SELECT $tabla1.*, $tabla2.*, $tabla3.*,  $tabla4.* FROM $tabla1 INNER JOIN $tabla2 ON $tabla1.habitacion_id = $tabla2.id_h  INNER JOIN $tabla3 ON $tabla1.reserva_id = $tabla3.id_reserva  INNER JOIN $tabla4 ON $tabla1.usuario_id = $tabla4.id_u WHERE $item = :$item ORDER BY id_test DESC");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+	}
+
+	/*=============================================
+	 Actualizar testimonio
+	=============================================*/
+
+	static public function mdlActualizarTestimonio($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET testimonio = :testimonio WHERE id_test = :id_testimonio");
+
+		$stmt -> bindParam(":testimonio", $datos["testimonio"], PDO::PARAM_STR);
+		$stmt -> bindParam(":id_testimonio", $datos["id_test"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+
+		}else{
+
+			return "error";
+
+		}
+
+		$stmt-> close();
+
+		$stmt = null;
+
+	}
+
 
 
 
