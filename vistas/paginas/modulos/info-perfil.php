@@ -34,7 +34,7 @@ foreach ($reservas as $key => $value) {
 INFO PERFIL
 ======================================-->
 
-<div class="infoPerfil container-fluid bg-white p-0 pb-5 mb-5">
+<div class="infoPerfil container-fluid bg-white p-0 pb-5 pb-5">
 	
 	<div class="container">
 		

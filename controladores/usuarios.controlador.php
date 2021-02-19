@@ -908,27 +908,157 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
 
 	}
 
+	/*=============================================
+	FORMULARIO CONTACTENOS
+	=============================================*/
+    public function ctrFormularioContactenos(){
 
+		if(isset($_POST["mensajeContactenos"])){
+
+			if( preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombreContactenos"]) &&
+				preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["apellidoContactenos"]) &&
+				preg_match('/^[0-9- ]+$/', $_POST["movilContactenos"]) &&
+			    preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["emailContactenos"]) &&
+			    preg_match('/^[?\\¿\\!\\¡\\:\\,\\.\\a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["mensajeContactenos"])
+			 ){
+				
+				/*=============================================
+				VERIFICACIÓN CORREO ELECTRÓNICO
+				=============================================*/
+
+				date_default_timezone_set("Africa/Casablanca"); 
+
+				/* $ruta = ControladorRuta::ctrRuta(); */
+
+				$mail = new PHPMailer;
+
+				$mail->CharSet = 'UTF-8';
+
+				$mail->isMail();
+
+				$mail->setFrom('cursos@tutorialesatualcance.com', 'Tutoriales a tu Alcance');
+
+				$mail->addReplyTo('mobmaroc@gmail.com', 'Tutoriales a tu Alcance');  
+
+				$mail->Subject = "Por favor verifique su dirección de correo electrónico";
+
+				$mail->addAddress("mohcineikkou@gmail.com");   /* => quien va recibir el correo  */  /* correo de mi deminio donde recibo mensaje de cliente  */  /* en este caso la impresa no el cliente */
+
+				$mail->msgHTML('<div style="width:100%; background:#eee; position:relative; font-family:sans-serif; padding-bottom:40px">
 	
+						<center>
+
+							<img style="padding:20px; width:10%" src="https://tutorialesatualcance.com/tienda/logo.png">
+
+						</center>
+
+						<div style="position:relative; margin:auto; width:600px; background:white; padding-bottom:20px">
+
+							<center>
+								
+								<img style="padding:20px; width:15%" src="https://tutorialesatualcance.com/tienda/icon-email.png">
+
+								<h3 style="font-weight:100; color:#999;">HA RECIBIDO UNA CONSULTA</h3>
+
+								<hr style="width:80%; border:1px solid #ccc">
+
+								<h4 style="font-weight:100; color:#999; padding:0px 20px; text-transform:uppercase">'.$_POST["nombreContactenos"].' '.$_POST["apellidoContactenos"].'</h4>
+								<h4 style="font-weight:100; color:#999; padding:0px 20px;">Móvil: '.$_POST["movilContactenos"].'</h4>
+								<h4 style="font-weight:100; color:#999; padding:0px 20px;">Email: '.$_POST["emailContactenos"].'</h4>
+								<h4 style="font-weight:100; color:#999; padding:0px 20px">'.$_POST["mensajeContactenos"].'</h4>
+
+								<hr style="width:80%; border:1px solid #ccc">
+
+							</center>
+
+						</div>
+						
+					</div>
+				');
+
+				$envio = $mail->Send();
+
+				if(!$envio){
+
+					echo'<script>
+
+						swal({
+								type:"error",
+							  	title: "¡ERROR!",
+							  	text: "¡Ha ocurrido un problema enviando el mensaje, vuelva a intentarlo!",
+							  	showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							  
+						}).then(function(result){
+
+								if(result.value){   
+								    history.back();
+								  } 
+						});
+
+					</script>';
 
 
 
+				}else{
 
 
+					echo'<script>
+
+					    swal({
+					    		 type: "success",
+					    		  title: "¡OK!",
+					    		  text: "¡Su mensaje ha sido enviado, muy pronto le responderemos!",					 
+					    		showConfirmButton: false,
+					    		confirmButtonText: "cerra"
+					    	
+					    	}).then(function(result){
+    
+					    		if(result.value){
+					    			/* history.back(); */
+					    		}
+					    });
+
+						setTimeout(function(){
+                                   
+							window.location="http://localhost/reservas-h/perfil";   
+						   
+						   
+						   },3000)
+
+			           </script>';
+				
+
+				}	
 
 
+			}else{
 
 
+				echo '<script>
 
+					swal({
+					 		type:"error",
+							title: "¡ERROR!",
+						  	text: "¡Problemas al enviar el mensaje, revise que no tenga caracteres especiales!",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						
+						}).then(function(result){
 
+							if(result.value){
+								history.back();
+							}
+					});
 
+				</script>';
 
+			}
 
+		}
 
-
-
-
-
+	}
+ 
 
 
 }

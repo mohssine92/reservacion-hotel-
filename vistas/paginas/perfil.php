@@ -5,9 +5,17 @@
  
     	if($_SESSION["validarSesion"] == "ok"){   /* por seguridad vovlemos a preguntar , porque puede existir esta variable pero con otro valor  */
    
-            /* ahora puedo incluir estos modulos privados */
-   	       include "modulos/banner-interior.php";  /* container-fluid img width 100% */
-           include "modulos/info-perfil.php";  /*  row col col perfil  */
+          
+
+           include "modulos/banner-interior.php";
+           include "modulos/info-perfil.php";
+           include "modulos/habitaciones.php";
+           include "modulos/planes.php";
+           include "modulos/planes-movil.php";
+           include "modulos/recorrido-pueblo.php";
+           include "modulos/restaurante.php";
+           echo '<div class="mb-5"></div>';
+       
       
     	} 
  

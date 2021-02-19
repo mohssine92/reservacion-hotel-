@@ -4,6 +4,12 @@ var urlPrincipal = $("#urlPrincipal").val();
 var urlServidor = $("#urlServidor").val();
 
 
+/*=============================================
+ Limpiar formulario contactano despues de mandar mensaje 
+=============================================*/
+  $(".contactenos form input, .contactenos form textarea").val("");  
+
+
 
 /*=============================================
 ANIMACIONES CON EL SCROLL
