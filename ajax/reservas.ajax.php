@@ -108,6 +108,23 @@ class AjaxReservas{
 
 	}
 
+	/*=============================================
+	Traer Testimonios
+	=============================================*/
+
+	public $id_h;
+
+	public function ajaxTraerTestimonios(){
+
+		$item = "habitacion_id";
+		$valor = $this->id_h;
+
+		$respuesta = ControladorReservas::ctrMostrarTestimonios($item, $valor);  /* => devuelveme todoa testimonis relacionados con este  id habitacion   */
+
+		echo json_encode($respuesta);
+
+	}
+
 
 
 } /* clase  AjaxReservas  */
@@ -168,6 +185,18 @@ if(isset($_POST["id_habitacion"])){
   $datosReserva-> ajaxInsertarDatosReserva();
 	
    
+}
+
+/*=============================================
+Traer Testimonios
+=============================================*/
+
+if(isset($_POST["id_h"])){
+
+	$id_h = new AjaxReservas();
+	$id_h -> id_h = $_POST["id_h"];
+	$id_h -> ajaxTraerTestimonios();
+
 }
 
 

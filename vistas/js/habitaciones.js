@@ -102,6 +102,122 @@ $(".cabeceraHabitacion ul.nav li.nav-item a").click(function(e){   /* cuando doy
 		  
 		  $('input[name="id-habitacion"]').val(respuesta[orden]["id_h"])   /* actualizar datos de value de este input  */
 
+		  	/*=============================================
+			TRAER TESTIMONIOS
+			=============================================*/
+
+			var datosTestimonios = new FormData();
+			datosTestimonios.append("id_h", respuesta[orden]["id_h"]);   /* => respuesta trae iteams de tabla categorias y habitaciones */ /* ami mi interesa id de habitacion para mostrar tetimonios sobre la habitacion cliqueada de manera asincrona */
+
+			$.ajax({
+
+				url:urlPrincipal+"ajax/reservas.ajax.php",
+				method: "POST",
+				data: datosTestimonios,
+				cache: false,
+				contentType: false,
+				processData: false,
+				dataType:"json",
+				success:function(respuesta){
+
+                  /*  console.log("testimonis",respuesta['0']['id_test']); */
+
+				    $(".testimonios .row").html("");   /* vaciar row  */
+
+					$(".verMasTestimonios").remove();     /* se desparezca  */
+					$(".verMenosTestimonios").remove();   /* y si esto en esta tambien se desparesca */
+
+					$(".testimonios .row").css({'height':"auto"})   /* => la altura del row convierte en altuta automatica  adbtable al contenido anterior*/
+
+					var cantidadTestimonios = 0;
+					var idTestimonios = [];
+				                /* => capturar altura del row  */
+					var alturaTestimoniosCort = $(".testimonios .row div").height()+50
+
+					/* Primero preguntamos que testimonios estan aprobados  */
+					for(var i = 0; i < respuesta.length; i ++){    /* todos ids tetimonios del id habitacion a recorrero  */
+
+						if(respuesta[i]["aprobado"] != 0){                 /* si estan aprobados  */
+
+							cantidadTestimonios++;                           /* aumentamos */
+							idTestimonios.push(respuesta[i]["id_test"]);    
+
+						}
+
+					}
+
+					if(cantidadTestimonios >= 4){
+                
+					   
+						
+						var foto = [];
+
+						for(var i = 0; i < idTestimonios.length; i ++){   /* => un array de todos ids de testimonios relacionados con id habitacion  */
+
+							if(respuesta[i]["foto"] == ""){    /* => respuesta es un innerjoin de tablas : testimonios - habitaciones - reservas - ususarios  */
+  
+								foto[i] = urlServidor+"vistas/img/usuarios/default/default.png";
+							
+							}else{
+
+								if(respuesta[i]["modo"] == "directo"){
+
+									foto[i] = urlServidor+respuesta[i]["foto"];
+
+								}else{
+
+									foto[i] = respuesta[i]["foto"];  /* => fotos redes sociales no hace falta ruta del servidor viene completa desde el exterior  */
+
+								}
+
+							}
+
+							$(".testimonios .row").append(`
+
+								<div class="col-12 col-lg-3 text-center p-4">
+
+									<img src="`+foto[i]+`" class="img-fluid rounded-circle w-50">	
+																
+									<h4 class="py-4">`+respuesta[i]["nombre"]+`</h4>
+
+									<p>`+respuesta[i]["testimonio"]+`</p>
+
+								</div>
+
+							`);
+
+							$(".testimonios .row").css({'height': $(".testimonios .row div").height()+50, 
+	                           'overflow':'hidden'}) 
+
+						 	
+	 										
+
+						}
+
+
+
+
+					}else{
+                     
+						$(".testimonios .row").html('<div class="col-12 text-white text-center">¡Esta habitación aún no tiene testimonios!</div>');	
+
+					}
+
+					if(cantidadTestimonios > 4){
+
+						$(".testimonios .container").after(`
+							
+			     			<button class="btn btn-default px-4 float-right verMasTestimonios">VER MÁS</button>
+			     			
+			     		`);
+
+					}
+
+
+				}
+
+			})
+
 
 
 
@@ -115,3 +231,40 @@ $(".cabeceraHabitacion ul.nav li.nav-item a").click(function(e){   /* cuando doy
 
 
 })
+
+
+
+/*=============================================
+BLOQUE VER MAS TESTIMONIOS cuando son myor que 4 testimonios
+=============================================*/
+
+ var alturaTestimonios = $(".testimonios .row").height();                 /* => capturar altura del row  */
+ var alturaTestimoniosCorta = $(".testimonios .row div").height()+50;     /* => capto la altura de la columna y le añado 50 unidades mas  */
+
+ $(".testimonios .row").css({'height':alturaTestimoniosCorta+"px" ,'overflow':'hidden' })   /* => concatenar los pixeles importante  */ /* nada mas pasamos la altuta maxima , lo que sobre lo ocultas , asi no hay espacio a mas 4 columnas  */
+
+ $(document).on("click", ".verMasTestimonios", function(){    /* => aplico el evento despues de cargar el docuemento porque el button sera apliacado despues de la lectura php podra que no lo tome js , por eso  */
+
+	$(".testimonios .row").css({'height':"auto", 
+	'overflow':'hidden'})   /* => recupèrar altura orifginal  */
+								
+
+ 	$(this).removeClass("verMasTestimonios");
+	$(this).addClass("verMenosTestimonios");
+	$(this).html("Ver menos"); 
+
+ }) 
+
+ $(document).on("click", ".verMenosTestimonios", function(){
+
+	$(".testimonios .row").css({'height': $(".testimonios .row div").height()+50, 
+								'overflow':'hidden'})
+
+	$(this).removeClass("verMenosTestimonios");
+	$(this).addClass("verMasTestimonios");
+	$(this).html("Ver más");
+
+})
+
+ 
+

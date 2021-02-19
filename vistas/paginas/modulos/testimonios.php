@@ -75,14 +75,6 @@ TESTIMONIOS
 
                  				  </div>';
 
-		
-							    
-					        
-		    
-					        
-
-						
-
 					
 						}
 						
@@ -101,25 +93,25 @@ TESTIMONIOS
 				  ?> 
     
      
-			    
-
+            	
 		   
 				
 			
-			</div>
+			</div>  <!-- row -->
 	
-		<!-- 	<button class="btn btn-default float-right px-4">VER MÁS</button>	 -->
-       
-	   <?php
 		
-
-		if($cantidadTestimonios >= 4){
-
-		echo '<button class="btn btn-default float-right px-4 verMasTestimonios">VER MÁS</button>';
-
-		}
-
-		?>
+			<?php
+            		
+            
+            		if($cantidadTestimonios > 4){
+            
+            	    	echo '<button class="btn btn-default float-right px-4 verMasTestimonios">VER MÁS</button>';
+            
+            		}
+            
+            	?>
+            
+	  
 
 		
 	
