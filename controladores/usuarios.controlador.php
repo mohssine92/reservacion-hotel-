@@ -1005,28 +1005,28 @@ use PHPMailer\PHPMailer\Exception;   /* =>  para mirar las excepcciones en caso 
 
 					echo'<script>
 
-					    swal({
-					    		 type: "success",
-					    		  title: "¡OK!",
-					    		  text: "¡Su mensaje ha sido enviado, muy pronto le responderemos!",					 
-					    		showConfirmButton: false,
-					    		confirmButtonText: "cerra"
-					    	
-					    	}).then(function(result){
-    
-					    		if(result.value){
-					    			/* history.back(); */
-					    		}
-					    });
-
-						setTimeout(function(){
-                                   
-							window.location="http://localhost/reservas-h/perfil";   
-						   
-						   
-						   },3000)
-
-			           </script>';
+					        swal({
+					        		 type: "success",
+					        		  title: "¡OK!",
+					        		  text: "¡Su mensaje ha sido enviado, muy pronto le responderemos!",					 
+					        		showConfirmButton: false,
+					        		confirmButtonText: "cerra"
+					        	
+					        	}).then(function(result){
+        
+					        		if(result.value){
+					        			/* history.back(); */
+					        		}
+					        });
+        
+					        setTimeout(function(){
+					        		   
+					        	window.location="http://localhost/reservas-h/perfil";   
+					           
+					           
+					           },3000)
+        
+				   </script>';
 				
 
 				}	
