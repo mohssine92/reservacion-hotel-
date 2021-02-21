@@ -2,48 +2,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>   
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Hotel Portobelo | backend </title>
+     <title>Hotel Portobelo | backend </title>
 
+     <!-- icono --> 
     <link rel="icon" href="vistas/img/plantilla/icono.jpg">
 
-    <!--=====================================
+  <!--=====================================
 	  VÍNCULOS CSS
 	======================================-->
-	<!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=">
-    
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    
-    <!-- Theme style -->
-    <script src="vistas/css/plugins/adminlte.min.css"></script>
-    
-   
-  <!--=====================================
-	VÍNCULOS JAVASCRIPT
-	======================================-->
-  <!-- jQuery -->  <!-- puede eviatar este archivo -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Boostrap.css  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> 
+  <!-- Font Awesome Icons -->
+  <!-- <link rel="stylesheet" href="vistas/css/plugins/all.min.css"> -->
+  <script src="https://kit.fontawesome.com/3126ef50ac.js" crossorigin="anonymous"></script>
+  <!-- Theme style -->
+  <link rel="stylesheet" href="vistas/css/plugins/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  <!-- Option 1: Bootstrap Bundle with Popper -->  <!-- mas completo -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
-  <!-- AdminLTE App -->
-	<script src="vistas/js/plugins/adminlte.min.js"></script>
-
+<!--=====================================
+ VÍNCULOS js
+======================================--> 
+  <!-- jQuery -->
+<script src="vistas/js/plugins/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="vistas/js/plugins/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="vistas/js/plugins/adminlte.min.js"></script>
 
 
 </head>
-<body>
+   <body class="hold-transition sidebar-mini sidebar-collapse">
+  
+   <div class="wrapper">
     
+    <?php
+    
+      include "paginas/modulos/header.php";
+      include "paginas/modulos/menu.php";
+      include "paginas/inicio.php"; 
+      include "paginas/modulos/footer.php";
+
+
+   ?>
+ 
+  <div>
+
 </body>
+
 </html>
 
 
