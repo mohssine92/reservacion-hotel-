@@ -8,7 +8,7 @@
 
           <div class="col-sm-6">
 
-            <h1>Analiticas</h1>
+            <h1>Habitaciones</h1>
 
           </div>
 
@@ -17,7 +17,7 @@
             <ol class="breadcrumb float-sm-right">
 
               <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Analiticas</li> <!-- se trata de pagima anliticas  -->
+              <li class="breadcrumb-item active">Habitaciones</li> <!-- se trata de pagima anliticas  -->
 
             </ol>
 
@@ -75,6 +75,4 @@
       </div>
     
     </section>
-    <!-- /.content -->
-  
-  </div>
+    <!-- /.content -->Habitaciones

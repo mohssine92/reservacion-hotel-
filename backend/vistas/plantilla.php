@@ -46,7 +46,7 @@
     
       include "paginas/modulos/header.php";
       include "paginas/modulos/menu.php";
-      include "paginas/inicio.php"; 
+      include "paginas/recorrido.php"; 
       include "paginas/modulos/footer.php";
 
 
