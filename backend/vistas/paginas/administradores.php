@@ -42,25 +42,69 @@
             <div class="card card-info card-outline">
 
               <div class="card-header">
+   
+                <button class="btn btn-primary btn-sm">Crear nuevo administrador</button>
 
-                <h3 class="card-title">Title</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
-
+             <!--    <div class="card-tools"> -->  <!-- Lo hemos quitado sob botones para mostrar y uccultar card-body and card footer -->
+                
               </div>
 
               <div class="card-body">
-                Start creating your amazing application!
+                 
+                 <table class="table table-bordered table-striped dt-responsive tablaAdministradores" width="100%">
+                   
+                    <thead>
+                     
+                        <tr>  <!-- fila -->
+                          
+                          <th style="width:10px">#</th>  <!-- columna -->  <!-- este style reducir le ancho  -->
+                          <th>Nombre</th>
+                          <th>Usuario</th>
+                          <th>Perfil</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+      
+                        </tr>
+   
+                   </thead>
+
+                   
+                    <tbody>   <!--=> bnody de la tabla  -->
+                      
+                        <tr>    
+                         
+                         <td>1</td>
+                         <td>Hotel Portobelo</td>
+                         <td>portobelo</td>
+                         <td>Administrador</td>
+                         <td><button class="btn btn-info btn-sm">Activo</button></td>
+                         <td>
+      
+                           <div class='btn-group'>
+                           
+                             <button class="btn btn-warning btn-sm">
+                               <i class="fas fa-pencil-alt text-white"></i>
+                             </button>  
+      
+                             <button class="btn btn-danger btn-sm">
+                               <i class="fas fa-trash-alt"></i>
+                             </button> 
+      
+                           </div> 
+      
+                         </td>
+      
+                       </tr> 
+      
+                     </tbody>
+ 
+               </table>
+
               </div>
 
               <!-- /.card-body -->
               <div class="card-footer">
-                Footer
+              <!--   lO dejo vacio genera una sombrita guay -->
               </div>
 
               <!-- /.card-footer-->
