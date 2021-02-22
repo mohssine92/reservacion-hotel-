@@ -75,4 +75,6 @@
       </div>
     
     </section>
-    <!-- /.content -->Habitaciones
+    <!-- /.content -->
+  
+  </div>

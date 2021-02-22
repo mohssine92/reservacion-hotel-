@@ -1,4 +1,11 @@
+<?php 
 
+  $ruta = ControladorRuta::ctrRuta();
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>   
@@ -46,7 +53,42 @@
     
       include "paginas/modulos/header.php";
       include "paginas/modulos/menu.php";
-      include "paginas/recorrido.php"; 
+       
+      /*=============================================
+		      Navagación de páginas
+		   =============================================*/
+       if(isset($_GET["pagina"])){
+           
+        if($_GET["pagina"] == "inicio" ||
+        $_GET["pagina"] == "administradores" ||
+        $_GET["pagina"] == "banner" ||
+        $_GET["pagina"] == "planes" ||
+        $_GET["pagina"] == "categorias" ||
+        $_GET["pagina"] == "habitaciones" ||
+        $_GET["pagina"] == "reservas" ||
+        $_GET["pagina"] == "testimonios" ||
+        $_GET["pagina"] == "usuarios" ||
+        $_GET["pagina"] == "recorrido" ||
+        $_GET["pagina"] == "restaurante" ||
+        $_GET["pagina"] == "salir"){
+
+           include "paginas/".$_GET["pagina"].".php";
+
+       }else{
+   
+         include "paginas/error404.php";
+   
+       }
+
+
+
+       }else{
+
+        include "paginas/inicio.php"; 
+
+
+       }
+      
       include "paginas/modulos/footer.php";
 
 
