@@ -1,6 +1,8 @@
 <?php 
+   session_start();
 
-  $ruta = ControladorRuta::ctrRuta();
+   $ruta = ControladorRuta::ctrRuta();
+   $rutaBackend = ControladorRuta::ctrRutaBackend();
 
 
 
@@ -45,6 +47,17 @@
 
 
 </head>
+
+
+<?php if (!isset($_SESSION["validarSesionBackend"])):   /* => si no viene informacion en la variable de session  */   /* siempre entra aqui cuando la sessio no esta iniciada */ /* => esta es pagina de bloqueo */
+
+  include "paginas/login.php";
+
+?>
+
+<?php else: ?>  <!-- pagina de login trae clases diferentes en el body asi evitamos conflictos -->
+
+
    <body class="hold-transition sidebar-mini sidebar-collapse">
   
    <div class="wrapper">
@@ -97,6 +110,8 @@
   <div>
 
 </body>
+
+<?php endif ?>
 
 </html>
 

@@ -10,7 +10,7 @@ class ControladorRuta{
 
 	static public function ctrRutaBackend(){
 
-		return "http://localhost/reservas-h/backend/";
+		return "http://localhost/reservas-h/backend/";   /* => nombre domino + el nombre que quieras poner al backend */
 
 	}
 
