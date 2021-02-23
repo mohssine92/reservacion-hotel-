@@ -63,15 +63,16 @@ class ControladorAdministradores{
 	Mostrar Administradores
 	=============================================*/
 
-/* 	static public function ctrMostrarAdministradores($item, $valor){
+	static public function ctrMostrarAdministradores($item, $valor){
 
 		$tabla = "administradores";
-
+		/* $item = null */
+        /* $valor = null */
 		$respuesta = ModeloAdministradores::mdlMostrarAdministradores($tabla, $item, $valor);
 
 		return $respuesta;
 
-	} */
+	} 
 
 	/*=============================================
 	Registro de administrador

@@ -21,7 +21,7 @@ class ModeloAdministradores{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");   /* => ajax ejecuta controlador con iteam u valor en null */
 
 			$stmt -> execute();
 

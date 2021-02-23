@@ -35,6 +35,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+  <!-- DataTables -->
+	<link rel="stylesheet" href="vistas/css/plugins/dataTables.bootstrap4.min.css">	
+	<link rel="stylesheet" href="vistas/css/plugins/responsive.bootstrap.min.css">
+
+
 <!--=====================================
  VÍNCULOS js
 ======================================--> 
@@ -44,6 +49,13 @@
 <script src="vistas/js/plugins/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="vistas/js/plugins/adminlte.min.js"></script>
+
+	<!-- DataTables 
+	https://datatables.net/-->
+  <script src="vistas/js/plugins/jquery.dataTables.min.js"></script>
+  <script src="vistas/js/plugins/dataTables.bootstrap4.min.js"></script> 
+	<script src="vistas/js/plugins/dataTables.responsive.min.js"></script>
+  <script src="vistas/js/plugins/responsive.bootstrap.min.js"></script>	
 
 
 </head>
@@ -110,6 +122,8 @@
   <div>
 
 </body>
+
+<script src="vistas/js/administradores.js"></script>
 
 <?php endif ?>
 

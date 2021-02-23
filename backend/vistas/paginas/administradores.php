@@ -51,7 +51,7 @@
 
               <div class="card-body">
                  
-                 <table class="table table-bordered table-striped dt-responsive tablaAdministradores" width="100%">
+                 <table class="table table-bordered table-striped dt-responsive tablaAdministradores" width="100%">  <!-- paar poder trabajar con datatable agregar dt-responsive y para javascript agregar tablaAdministradores  -->
                    
                     <thead>
                      
@@ -71,7 +71,7 @@
                    
                     <tbody>   <!--=> bnody de la tabla  -->
                       
-                        <tr>    
+                         <!-- <tr>    
                          
                          <td>1</td>
                          <td>Hotel Portobelo</td>
@@ -94,8 +94,8 @@
       
                          </td>
       
-                       </tr> 
-      
+                       </tr>  
+       -->
                      </tbody>
  
                </table>
