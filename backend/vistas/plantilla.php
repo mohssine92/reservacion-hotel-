@@ -4,8 +4,14 @@
    $ruta = ControladorRuta::ctrRuta();
    $rutaBackend = ControladorRuta::ctrRutaBackend();
 
+   if(isset($_SESSION["idBackend"])){
 
-
+    $admin = ControladorAdministradores::ctrMostrarAdministradores("id", $_SESSION["idBackend"]);
+    
+   /*  echo '<pre>'; print_r($admin); echo '</pre>'; */
+  
+  }
+  
 
 ?>
 <!DOCTYPE html>
@@ -56,6 +62,10 @@
   <script src="vistas/js/plugins/dataTables.bootstrap4.min.js"></script> 
 	<script src="vistas/js/plugins/dataTables.responsive.min.js"></script>
   <script src="vistas/js/plugins/responsive.bootstrap.min.js"></script>	
+
+  <!-- SWEET ALERT 2 -->	
+	<!-- https://sweetalert2.github.io/ -->
+	<script src="vistas/js/plugins/sweetalert2.all.js"></script> 
 
 
 </head>

@@ -51,8 +51,8 @@
 
          <!-- Botón página administradores -->
 
-       
-          
+         <?php if ($admin["perfil"] == "Administrador"): ?> <!-- este button parezca solo a los administradores  -->  <!-- tambien tenemos que evitar entrar a la pagina forzando la url señor inteligente  -->
+         
         <li class="nav-item">
 
           <a href="administradores" class="nav-link">
@@ -64,6 +64,8 @@
           </a>
         
         </li>
+        
+        <?php endif ?>
 
           <!-- Botón página banner -->
 
@@ -119,7 +121,8 @@
         </li>
 
         <!-- Botón página reservas -->
-
+        <?php if ($admin["perfil"] == "Administrador"): ?>
+    
         <li class="nav-item">
         
           <a href="reservas" class="nav-link">
@@ -131,6 +134,8 @@
           </a>
         
         </li>
+
+        <?php endif ?>
 
          <!-- Botón página testimonios -->
 
@@ -147,7 +152,8 @@
         </li>
 
          <!-- Botón página usuarios -->
-
+         <?php if ($admin["perfil"] == "Administrador"): ?>
+         
         <li class="nav-item">
          
          <a href="usuarios" class="nav-link">
@@ -159,6 +165,8 @@
          </a>
         
         </li>
+
+        <?php endif ?>
 
           <!-- Botón página recorrido -->
 

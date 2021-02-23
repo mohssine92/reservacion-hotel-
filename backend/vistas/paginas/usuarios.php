@@ -1,3 +1,18 @@
+<?php 
+
+  if($admin["perfil"] != "Administrador"){
+
+    echo '<script>
+
+      window.location = "banner";
+
+    </script>';
+
+    return;
+
+  }
+
+ ?>
 <div class="content-wrapper" style="min-height: 1364.81px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">

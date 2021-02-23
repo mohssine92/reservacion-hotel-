@@ -17,7 +17,7 @@ class ModeloAdministradores{
 
 			$stmt -> execute();
 
-			return $stmt -> fetch();
+			return $stmt -> fetch();  
 
 		}else{
 
@@ -39,15 +39,16 @@ class ModeloAdministradores{
 	Registro administradores
 	=============================================*/
 
-	/* static public function mdlRegistroAdministradores($tabla, $datos){
+	static public function mdlRegistroAdministradores($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password,  perfil, estado) VALUES (:nombre, :usuario, :password, :perfil, :estado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(perfil, nombre, usuario,  password, estado) VALUES (:perfil, :nombre, :usuario, :password, :estado)");
 
+		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
-		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+
 
 		if($stmt->execute()){
 
@@ -63,15 +64,15 @@ class ModeloAdministradores{
 		$stmt->close();
 		$stmt = null;
 
-	} */
+	} 
 
 	/*=============================================
 	Editar Administrador
 	=============================================*/
 
-	/* static public function mdlEditarAdministrador($tabla, $datos){
+	 static public function mdlEditarAdministrador($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, usuario = :usuario, password = :password,  perfil = :perfil WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  perfil = :perfil, nombre = :nombre, usuario = :usuario, password = :password  WHERE id = :id");
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
@@ -79,6 +80,7 @@ class ModeloAdministradores{
 		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
+		
 		if($stmt -> execute()){
 
 			return "ok";
@@ -94,13 +96,13 @@ class ModeloAdministradores{
 
 		$stmt = null;
 
-	} */
+	} 
 
 	/*=============================================
 	Actualizar administrador
 	=============================================*/
 
-/* 	static public function mdlActualizarAdministrador($tabla, $item1, $valor1, $item2, $valor2){
+	static public function mdlActualizarAdministrador($tabla, $item1, $valor1, $item2, $valor2){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item2 = :$item2 WHERE $item1 = :$item1");
 
@@ -122,13 +124,13 @@ class ModeloAdministradores{
 
 		$stmt = null;
 
-	} */
+	} 
 
 	/*=============================================
 	Eliminar Administrador
 	=============================================*/
 
-	/* static public function mdlEliminarAdministrador($tabla, $id){
+	static public function mdlEliminarAdministrador($tabla, $id){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
@@ -136,7 +138,7 @@ class ModeloAdministradores{
 
 		if($stmt -> execute()){
 
-			return "ok";
+			return "ok";   /* => tambien al eleminar administrador o editoe debe borrale la session , para se cierra en tiempo real es una tarea a añadir */
 		
 		}else{
 
@@ -149,6 +151,6 @@ class ModeloAdministradores{
 
 		$stmt = null;
 
-	} */
+	}
 
 }

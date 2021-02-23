@@ -29,9 +29,30 @@ class TablaAdmin{
        
         foreach ($respuesta as $key => $value) {
            
-		    $acciones = "<div class='btn-group'><button class='btn btn-warning btn-sm'><i class='fas fa-pencil-alt text-white'></i></button><button class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button></div>";
+		    $acciones = "<div class='btn-group'><button class='btn btn-warning btn-sm editarAdministrador' data-toggle='modal' data-target='#editarAdministrador' idAdministrador='".$value["id"]."''><i class='fas fa-pencil-alt text-white'></i></button><button class='btn btn-danger btn-sm  eliminarAdministrador' idAdministrador='".$value["id"]."''><i class='fas fa-trash-alt'></i></button></div>";
   
-            $estado = "<button class='btn btn-info btn-sm'>Activo</button>";
+            if($value["id"] != 8 ){  /* => evitando desactivar el administradore princiapal del systema  */
+                  
+			    if($value["estado"] == 0){
+       
+			       $estado = "<button class='btn btn-dark btn-sm btnActivar' estadoAdmin='1' idAdmin='".$value["id"]."'>Desactivado</button>";     /* tiene clase y atrributo va ser capturada y manipulada por jquery */ 
+       
+			    }else{
+       
+        	        $estado = "<button class='btn btn-info btn-sm btnActivar' estadoAdmin='0' idAdmin='".$value["id"]."'>Activado</button>";      /* tiene clase y atrributo va ser capturada y manipulada por jquery */
+       
+			    }
+
+
+
+			}
+
+			if($value["id"] == 8){
+              
+				$estado = "<button class='btn btn-info btn-sm ' >Activado - Administrador Ejecutimo</button>";
+
+			}
+
   
            /* => es obligatorio declara la columnas de la tabla donde insertamos aqui y  en la peticion ajax en js , escritura exacta evitando errores  */
     
@@ -42,7 +63,7 @@ class TablaAdmin{
 					"Nombre": "'.$value["nombre"].'",
 					"Usuario": "'.$value["usuario"].'",
 					"Perfil": "'.$value["perfil"].'",
-					"Estado": "'.$value["estado"].'",
+					"Estado": "'.$estado.'",
 					"Acciones": "'.$acciones.'"
 				},';		
 

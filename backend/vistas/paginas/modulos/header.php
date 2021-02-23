@@ -14,7 +14,7 @@
      
     <li class="nav-item d-none d-sm-inline-block">
      
-       <a class="nav-link">Hola administrador</a>
+       <a class="nav-link">Hola <?php echo $admin['usuario']; ?></a>
      
     </li>
    
