@@ -1,10 +1,10 @@
 <?php 
    session_start();
 
-   $ruta = ControladorRuta::ctrRuta();
-   $rutaBackend = ControladorRuta::ctrRutaBackend();
+   $ruta = ControladorRuta::ctrRuta();                   /* dominio  */
+   $rutaBackend = ControladorRuta::ctrRutaBackend();     /* dominio + backend */
 
-   if(isset($_SESSION["idBackend"])){
+   if(isset($_SESSION["idBackend"])){    /* detectamos el administrador por su id para consultar infs acerca de el */
 
     $admin = ControladorAdministradores::ctrMostrarAdministradores("id", $_SESSION["idBackend"]);
     
@@ -134,6 +134,7 @@
 </body>
 
 <script src="vistas/js/administradores.js"></script>
+<script src="vistas/js/banner.js"></script>
 
 <?php endif ?>
 
