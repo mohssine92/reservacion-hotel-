@@ -10,7 +10,7 @@ Class ModeloPlanes{
 	
 	static public function mdlMostrarPlanes($tabla){
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC LIMIT 4");  /* el html esta diseñado para mostrar 4 planes asi vamos a hacer un limite para los planes devueltos */
 
 		$stmt -> execute();
 

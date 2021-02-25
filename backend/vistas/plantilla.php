@@ -67,6 +67,10 @@
 	<!-- https://sweetalert2.github.io/ -->
 	<script src="vistas/js/plugins/sweetalert2.all.js"></script> 
 
+  <!-- CKEDITOR -->
+	<!-- https://ckeditor.com/ckeditor-5/#classic -->
+	<script src="vistas/js/plugins/ckeditor.js"></script>
+
 
 </head>
 
@@ -135,6 +139,7 @@
 
 <script src="vistas/js/administradores.js"></script>
 <script src="vistas/js/banner.js"></script>
+<script src="vistas/js/planes.js"></script>
 
 <?php endif ?>
 
