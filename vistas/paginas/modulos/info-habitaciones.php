@@ -7,6 +7,20 @@ $valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabl
 							 
 
   $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria */ 
+
+
+  /* => mientras he creado una categoria y todavia no hemos credo sus habitaciones segnifica no hay infs pues redericcionamos hacia pagina inicio */
+  if(count($habitaciones) == 0){
+
+     echo '<script>
+	 
+	     window.location = "'.$ruta.'";
+
+	 </script>';
+
+	 return;  /* stop to compil */
+
+  }
 	
 ?>
 

@@ -47,7 +47,7 @@ class TablaAdmin{
 
 			}
 
-			if($value["id"] == 8){
+			if($value["id"] == 5){
               
 				$estado = "<button class='btn btn-info btn-sm ' >Activado - Administrador Ejecutimo</button>";
 

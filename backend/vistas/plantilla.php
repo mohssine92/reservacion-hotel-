@@ -45,6 +45,12 @@
 	<link rel="stylesheet" href="vistas/css/plugins/dataTables.bootstrap4.min.css">	
 	<link rel="stylesheet" href="vistas/css/plugins/responsive.bootstrap.min.css">
 
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="vistas/css/plugins/bootstrap-colorpicker.min.css">
+
+ <!-- iCheck -->
+ <link rel="stylesheet" href="vistas/css/plugins/iCheck-flat-blue.css">	
+
 
 <!--=====================================
  VÍNCULOS js
@@ -70,6 +76,15 @@
   <!-- CKEDITOR -->
 	<!-- https://ckeditor.com/ckeditor-5/#classic -->
 	<script src="vistas/js/plugins/ckeditor.js"></script>
+
+  <!-- bootstrap color picker 
+	https://farbelous.github.io/bootstrap-colorpicker/v2/-->
+  <script src="vistas/js/plugins/bootstrap-colorpicker.min.js"></script>
+
+  <!-- iCheck -->
+	<!-- http://icheck.fronteed.com/ -->
+	<script src="vistas/js/plugins/icheck.min.js"></script>
+
 
 
 </head>
@@ -140,6 +155,7 @@
 <script src="vistas/js/administradores.js"></script>
 <script src="vistas/js/banner.js"></script>
 <script src="vistas/js/planes.js"></script>
+<script src="vistas/js/categorias.js"></script>
 
 <?php endif ?>
 

@@ -15,7 +15,7 @@ class ControladorAdministradores{
 
 			
 
-			    $encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');  
+			    $encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');   
 
 			   	$tabla = "administradores";
 			    $item = "usuario";
@@ -25,7 +25,7 @@ class ControladorAdministradores{
 
 			   /* 	echo '<pre>'; print_r($respuesta); echo '</pre>'; */
 				
-				 if($respuesta["usuario"] == $_POST["ingresoUsuario"] && $respuesta["password"] == $encriptarPassword){ /* => la contraseña viene de la base de datos increptada  */
+				 if($respuesta["usuario"] == $_POST["ingresoUsuario"] && $respuesta["password"] == $encriptarPassword ){ /* => la contraseña viene de la base de datos increptada  */
 
 					if($respuesta["estado"] == 1){
 
@@ -148,6 +148,7 @@ class ControladorAdministradores{
 
 			  	$encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'); 
 
+
 				$tabla = "administradores";
 
 				$datos = array("nombre" => $_POST["registroNombre"],
@@ -155,6 +156,9 @@ class ControladorAdministradores{
 							   "password" => $encriptarPassword,
 							   "perfil" => $_POST["registroPerfil"],
 							   "estado" => 0);
+
+							/*    var_dump($datos);
+							   die(); */
 
 				
 				$respuesta = ModeloAdministradores::mdlRegistroAdministradores($tabla, $datos);

@@ -358,7 +358,7 @@ INFO PERFIL
 
 					<div class="col-6 d-none d-lg-block">
 						
-						<h4 class="float-left">Hola <?php echo $usuario["nombre"]; ?></h4>
+						<h4 class="float-left my-3">Hola <?php echo $usuario["nombre"]; ?></h4>
 					
 					</div>
 

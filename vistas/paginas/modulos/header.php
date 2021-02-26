@@ -218,12 +218,14 @@ MENÚ
 
 <nav class="menu container-fluid p-0">
 	
-	<ul class="nav nav-justified py-2">
-		
-		<li class="nav-item">
-			<a class="nav-link text-white" href="#planes">Planes</a>
-		</li>
+	<ul class="nav nav-justified py-2">             <!--    $_GET["pagina"] != "perfil" -->
 
+        <?php if ($_GET["pagina"] != "perfil") : ?>
+	    	       
+	       <li class="nav-item">
+	          	<a class="nav-link text-white" href="#planes">Planes</a>
+	       </li> 
+    
 		<li class="nav-item">
 			<a class="nav-link text-white" href="#habitaciones">Habitaciones</a>
 		</li>
@@ -235,6 +237,8 @@ MENÚ
 		<li class="nav-item">
 			<a class="nav-link text-white" href="#restaurante">Restaurante</a>
 		</li>
+
+		<?php endif ?>	
 
 		<li class="nav-item">
 			<a class="nav-link text-white" href="#contactenos">Contáctenos</a>

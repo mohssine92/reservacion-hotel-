@@ -9,11 +9,29 @@
 
            include "modulos/banner-interior.php";
            include "modulos/info-perfil.php";
-           include "modulos/habitaciones.php";
-           include "modulos/planes.php";
-           include "modulos/planes-movil.php";
-           include "modulos/recorrido-pueblo.php";
-           include "modulos/restaurante.php";
+         
+
+            /*   $user = $_SESSION["id"] ;
+ */
+ 
+              /* cho $user; */  /* la idea es consultar tablña reserva si trare mayor que zero mostramos los sigientes modulso  */
+
+
+
+
+        /*    if(){ */
+              
+                /*  include "modulos/habitaciones.php";
+                   include "modulos/planes.php";
+                   include "modulos/planes-movil.php";
+                   include "modulos/recorrido-pueblo.php";
+                   include "modulos/restaurante.php";  */
+
+
+
+
+         /*   } */
+        
            echo '<div class="mb-5"></div>';
        
       

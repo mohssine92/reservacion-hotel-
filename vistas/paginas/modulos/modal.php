@@ -1,9 +1,7 @@
 <?php
-
 /*=============================================
 CREAR EL OBJETO DE LA API GOOGLE
 =============================================*/
-
 $cliente = new Google_Client();      /* => dentro esta clase yengp codigo motor interectuarme conapi google */
 $cliente->setAuthConfig('modelos/client_secret.json');  /* => paso como params las cerdenciales de autorizacion creados en app de google  */
 $cliente->setAccessType("offline");
@@ -18,97 +16,99 @@ $rutaGoogle = $cliente->createAuthUrl();   /* =>  rura abra form google  */  /* 
 /*=============================================
 RECIBIMOS LA VARIABLE GET DE GOOGLE LLAMADA CODE , y otro variables , como paramertros en nuestra roota de aterrizaje 
 =============================================*/
+
+
 if(isset($_GET["code"])){  
 
-	$token = $cliente->authenticate($_GET["code"]);    /* => sacar el token de este code  */
+$token = $cliente->authenticate($_GET["code"]);    /* => sacar el token de este code  */
 
-	$_SESSION['id_token_google'] = $token;   /* => crear la variable de session de google  */
+$_SESSION['id_token_google'] = $token;   /* => crear la variable de session de google  */
 
-    $cliente->setAccessToken($token);     /* pedimos  setAccessToken paraque nos devuelva el scopes  */
+$cliente->setAccessToken($token);     /* pedimos  setAccessToken paraque nos devuelva el scopes  */
 
+$item = $cliente->verifyIdToken();  
 
-
+echo '<pre class="bg-white">'; print_r($item); echo '</pre><br>';
 }
 
 /*=============================================
 RECIBIMOS LOS DATOS CIFRADOS DE GOOGLE EN UN ARRAY
 =============================================*/
-if($cliente->getAccessToken()){  /* => si es verdadero permitimos almacenar datos de usuario en $item  */
+if($cliente->getAccessToken()){ 
 
-	$item = $cliente->verifyIdToken();   /* => este metedo me traega toda la verificacion de este token  */   /* => en $item  tengo toda informacion que necesito , paraque un usuario podra iniciar seesion en mi aplicacion ... */
-
-	$datos = array("nombre"=>$item["name"],    /* => capto solo datos que me hacen falta , los organizo respecto al modelo de insert atraves de reder sociales , asi la validacion una validacion para redes sociales me vale ,  */
-		"email"=>$item["email"],
-		"foto"=>$item["picture"],
-		"password"=>"null",
-		"modo"=>"google",
-		"verificacion"=>1,
-		"email_encriptado"=>"null");
-
-	 $verificarExistenciaUsuario = ControladorUsuarios::ctrvVerificaccionEmailMode($datos);  
-
-	 if($verificarExistenciaUsuario == true){
-
-		echo ' <script>
-			
-		swal({
-			type: "error",
-			title: "¡ERROR!",
-			text: "¡El correo electrónico ya está registrado con un método diferente a Google!",			          
-			showConfirmButton: false,
-			confirmButtonText: "Cerrar"
-	  
-		  }).then(function(result){
-
-			  if(result.value){  
-
-				  
+    $item = $cliente->verifyIdToken();   
 
 
+    $datos = array("nombre"=>$item["name"],  
+        "email"=>$item["email"],
+        "foto"=>$item["picture"],
+        "password"=>"null",
+        "modo"=>"google",
+        "verificacion"=>1,
+        "email_encriptado"=>"null");
 
-			  }
-										  
-		  })
+      $verificarExistenciaUsuario = ControladorUsuarios::ctrvVerificaccionEmailMode($datos);  
+     
+      if($verificarExistenciaUsuario == true){
 
-		  setTimeout(function(){
-				   
-			  window.location="http://localhost/reservas-h/";   
-
-
-		},3000)
-		
-	   
-		</script>';
-		
-		return;
-
-	}else{
-
-  
-		$respuesta = ControladorUsuarios::ctrRegistroRedesSociales($datos);
+          echo ' <script>
         
+             swal({
+                 type: "error",
+                 title: "¡ERROR!",
+                 text: "¡El correo electrónico ya está registrado con un método diferente a Google!",			          
+                 showConfirmButton: false,
+                 confirmButtonText: "Cerrar"
+           
+               }).then(function(result){
+         
+                   if(result.value){  
+         
+                       
+         
+         
+         
+                   }
+                                               
+               })
 
-	} 
-	
-
-
-	if($respuesta == "google-connect"){
-
-			echo '<script>
-
-		
-				
-				window.location = "'.$ruta.'perfil";
-
-
-			</script>';
-
-	}
-
+              setTimeout(function(){
+                       
+                  window.location="http://localhost/reservas-h/";   
         
+        
+            },3000)
+    
+   
+           </script>';
+    
+           return;
+
+      }else{
+
+
+           $respuesta = ControladorUsuarios::ctrRegistroRedesSociales($datos);
+    
+
+      } 
+
+
+
+        if($respuesta == "google-connect"){
+        
+                echo '<script>
+        
+            
+                    
+                    window.location = "'.$ruta.'perfil";
+        
+        
+                </script>';
+        
+        }
+        
+    
 }
-
-	
 
 
 
