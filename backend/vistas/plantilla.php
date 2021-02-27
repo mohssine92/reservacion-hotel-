@@ -51,6 +51,9 @@
  <!-- iCheck -->
  <link rel="stylesheet" href="vistas/css/plugins/iCheck-flat-blue.css">	
 
+ 	<!-- Pano -->
+   <link rel="stylesheet" href="vistas/css/plugins/jquery.pano.css">
+
 
 <!--=====================================
  VÍNCULOS js
@@ -84,6 +87,10 @@
   <!-- iCheck -->
 	<!-- http://icheck.fronteed.com/ -->
 	<script src="vistas/js/plugins/icheck.min.js"></script>
+
+  <!-- Pano -->
+	<!-- https://www.jqueryscript.net/other/360-Degree-Panoramic-Image-Viewer-with-jQuery-Pano.html -->
+	<script src="vistas/js/plugins/jquery.pano.js"></script>
 
 
 
@@ -156,6 +163,7 @@
 <script src="vistas/js/banner.js"></script>
 <script src="vistas/js/planes.js"></script>
 <script src="vistas/js/categorias.js"></script>
+<script src="vistas/js/habitaciones.js"></script>
 
 <?php endif ?>
 

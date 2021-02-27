@@ -16,6 +16,9 @@ require_once "modelos/planes.modelo.php";
 require_once "controladores/categorias.controlador.php";
 require_once "modelos/categorias.modelo.php";
 
+require_once "controladores/habitaciones.controlador.php";
+require_once "modelos/habitaciones.modelo.php";
+
 
 
 
