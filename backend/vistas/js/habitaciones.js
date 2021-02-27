@@ -27,17 +27,17 @@ ClassicEditor.create(document.querySelector('#descripcionHabitacion'), {
 /*=============================================
 Tabla Habitaciones
 =============================================*/
+/* 
+ $.ajax({
 
-// $.ajax({
-
-//     "url":"ajax/tablaHabitaciones.ajax.php",
-//     success: function(respuesta){
+     "url":"ajax/tablaHabitaciones.ajax.php",
+     success: function(respuesta){
       
-//      console.log("respuesta", respuesta);
+      console.log("respuesta", respuesta);
 
-//     }
+     }
 
-// })
+ }) */
 
 $(".tablaHabitaciones").DataTable({
   "ajax":"ajax/tablaHabitaciones.ajax.php",

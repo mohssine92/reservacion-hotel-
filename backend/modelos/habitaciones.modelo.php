@@ -12,21 +12,21 @@ class ModeloHabitaciones{
 
 		if($valor != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT $tabla1.*, $tabla2.* FROM $tabla1 INNER JOIN $tabla2 ON $tabla1.id = $tabla2.tipo_h WHERE id_h = :id_h");
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla1.*, $tabla2.* FROM $tabla1 INNER JOIN $tabla2 ON $tabla1.id_cat = $tabla2.categoria_id WHERE id_h = :id_h");
 
 			$stmt -> bindParam(":id_h", $valor, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
-			return $stmt -> fetch();
+			return $stmt -> fetch();  /* squi devolvemos solo un objeto de propiedades de id habitacion */
 
 		}else{
-
-			$stmt = Conexion::conectar()->prepare("SELECT $tabla1.*, $tabla2.* FROM $tabla1 INNER JOIN $tabla2 ON $tabla1.id = $tabla2.tipo_h ORDER BY $tabla2.id_h DESC");
+                       /* categorias - habitaciones  */
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla1.*, $tabla2.* FROM $tabla1 INNER JOIN $tabla2 ON $tabla1.id_cat = $tabla2.categoria_id ORDER BY $tabla2.id_h DESC");
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();
+			return $stmt -> fetchAll();  /* una coleccion de todos objetos de ids habitaciones existentes */
 
 		}
 

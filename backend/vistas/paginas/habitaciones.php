@@ -62,7 +62,7 @@
              
               <div class="card-body">
                 
-                <table class="table table-bordered table-striped dt-responsive tablaHabitaciones" width="100%">
+                <table class="table table-bordered table-striped dt-responsive tablaHabitaciones" width="100%">  <!-- data table -->
                   
                   <thead>
              
@@ -106,6 +106,24 @@
       <!--=====================================
          Editor de habitaciones  bloque de derecha
       =====================================-->
+       
+      <?php
+
+           if(isset($_GET["id_h"])){
+           
+             $habitacion = ControladorHabitaciones::ctrMostrarhabitaciones($_GET["id_h"]);  /* me trae toda informacion de la habitacion segun su id recebido en esta variable get  */
+            /*  echo '<pre class="bg-white">'; print_r($habitacion); echo '</pre><br>';  */
+           
+           }else{
+           
+             $habitacion = null;
+           
+           }
+      
+      
+      ?>
+
+
       <div class="col-12 col-xl-7">   
            
         <div class="card card-primary card-outline">   <!--card principal  -->
@@ -114,7 +132,7 @@
 
             <div class="card-header">    <!-- header-card -->
                      
-                <h5  class="card-title"> <!-- <?php echo $habitacion["tipo"] ?> / <?php echo $habitacion["estilo"] ?> --> Suite/ Oriental</h5>
+                <h5  class="card-title"><?php echo $habitacion["tipo"] ?> / <?php echo $habitacion["estilo"] ?></h5>
                      
                 <div class="preload"></div>
                      
@@ -159,11 +177,35 @@
       
                     <p class="mr-sm-2">Elije la Categoría:</p>  
       
-                    <select class="form-control seleccionarTipo" readonly>
-                   
-                       <option value=""></option>
-        
-                    </select>
+                      <?php 
+
+                            if($habitacion != null){
+                            
+                                  echo '<select class="form-control seleccionarTipo" readonly>
+                                   
+                                   <option value="'.$habitacion["id_cat"].','.$habitacion["tipo"].'">'.$habitacion["tipo"].'</option>
+                               
+                                  </select>';
+                            
+                            }else{
+                            
+                                   echo '<select class="form-control seleccionarTipo">
+                                
+                                     <option value="">Seleccione</option>';
+                                
+                                     $categorias = ControladorCategorias::ctrMostrarCategorias(null, null);  /* traer toda categorias existentes  */
+                                
+                                     foreach ($categorias as $key => $value) {
+                                    
+                                         echo '<option value="'.$value["id_cat"].','.$value["tipo"].'">'.$value["tipo"].'</option>';
+                                    
+                                     }
+                                
+                                   echo '</select>';    
+                            
+                            }
+                        
+                      ?>
       
       
                   </div>   <!-- Formulario en linea  -->
@@ -171,7 +213,19 @@
                   <div class="form-inline">   <!-- Formulario en linea  -->
                        
                        <p class="mr-sm-2">Escribe el nombre de la habitación:</p>
-                       <input type="text" class="form-control seleccionarEstilo"  placeholder="escriba nombre habitacion" >
+                          <?php 
+
+                            if($habitacion != null){
+                            
+                              echo '<input type="text" class="form-control seleccionarEstilo" value="'.$habitacion["estilo"].'" readonly>';
+                            
+                            }else{
+                            
+                              echo '<input type="text" class="form-control seleccionarEstilo">';
+                            
+                            }
+                            
+                          ?> 
       
                   </div>    <!-- Formulario en linea  --> 
                 </div>   <!-- Categoría y nombre de la habitación dos forms en linea  -->
@@ -189,48 +243,38 @@
                   <div class="card-body">  
                          <ul class="row p-0 vistaGaleria">
                
-                               <li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
-                               
-                                <img src="vistas/img/suite/oriental01.jpg">
-                               
-                                 <div class="card-img-overlay p-0 pr-3">
-                     
-                                    <button class="btn btn-danger btn-sm float-right shadow-sm quitarFotoAntigua" temporal="'.$value.'">
-                                       <i class="fas fa-times"></i>
-                                    </button>
-                     
-                                 </div>
-                               
-                               
-                               </li>   
-                               <li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
-                               
-                                <img src="vistas/img/suite/moderna01.jpg">
-                               
-                                 <div class="card-img-overlay p-0 pr-3">
-                     
-                                    <button class="btn btn-danger btn-sm float-right shadow-sm quitarFotoAntigua" temporal="'.$value.'">
-                                       <i class="fas fa-times"></i>
-                                    </button>
-                     
-                                 </div>
-                               
-                               
-                               </li>
-                               <li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
+                              
+                            <?php 
+                                   
+                                   if($habitacion != null){
+                                   
+                                     $galeria = json_decode($habitacion["galeria"], true);  /* colleccion of strings ==> array with indexes  */
+                                   
+                                     foreach ($galeria as $key => $value) {
+                                   
+                                       echo '<li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
+                                     
+                                               <img class="card-img-top" src="'.$value.'">
+                                   
+                                               <div class="card-img-overlay p-0 pr-3">
+                                                 
+                                                  <button class="btn btn-danger btn-sm float-right shadow-sm quitarFotoAntigua" temporal="'.$value.'">
+                                                    
+                                                    <i class="fas fa-times"></i>
+                                   
+                                                  </button>
+                                   
+                                               </div>
+                                   
+                                             </li>';
+                                   
+                                     }
+                                   
+                                   }
+                                   
+                            ?>
                              
-                               <img src="vistas/img/suite/africana01.jpg">
-                             
-                                <div class="card-img-overlay p-0 pr-3">
-                   
-                                   <button class="btn btn-danger btn-sm float-right shadow-sm quitarFotoAntigua" temporal="'.$value.'">
-                                      <i class="fas fa-times"></i>
-                                   </button>
-                   
-                                </div>
-                             
-                             
-                               </li>    
+                              
                          </ul>
                   </div> <!-- card body termina de galeria -->
 
@@ -266,18 +310,34 @@
         
                       <div class="card-body vistaVideo">
         
-                        <iframe width="100%" height="320" src="https://www.youtube.com/embed/JTu790_yyRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                             <!--  se usan poara visualizar videos de youtube esto atributos  -->
+                        <?php if ($habitacion != null): ?>
+
+                        <iframe width="100%" height="320" src="https://www.youtube.com/embed/<?php echo $habitacion["video"]; ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        
+                        <?php endif ?>
+
+                        
+
                       </div>
         
                       <div class="card-footer">
                          
                           <div class="input-group"> 
+                            
                              <div class="input-group-prepend">
                                  <span class="p-2 bg-secondary rounded-left small">youtube.com/embed/</span> 
                              </div>
             
-                             <input type="text" class="form-control agregarVideo" placeholder="Agregue el código del vídeo" value="">  <!-- aca debe agregar el codigo de youtube para subir el video  -->
+                             
+                             <?php if ($habitacion != null): ?>
+                        
+                             <input type="text" class="form-control agregarVideo" placeholder="Agregue el código del vídeo" value="<?php echo $habitacion["video"]; ?>">
+
+                             <?php else: ?>
+
+                             <input type="text" class="form-control agregarVideo" placeholder="Agregue el código del vídeo">
+
+                             <?php endif ?>
             
                           </div>
         
@@ -299,12 +359,19 @@
           
                     <div class="card-body ver360">
         
-                       <div class="pano 360Antiguo" back="vistas/img/suite/africana-360.jpg"> <!-- pano panoramica  --> <!-- para poder aplicar el plugin de panoramic -->
-                               <div class="controls">  <!-- controles de vista panoramica -->
-                                     <a href="#" class="left">&laquo;</a>
-                                     <a href="#" class="right">&raquo;</a>
-                               </div>
-                       </div>
+                        <?php if ($habitacion != null): ?>
+                      
+                          <div class="pano 360Antiguo" back="<?php echo $habitacion["recorrido_virtual"]; ?>">
+    
+                            <div class="controls">
+                              <a href="#" class="left">&laquo;</a>
+                              <a href="#" class="right">&raquo;</a>
+                            </div>
+    
+                          </div>
+
+                        <?php endif ?>
+
         
                     </div>
           
@@ -337,6 +404,16 @@
                 
                       <!--Plugin ckEditor -->  
                   <textarea id="descripcionHabitacion" style="width: 100%">  
+ 
+                     <?php 
+
+                        if($habitacion != null){
+                        
+                          echo $habitacion["descripcion_h"];
+                        
+                        } 
+                     
+                     ?>
                     
                   </textarea>
 

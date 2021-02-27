@@ -12,6 +12,9 @@ class TablaHabitaciones{
 	public function mostrarTabla(){
 
 		$habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones(null);
+        
+	   /* 	var_dump($habitaciones);
+		  die(); */
 
 		if(count($habitaciones)== 0){
 
