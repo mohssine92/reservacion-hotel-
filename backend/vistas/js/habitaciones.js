@@ -75,21 +75,22 @@ $(".tablaHabitaciones").DataTable({
 
 
 /*=============================================
-ARRASTRAR VARIAS IMAGENES GALERÍA
+ARRASTRAR VARIAS IMAGENES GALERÍA Y DAR CLICK
 =============================================*/
+ /* solo seleccionar podemos para arrastrar necesitamos de estos clasesde javascript  */
 
-var archivosTemporales = [];
+var archivosTemporales = [];  /* donde almacenamos todos archivos que arrastramos para mandarlos a base de datos a guardar   */
 
-$(".subirGaleria").on("dragenter", function(e){
+$(".subirGaleria").on("dragenter", function(e){  /* clase de label donde se van a caer los archivos imagenes  */
 
-	e.preventDefault();
+	e.preventDefault();   /* evitar cualquier accion que tenga el navigador por defecto  */
   	e.stopPropagation();
 
-  	$(".subirGaleria").css({"background":"url(vistas/img/plantilla/pattern.jpg)"})
+  	$(".subirGaleria").css({"background":"url(vistas/img/plantilla/pattern.jpg)"}) /* cabia background para experiencia user para darse cuenta que esta encima de la zona para soltar la imegen */
 
 })
 
-$(".subirGaleria").on("dragleave", function(e){
+$(".subirGaleria").on("dragleave", function(e){  /* lo que pasar cuando quitamos el maus imagen encima de la zona de caeda */
 
   e.preventDefault();
   e.stopPropagation();
@@ -98,16 +99,16 @@ $(".subirGaleria").on("dragleave", function(e){
 
 })
 
-$(".subirGaleria").on("dragover", function(e){
+$(".subirGaleria").on("dragover", function(e){  /* para decir que vamos a soltar las imagenes  */
 
   e.preventDefault();
   e.stopPropagation();
 
 })
 
-$("#galeria").change(function(){
+$("#galeria").change(function(){  /* para que funcciona al dar clcik seleccionar o arrastrar */ /* se le aplica al input file multi  */
 
-	var archivos = this.files;
+	var archivos = this.files;  /* captar todo ....  y mandarlos a la siguiente funccion .. */
 
 	multiplesArchivos(archivos);
 
@@ -120,17 +121,19 @@ $(".subirGaleria").on("drop", function(e){
 
   $(".subirGaleria").css({"background":""})
 
-  var archivos = e.originalEvent.dataTransfer.files;
+  var archivos = e.originalEvent.dataTransfer.files;      /* capturar los archivos imagenes que se estan soltando */
+
+ /*  console.log("archivos ==>",archivos) */;              
   
-  multiplesArchivos(archivos);
+  multiplesArchivos(archivos);  /* ejecutar la funccion */
 
 })
 
 function multiplesArchivos(archivos){
 
-	for(var i = 0; i < archivos.length; i++){
+	for(var i = 0; i < archivos.length; i++){          /* recorro los archivos captados y empiezo a validar */
 
-		var imagen = archivos[i];
+		var imagen = archivos[i];  /* aqui paso cada indice que se genero al soltar las imagenes y empiezo a validar  */
 		
 		if(imagen["type"] != "image/jpeg" && imagen["type"] != "image/png"){
 
@@ -159,11 +162,12 @@ function multiplesArchivos(archivos){
 			var datosImagen = new FileReader;
       		datosImagen.readAsDataURL(imagen);
 
-      		$(datosImagen).on("load", function(event){
+      		$(datosImagen).on("load", function(event){   /* cuando datos imagen se cargue ejecutamos esta funccion */
 
-      			var rutaImagen = event.target.result;
-
-      			$(".vistaGaleria").append(`
+      			var rutaImagen = event.target.result;  /* mew saca la ruta del imagen del indice generado */
+				   
+                     /* despues a esta clase que es un ul le aplicamos un append */ /* se hace append en numero de indexes es decir en numero de archivos generados  */
+      			$(".vistaGaleria").append(`   
 
 					<li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
                       
@@ -184,15 +188,15 @@ function multiplesArchivos(archivos){
       			`)
 
 
-        		if(archivosTemporales.length != 0){
+        		if(archivosTemporales.length != 0){  /* en caso quiero agregar mas imagenes convierto en array para poder agregar mas archivos , por compilacion js vuelvo a convertir en strin json en el siguiente , asi voy jugando */
 
-        			archivosTemporales = JSON.parse($(".inputNuevaGaleria").val());
+        			archivosTemporales = JSON.parse($(".inputNuevaGaleria").val());  
 
         		}
 
-        		archivosTemporales.push(rutaImagen);    
+        		archivosTemporales.push(rutaImagen);  /* aqui se crear array de strings  */
 
-        		$(".inputNuevaGaleria").val(JSON.stringify(archivosTemporales)) 		
+        		$(".inputNuevaGaleria").val(JSON.stringify(archivosTemporales))  /* cadenas de texto en formato 64 que viene como array los convierto en string de json */
 
       		})
 
@@ -208,23 +212,24 @@ QUITAR IMAGEN DE LA GALERÍA
 
 $(document).on("click", ".quitarFotoNueva", function(){
 
-	var listaFotosNuevas = $(".quitarFotoNueva"); 
+	var listaFotosNuevas = $(".quitarFotoNueva");  /* todas imagenes que tenga la galeria en ese momento */ 
+    /* 	console.log(listaFotosNuevas); */
 	
-	var listaTemporales = JSON.parse($(".inputNuevaGaleria").val());
+	var listaTemporales = JSON.parse($(".inputNuevaGaleria").val()); /* todos imagenes que tengo en formato 64 en string de json ==> se convierten en array */
 
 	for(var i = 0; i < listaFotosNuevas.length; i++){
 
-		$(listaFotosNuevas[i]).attr("temporal", listaTemporales[i]);
+		$(listaFotosNuevas[i]).attr("temporal", listaTemporales[i]);  /* cada button le agrego su archivo imagen foto temporal en formato 64 correspondiente  */
 
-		var quitarImagen = $(this).attr("temporal");
+		var quitarImagen = $(this).attr("temporal"); /* se captura valor de ese atributo al que estoy dando click  */
 
-		if(quitarImagen == listaTemporales[i]){
+		if(quitarImagen == listaTemporales[i]){  /* pues si el valor que estoy capturando es == a un valor de los valores que tengo temporlmente  */
 
-			listaTemporales.splice(i, 1);
+			listaTemporales.splice(i, 1);  /* => quitar ese indice del array resuelta que la foto desparece lo que digamos se ha borrado */
 
-			$(".inputNuevaGaleria").val(JSON.stringify(listaTemporales));
+			$(".inputNuevaGaleria").val(JSON.stringify(listaTemporales)); /* array actualizado con un indice menos y convertido en cadena texto de json  */
 
-			 $(this).parent().parent().remove();
+			 $(this).parent().parent().remove();  /* borra la imagen de la vista , salir del button , salir del div y remove li  */
 
 		}
 
@@ -255,7 +260,7 @@ AGREGAR IMAGEN 360
 
 $("#imagen360").change(function(){
 
-	var imagen = this.files[0];
+	var imagen = this.files[0];  /* captura la imagen en su indice zero porque solamente viene una */
 
 	/*=============================================
 	VALIDAMOS EL FORMATO DE LA IMAGEN SEA JPG O PNG
@@ -286,13 +291,13 @@ $("#imagen360").change(function(){
 	}else{
 
 		var datosImagen = new FileReader;
-		datosImagen.readAsDataURL(imagen);
+		datosImagen.readAsDataURL(imagen); 
 
-		$(datosImagen).on("load", function(event){
+		$(datosImagen).on( "load", function(event){
 
-			var rutaImagen = event.target.result;
+			var rutaImagen = event.target.result;  /* imagen temporal de de 360 grados  */
 
-			 $(".ver360").html(
+			 $(".ver360").html(  /* le aplica clase nueva como se fuera imagen nueva temporalmente */
 
 			 	`<div class="pano 360Nuevo" back="`+rutaImagen+`">
 
@@ -305,7 +310,7 @@ $("#imagen360").change(function(){
 
 			)
 
-			$(".360Nuevo").pano({
+			$(".360Nuevo").pano({  /* se le aplica al div nuevo es decir el div temporal la clase pano del plugin paraque se muestra imagen panoramica */
 		        img: $(".360Nuevo").attr("back")
 		    });
 

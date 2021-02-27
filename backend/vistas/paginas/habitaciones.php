@@ -278,15 +278,22 @@
                          </ul>
                   </div> <!-- card body termina de galeria -->
 
+
+                  <input type="hidden" class="inputNuevaGaleria">  <!-- despues de validar y convertir en colleccion de strings los cargo aqui , este input sera como variabl post recibe el controlador para almacenar en base de datos  -->
+
+                  <input type="hidden" class="inputAntiguaGaleria" value="<?php echo implode(",", $galeria); ?>">
+
+
+
                   <!-- card-footer  -->
                   <div class="card-footer">
       
-                     <input type="file" multiple id="galeria" class="d-none"> <!-- lo voy a esconder paraque atraves label podra usar una area le das click y se tariga imagenes que vaya poner for=galeria paraque se active cuando vaya utulizar input tipo file 
-                                                                                que tiene id galeria aunque esta escondido es el que va ayudar traer fotos al servidor  -->
+                     <input type="file" multiple id="galeria" class="d-none"> 
                      
-                     <label for="galeria" class="text-dark text-center py-5 border rounded bg-white w-100 subirGaleria">
+                     <label for="galeria" class="text-dark text-center py-5 border rounded bg-white w-100 subirGaleria"> <!-- al dar click en label se abra en systema para seleccinar imagen porque hemos puesto input fil ver id y for 
+                                                                                                                            tambien hemos puesto atrb multiple parapoder seleccionar varios imagenes   -->
                      
-                     Haz clic aquí o arrastra las imágenes <br>
+                     Haz clic aquí o arrastra las imágenes <br> 
                                 <span class="help-block small">Dimensiones: 940px * 480px | Peso Max. 2MB | Formato: JPG o PNG</span>
       
                   </div>   <!-- card-footer  -->
