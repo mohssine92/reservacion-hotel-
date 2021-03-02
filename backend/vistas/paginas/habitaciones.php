@@ -241,7 +241,7 @@
                    </div>
 
                   <div class="card-body">  
-                         <ul class="row p-0 vistaGaleria">
+                         <ul class="row p-0 vistaGaleria">   <!-- => aqui tambien se aplica un append a lso archivos arrastrados al momento de subir imagenes  -->
                
                               
                             <?php 
@@ -279,19 +279,18 @@
                   </div> <!-- card body termina de galeria -->
 
 
-                  <input type="hidden" class="inputNuevaGaleria">  <!-- despues de validar y convertir en colleccion de strings los cargo aqui , este input sera como variabl post recibe el controlador para almacenar en base de datos  -->
+                  <input type="hidden" class="InputNuevaGaleria" > <!-- ojo lo que estoy recibiendo es array de imagenes en formato 64 => imagenes temporales  en string de json  -->
 
-                  <input type="hidden" class="inputAntiguaGaleria" value="<?php echo implode(",", $galeria); ?>">
+                 <!--  <input type="hidden" class="inputAntiguaGaleria" value="<?php echo implode(",", $galeria); ?>"> --> <!--  -->
 
 
 
                   <!-- card-footer  -->
-                  <div class="card-footer">
+                  <div class="card-footer">    <!-- para seleccionar o arrastrar fotos -->
       
                      <input type="file" multiple id="galeria" class="d-none"> 
                      
-                     <label for="galeria" class="text-dark text-center py-5 border rounded bg-white w-100 subirGaleria"> <!-- al dar click en label se abra en systema para seleccinar imagen porque hemos puesto input fil ver id y for 
-                                                                                                                            tambien hemos puesto atrb multiple parapoder seleccionar varios imagenes   -->
+                     <label for="galeria" class="text-dark text-center py-5 border rounded bg-white w-100 subirGaleria"> 
                      
                      Haz clic aquí o arrastra las imágenes <br> 
                                 <span class="help-block small">Dimensiones: 940px * 480px | Peso Max. 2MB | Formato: JPG o PNG</span>
@@ -425,7 +424,6 @@
                   </textarea>
 
               </div>
-
 
 
             </div>

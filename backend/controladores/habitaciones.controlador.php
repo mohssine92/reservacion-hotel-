@@ -20,48 +20,129 @@ class ControladorHabitaciones{
 	/*=============================================
 	Nueva habitación
 	=============================================*/
-
 	static public function ctrNuevaHabitacion($datos){
 
 		if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $datos["estilo"]) && 
 		   preg_match('/^[_\\a-zA-Z0-9]+$/', $datos["video"]) && 
 		   preg_match('/^[\/\=\\&\\$\\;\\_\\|\\*\\"\\<\\>\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $datos["descripcion"])){
 
-		   	if($datos["galeria"] != ""){
+            if ($datos["Galeria"] != "") {
+                
+				
+				$galeria = json_decode($datos["Galeria"], true);  /*  es un array de galeria trae extensiones jpg y png  */
 
-			   	$ruta = array();
-			   	$guardarRuta = array();
+            
+                $root = array();   /* aqui empujamos todas imagenes .png en en base 64 */
 
-				$galeria = json_decode($datos["galeria"], true);
+                for ($f = 0; $f < count($galeria); $f++) {
+                    $image = $galeria[$f];
 
-				for($i = 0; $i < count($galeria); $i++){
+                    $porciones = explode(";", $image);
+                    $porciones1 = explode("/", $porciones[0]);
 
-					list($ancho, $alto) = getimagesize($galeria[$i]);
+                    if ($porciones1[1] == 'png') {
+                        array_push($root, $image);   
+                    }
+                }
 
-					$nuevoAncho = 940;
-					$nuevoAlto = 480;
-
-					/*=============================================
-					Creamos el directorio donde vamos a guardar la imagen
-					=============================================*/
-
-					$directorio = "../vistas/img/".$datos["tipo"];	
-
-					array_push($ruta, strtolower($directorio."/".$datos["estilo"].($i+1).".jpg"));
-
-					$origen = imagecreatefromjpeg($galeria[$i]);
-
-					$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);	
-
-					imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-					imagejpeg($destino, $ruta[$i]);	
-
-					array_push($guardarRuta, substr($ruta[$i], 3));
-
-				}
+                
+                
+                $guardarRuta = array();    /* aqui se guardan todas routas genaradas para que se guardan en servidor y en base de datos .. */
 
 
+      
+                $rutaPng = array();  /* nuevas rootas generadas en proceso de png , se empuan aqui  */
+                
+                if($root && isset($root)) {      /* aqui se entra solo cuando es .png  */
+
+                    for ($r = 0; $r < count($root); $r++) {
+                        list($ancho, $alto) = getimagesize($root[$r]);
+
+                        $nuevoAncho = 940;
+                        $nuevoAlto = 480;
+
+                        /*=============================================
+                         Creamos el directorio donde vamos a guardar la imagen
+                        =============================================*/
+                        
+                        $directorio = "../vistas/img/".$datos["tipo"];
+
+                        array_push($rutaPng, strtolower($directorio."/".$datos["estilo"].($r+100).".jpg"));
+
+                        $origen = imagecreatefrompng($root[$r]);   /* roota original */
+
+                        $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+                        imagealphablending($destino, false);
+       
+                        imagesavealpha($destino, true);
+     
+                        imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+                        imagepng($destino, $rutaPng[$r]);
+
+                        array_push($guardarRuta, substr($rutaPng[$r], 3));
+                    }
+                    
+                    
+                }
+              
+                
+                $galeriaFinal = array();   /* empujamos aqui solo jpeg */ /* asi evitamos png que viene por galeria , porque nos va a romper el proceso  */
+
+                for ($a = 0; $a < count($galeria); $a++) {   
+
+                    $imageF = $galeria[$a];
+
+                    $porcione = explode(";", $imageF);
+                    $porcione1 = explode("/", $porcione[0]);
+
+                    if ($porcione1[1] != 'png') {
+                        array_push($galeriaFinal, $imageF);
+                    }
+                }
+  
+				if($galeriaFinal && isset($galeriaFinal)){   /* como hemos declarado aqui tenemos solo los jpeg */
+                
+                     $ruta = array();
+            
+                      for ($i = 0; $i < count($galeriaFinal); $i++) {   /* squi todo lo que es jpg */
+      
+                          list($ancho, $alto) = getimagesize($galeriaFinal[$i]);
+      
+                          $nuevoAncho = 940;
+                          $nuevoAlto = 480;
+      
+                          /*=============================================
+                          Creamos el directorio donde vamos a guardar la imagen
+                          =============================================*/
+      
+                          $directorio = "../vistas/img/".$datos["tipo"];
+      
+                          array_push($ruta, strtolower($directorio."/".$datos["estilo"].($i+1).".jpg"));  /* => aqui se empuja la ruta en el array  */
+      
+                          $origen = imagecreatefromjpeg($galeriaFinal[$i]);
+      
+                          $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+      
+                          imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+      
+                          imagejpeg($destino, $ruta[$i]);
+      
+                          array_push($guardarRuta, substr($ruta[$i], 3));
+                      }
+
+					  
+
+
+                }
+               
+						
+				$guardarRutaString = json_encode($guardarRuta);    /* pues aqui tanto los generados por proceso de jpeg y png  */
+				
+				$guardarRutaLimpia = str_replace('\/', '/', $guardarRutaString);  /* al convertir se genera dos caracteres de esta forma resolvemos asi  , si no genera no hace falta este proceso */
+				
+				
 			}else{
 
 				echo'<script>
@@ -127,12 +208,13 @@ class ControladorHabitaciones{
 				return;
 			}
 
+		 
 
 			$tabla = "habitaciones";
 
 			$datos = array("tipo_h" => $datos["tipo_h"],
 							"estilo" => $datos["estilo"],
-							"galeria" => json_encode($guardarRuta),
+						    "Galeria" => ($guardarRutaLimpia),
 							"video" => $datos["video"],
 							"recorrido_virtual" => substr($ruta360,3),
 							"descripcion_h" => $datos["descripcion"]);
@@ -141,6 +223,7 @@ class ControladorHabitaciones{
 
 			return $respuesta; 
 
+
 		}else{
 
 			echo '<script>
@@ -169,228 +252,9 @@ class ControladorHabitaciones{
 
 	}
 
-	/*=============================================
-	Editar habitación
-	=============================================*/
 
-	static public function ctrEditarHabitacion($datos){
-
-		if(preg_match('/^[-\\_\\a-zA-Z0-9]+$/', $datos["video"]) && 
-		   preg_match('/^[\/\=\\&\\$\\;\\_\\-\\|\\*\\"\\<\\>\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $datos["descripcion"])){
-		   	
-			//Validamos que la galería no venga vacía
-
-		   	if($datos["galeriaAntigua"] == "" && $datos["galeria"] == ""){
-
-				echo'<script>
-
-						swal({
-								type:"error",
-							  	title: "¡CORREGIR!",
-							  	text: "¡La galería no puede estar vacía",
-							  	showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-							  
-						}).then(function(result){
-
-								if(result.value){   
-								    history.back();
-								  } 
-						});
-
-				</script>';
-
-				return;
-			}
-
-			//Eliminar las fotos de la galería de la carpeta
-
-			$traerHabitacion = ModeloHabitaciones::mdlMostrarHabitaciones("categorias", "habitaciones", $datos["idHabitacion"]);
-
-			if($datos["galeriaAntigua"] != ""){	
-
-				$galeriaBD = json_decode($traerHabitacion["galeria"], true);
-
-				$galeriaAntigua = explode("," , $datos["galeriaAntigua"]);
-
-				$guardarRuta = $galeriaAntigua;
-		
-				$borrarFoto = array_diff($galeriaBD, $galeriaAntigua);
-
-				foreach ($borrarFoto as $key => $valueFoto){
-						
-					unlink("../".$valueFoto);
-
-				}
-
-			}else{
-
-
-				$galeriaBD = json_decode($traerHabitacion["galeria"], true);
-
-				foreach ($galeriaBD as $key => $valueFoto){
-
-					unlink("../".$valueFoto);
-
-				}
-
-				
-			}
-		   	
-		   	// Cuando vienen fotos nuevas
-
-		   	if($datos["galeria"] != ""){
-
-			   	$ruta = array();
-			   	$guardarRuta = array();
-
-				$galeria = json_decode($datos["galeria"], true);
-				$galeriaAntigua = explode("," , $datos["galeriaAntigua"]);
-
-				for($i = 0; $i < count($galeria); $i++){
-
-					list($ancho, $alto) = getimagesize($galeria[$i]);
-
-					$nuevoAncho = 940;
-					$nuevoAlto = 480;
-
-					$aleatorio = mt_rand(100,999); 
-
-					/*=============================================
-					Creamos el directorio donde vamos a guardar la imagen
-					=============================================*/
-
-					$directorio = "../vistas/img/".$datos["tipo"];	
-
-					array_push($ruta, strtolower($directorio."/".$datos["estilo"].$aleatorio.".jpg"));
-
-					$origen = imagecreatefromjpeg($galeria[$i]);
-
-					$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);	
-
-					imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-					imagejpeg($destino, $ruta[$i]);	
-
-					array_push($guardarRuta, substr($ruta[$i], 3));
-
-				}
-
-				// Agregamos las fotos antiguas
-
-				if($datos["galeriaAntigua"] != ""){
-
-					foreach ($galeriaAntigua as $key => $value) {
-						
-						array_push($guardarRuta, $value);
-					}
-
-				}
-
-			}
-
-			//Cuando viene recorrido virtual nuevo
 
 	
-
-			if($datos["recorrido_virtual"] != "undefined"){	
-
-				unlink("../".$datos["antiguoRecorrido"]);
-				
-				list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
-
-				$nuevoAncho = 4030;
-				$nuevoAlto = 1144;
-
-				$directorio = "../vistas/img/".$datos["tipo"];	
-
-				$ruta360 = strtolower($directorio."/".$datos["estilo"]."-360.jpg");
-
-				$origen = imagecreatefromjpeg($datos["recorrido_virtual"]);
-
-				$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);	
-
-				imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-				imagejpeg($destino, $ruta360);
-
-				$ruta360 = substr($ruta360,3);	
-
-			}else{
-
-				$ruta360 = $datos["antiguoRecorrido"];
-				
-			}
-
-			$tabla = "habitaciones";
-
-			$datos = array("id_h" => $datos["idHabitacion"],
-						   "tipo_h" => $datos["tipo_h"],
-						   "estilo" => $datos["estilo"],
-						   "galeria" => json_encode($guardarRuta),
-						   "video" => $datos["video"],
-						   "recorrido_virtual" => $ruta360,
-						   "descripcion_h" => $datos["descripcion"]);
-
-			$respuesta = ModeloHabitaciones::mdlEditarHabitacion($tabla, $datos);
-
-			return $respuesta; 
-
-		}else{
-
-			echo '<script>
-
-					swal({
-
-						type:"error",
-						title: "¡CORREGIR!",
-						text: "¡No se permiten caracteres especiales en ninguno de los campos!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-
-					}).then(function(result){
-
-						if(result.value){
-
-							history.back();
-
-						}
-
-					});	
-
-				</script>';
-		}
-
-
-	}
-
-	/*=============================================
-	Eliminar Habitación
-	=============================================*/
-
-	static public function ctrEliminarHabitacion($datos){
-		
-		// Eliminamos fotos de la galería
-
-		$galeriaHabitacion = explode("," , $datos["galeriaHabitacion"]);
-
-		foreach ($galeriaHabitacion as $key => $value) {
-			
-			unlink("../".$value);
-		
-		}
-
-		// Eliminamos imagen 360°
-
-		unlink("../".$datos["recorridoHabitacion"]);	
-
-		$tabla = "habitaciones";
-
-		$respuesta = ModeloHabitaciones::mdlEliminarHabitacion($tabla, $datos["idEliminar"]);
-
-		return $respuesta;
-
-	}
 
 
 }

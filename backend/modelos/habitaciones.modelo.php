@@ -39,14 +39,13 @@ class ModeloHabitaciones{
 	/*=============================================
 	Nueva habitación
 	=============================================*/
-
 	static public function mdlNuevaHabitacion($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo_h, estilo, galeria, video, recorrido_virtual, descripcion_h) VALUES (:tipo_h, :estilo, :galeria, :video, :recorrido_virtual, :descripcion_h)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(categoria_id, estilo, galeria, video, recorrido_virtual, descripcion_h) VALUES (:tipo_h, :estilo,:galeria ,:video, :recorrido_virtual, :descripcion_h)");
 
 		$stmt->bindParam(":tipo_h", $datos["tipo_h"], PDO::PARAM_STR);
 		$stmt->bindParam(":estilo", $datos["estilo"], PDO::PARAM_STR);
-		$stmt->bindParam(":galeria", $datos["galeria"], PDO::PARAM_STR);
+	    $stmt->bindParam(":galeria", $datos["Galeria"], PDO::PARAM_STR); 
 		$stmt->bindParam(":video", $datos["video"], PDO::PARAM_STR);
 		$stmt->bindParam(":recorrido_virtual", $datos["recorrido_virtual"], PDO::PARAM_STR);
 		$stmt->bindParam(":descripcion_h", $datos["descripcion_h"], PDO::PARAM_STR);

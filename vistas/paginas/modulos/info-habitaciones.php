@@ -9,10 +9,11 @@ $valor = $_GET["pagina"];  /* esta variable captura propiedad de ruta de la tabl
   $habitaciones = ControladorHabitaciones::ctrMostrarHabitaciones($valor);  /*  nos llega habitaciones agrupadas por categoria */ 
 
 
-  /* => mientras he creado una categoria y todavia no hemos credo sus habitaciones segnifica no hay infs pues redericcionamos hacia pagina inicio */
+  /* => mientras he creado una categoria y todavia no hemos credo sus habitaciones segnifica no hay infs pues redericcionamos hacia pagina inicio */ /* pprque nis va dar error en front end , requiere al menos un index de habitacion */
+  /* => cuando se crea una una hqabitacion nueva en una categoria esta habitacion toma index 0 , asi vamos creando los estilos de habitaciones .   */
   if(count($habitaciones) == 0){
 
-     echo '<script>
+     echo '<script>                              
 	 
 	     window.location = "'.$ruta.'";
 

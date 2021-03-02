@@ -77,9 +77,9 @@ $(".tablaHabitaciones").DataTable({
 /*=============================================
 ARRASTRAR VARIAS IMAGENES GALERÍA Y DAR CLICK
 =============================================*/
- /* solo seleccionar podemos para arrastrar necesitamos de estos clasesde javascript  */
 
-var archivosTemporales = [];  /* donde almacenamos todos archivos que arrastramos para mandarlos a base de datos a guardar   */
+
+var ArchivosTemporales = [];  /* donde almacenamos todos archivos que arrastramos para mandarlos a base de datos a guardar   */
 
 $(".subirGaleria").on("dragenter", function(e){  /* clase de label donde se van a caer los archivos imagenes  */
 
@@ -121,11 +121,10 @@ $(".subirGaleria").on("drop", function(e){
 
   $(".subirGaleria").css({"background":""})
 
-  var archivos = e.originalEvent.dataTransfer.files;      /* capturar los archivos imagenes que se estan soltando */
-
- /*  console.log("archivos ==>",archivos) */;              
-  
-  multiplesArchivos(archivos);  /* ejecutar la funccion */
+  var archivos = e.originalEvent.dataTransfer.files;  /* aqui esoy capturando todos archivos arrastradsos  */    console.log("archivos ==>",archivos);    
+ 
+        
+  multiplesArchivos(archivos);  
 
 })
 
@@ -133,7 +132,7 @@ function multiplesArchivos(archivos){
 
 	for(var i = 0; i < archivos.length; i++){          /* recorro los archivos captados y empiezo a validar */
 
-		var imagen = archivos[i];  /* aqui paso cada indice que se genero al soltar las imagenes y empiezo a validar  */
+		var imagen = archivos[i];  /* pasar cada archivo individualmente , refieri a los que generaron al soltar en la vista   */
 		
 		if(imagen["type"] != "image/jpeg" && imagen["type"] != "image/png"){
 
@@ -159,14 +158,14 @@ function multiplesArchivos(archivos){
 
 		}else{
 
-			var datosImagen = new FileReader;
+			var datosImagen = new FileReader;                      /* => vamos a mostrar los archivos en la vista  */  /* como hemos dicho estamos pasado cada archivo individualmente */
       		datosImagen.readAsDataURL(imagen);
 
-      		$(datosImagen).on("load", function(event){   /* cuando datos imagen se cargue ejecutamos esta funccion */
+      		$(datosImagen).on("load", function(event){   
 
-      			var rutaImagen = event.target.result;  /* mew saca la ruta del imagen del indice generado */
+      			var rutaImagen = event.target.result;     /* => imagen temporal */  
 				   
-                     /* despues a esta clase que es un ul le aplicamos un append */ /* se hace append en numero de indexes es decir en numero de archivos generados  */
+                    
       			$(".vistaGaleria").append(`   
 
 					<li class="col-12 col-md-6 col-lg-3 card px-3 rounded-0 shadow-none">
@@ -188,16 +187,17 @@ function multiplesArchivos(archivos){
       			`)
 
 
-        		if(archivosTemporales.length != 0){  /* en caso quiero agregar mas imagenes convierto en array para poder agregar mas archivos , por compilacion js vuelvo a convertir en strin json en el siguiente , asi voy jugando */
+        		if(ArchivosTemporales.length != 0){  /* en caso quiero agregar mas imagenes convierto en array para poder agregar mas archivos , */
 
-        			archivosTemporales = JSON.parse($(".inputNuevaGaleria").val());  
+        			ArchivosTemporales = JSON.parse($(".InputNuevaGaleria").val());   /* lo convierta a un array paraque le empuja ,luego y lo convierta en string otra vez */
 
         		}
 
-        		archivosTemporales.push(rutaImagen);  /* aqui se crear array de strings  */
+        		ArchivosTemporales.push(rutaImagen);  /* agrefarle cada ruta temporal de imagenes */
 
-        		$(".inputNuevaGaleria").val(JSON.stringify(archivosTemporales))  /* cadenas de texto en formato 64 que viene como array los convierto en string de json */
+				$(".InputNuevaGaleria").val(JSON.stringify(ArchivosTemporales));  /* despues de cargar el array - convierto en string y lo paso como valor al input occulto */
 
+  
       		})
 
 		}	
@@ -212,22 +212,22 @@ QUITAR IMAGEN DE LA GALERÍA
 
 $(document).on("click", ".quitarFotoNueva", function(){
 
-	var listaFotosNuevas = $(".quitarFotoNueva");  /* todas imagenes que tenga la galeria en ese momento */ 
-    /* 	console.log(listaFotosNuevas); */
+	var listaFotosNuevas = $(".quitarFotoNueva");  /* almacenamiento de todo fotos que tenga galeria en ese momento*/ 
+   
 	
-	var listaTemporales = JSON.parse($(".inputNuevaGaleria").val()); /* todos imagenes que tengo en formato 64 en string de json ==> se convierten en array */
+	var listaTemporales = JSON.parse($(".InputNuevaGaleria").val());  /* realmente esta en string pero lo voy conveertir en un array  */  /* rutas de imagenes temporal */  /* la galeria a subir  */
 
 	for(var i = 0; i < listaFotosNuevas.length; i++){
 
-		$(listaFotosNuevas[i]).attr("temporal", listaTemporales[i]);  /* cada button le agrego su archivo imagen foto temporal en formato 64 correspondiente  */
+		$(listaFotosNuevas[i]).attr("temporal", listaTemporales[i]);  /* cada button en su atrributo temporal le agrego su ruta imagen temporal en formato 64   */
 
 		var quitarImagen = $(this).attr("temporal"); /* se captura valor de ese atributo al que estoy dando click  */
 
 		if(quitarImagen == listaTemporales[i]){  /* pues si el valor que estoy capturando es == a un valor de los valores que tengo temporlmente  */
 
-			listaTemporales.splice(i, 1);  /* => quitar ese indice del array resuelta que la foto desparece lo que digamos se ha borrado */
+			listaTemporales.splice(i, 1);  /* => quitar ese indice del array  */
 
-			$(".inputNuevaGaleria").val(JSON.stringify(listaTemporales)); /* array actualizado con un indice menos y convertido en cadena texto de json  */
+			$(".InputNuevaGaleria").val(JSON.stringify(listaTemporales)); /* array actualizado con un indice menos y convertido en cadena texto de json  */
 
 			 $(this).parent().parent().remove();  /* borra la imagen de la vista , salir del button , salir del div y remove li  */
 
@@ -297,7 +297,7 @@ $("#imagen360").change(function(){
 
 			var rutaImagen = event.target.result;  /* imagen temporal de de 360 grados  */
 
-			 $(".ver360").html(  /* le aplica clase nueva como se fuera imagen nueva temporalmente */
+			 $(".ver360").html(  /* añado este div poque no aparece cuando no hay imagen */
 
 			 	`<div class="pano 360Nuevo" back="`+rutaImagen+`">
 
@@ -347,28 +347,30 @@ $(document).on("click", ".quitarFotoAntigua", function(){
 	}
 })
 
+
 /*=============================================
 GUARDAR HABITACIÓN
 =============================================*/
-
 $(".guardarHabitacion").click(function(){
 
-	var idHabitacion = $(".idHabitacion").val();
+/* 	var idHabitacion = $(".idHabitacion").val(); */
 
-	var tipo = $(".seleccionarTipo").val().split(",")[1];
-	var tipo_h = $(".seleccionarTipo").val().split(",")[0];
+	var tipo = $(".seleccionarTipo").val().split(",")[1];      console.log(tipo);
+	var tipo_h = $(".seleccionarTipo").val().split(",")[0];   console.log(tipo_h);
 
-	var estilo = $(".seleccionarEstilo").val();
+	var estilo = $(".seleccionarEstilo").val();      console.log(estilo);
+    
+	
+	var galeria = $(".InputNuevaGaleria").val();        console.log(galeria);          /* archivos en formato 64 strings */
+	/* var galeriaAntigua = $(".inputAntiguaGaleria").val(); */
 
-	var galeria = $(".inputNuevaGaleria").val();
-	var galeriaAntigua = $(".inputAntiguaGaleria").val();
 
-	var video = $(".agregarVideo").val();
+	var video = $(".agregarVideo").val();      console.log(video);    
 
-	var recorrido_virtual = $(".360Nuevo").attr("back");
-	var antiguoRecorrido = $(".antiguoRecorrido").val();
+	var recorrido_virtual = $(".360Nuevo").attr("back");   console.log(recorrido_virtual);
+	/* var antiguoRecorrido = $(".antiguoRecorrido").val(); */
 
-	var descripcion = $(".ck-content").html();
+	var descripcion = $(".ck-content").html();          console.log(descripcion);
 
 
 	if(tipo == "" || tipo_h == ""){
@@ -418,15 +420,12 @@ $(".guardarHabitacion").click(function(){
   	}else{
 
     	var datos = new FormData();
-    	datos.append("idHabitacion", idHabitacion);
     	datos.append("tipo_h", tipo_h);
     	datos.append("tipo", tipo);
     	datos.append("estilo", estilo);
-    	datos.append("galeria", galeria);
-    	datos.append("galeriaAntigua", galeriaAntigua);
+     	datos.append("Galeria", galeria);
     	datos.append("video", video);
     	datos.append("recorrido_virtual", recorrido_virtual);
-    	datos.append("antiguoRecorrido", antiguoRecorrido);
     	datos.append("descripcion", descripcion);
 
     	 $.ajax({
@@ -437,26 +436,6 @@ $(".guardarHabitacion").click(function(){
 		    cache: false,
 		    contentType: false,
 		    processData: false,
-		    xhr: function(){
-	        
-		    	var xhr = $.ajaxSettings.xhr();
-
-		    	xhr.onprogress = function(evt){ 
-
-		    		var porcentaje = Math.floor((evt.loaded/evt.total*100));
-
-		    		$(".preload").before(`
-
-		    			<div class="progress mt-3" style="height:2px">
-		    			<div class="progress-bar" style="width: `+porcentaje+`%;"></div>
-		    			</div>`
-		    			)
-
-		    	};
-
-		    	return xhr;
-		          
-		    },
 	      	success:function(respuesta){
 
       			if(respuesta == "ok"){
@@ -489,6 +468,7 @@ $(".guardarHabitacion").click(function(){
 
 
 })
+
 
 /*=============================================
 Eliminar Habitacion
