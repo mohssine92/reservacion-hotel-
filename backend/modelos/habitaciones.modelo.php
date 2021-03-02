@@ -57,6 +57,7 @@ class ModeloHabitaciones{
 		}else{
 
 			echo "\nPDO::errorInfo():\n";
+			
     		print_r(Conexion::conectar()->errorInfo());
 		
 		}

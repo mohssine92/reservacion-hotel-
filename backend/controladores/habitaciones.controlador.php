@@ -26,15 +26,19 @@ class ControladorHabitaciones{
 		   preg_match('/^[_\\a-zA-Z0-9]+$/', $datos["video"]) && 
 		   preg_match('/^[\/\=\\&\\$\\;\\_\\|\\*\\"\\<\\>\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $datos["descripcion"])){
 
-            if ($datos["Galeria"] != "") {
+          
+ 
+            if($datos["Galeria"] != "" && !empty($datos["Galeria"]) ) {
                 
 				
-				$galeria = json_decode($datos["Galeria"], true);  /*  es un array de galeria trae extensiones jpg y png  */
+				
+				$galeria = json_decode($datos["Galeria"], true);  /* viene como string ==>  es un array de galeria trae extensiones jpg y png  */ 
 
-            
+                /* var_dump($galeria);
+				die(); */
                 $root = array();   /* aqui empujamos todas imagenes .png en en base 64 */
 
-                for ($f = 0; $f < count($galeria); $f++) {
+                for($f = 0; $f < count($galeria); $f++) {
                     $image = $galeria[$f];
 
                     $porciones = explode(";", $image);
@@ -145,28 +149,17 @@ class ControladorHabitaciones{
 				
 			}else{
 
-				echo'<script>
+               if(empty($datos["Galeria"])){
+				   
+				  return "errorGaleria";
 
-						swal({
-								type:"error",
-							  	title: "¡CORREGIR!",
-							  	text: "¡La galería no puede estar vacía",
-							  	showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-							  
-						}).then(function(result){
+			   }
+              
 
-								if(result.value){   
-								    history.back();
-								  } 
-						});
-
-				</script>';
-
-				return;
 			}
-
-			if($datos["recorrido_virtual"] != ""){
+				
+		
+			if(isset($datos["recorrido_virtual"]) && $datos["recorrido_virtual"] != 'undefined' ){
 				
 				list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
 
@@ -187,66 +180,50 @@ class ControladorHabitaciones{
 
 			}else{
 
-				echo'<script>
+				return "errorRecorridoVirtual";
 
-						swal({
-								type:"error",
-							  	title: "¡CORREGIR!",
-							  	text: "¡El recorrido virtual no puede estar vacío",
-							  	showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-							  
-						}).then(function(result){
-
-								if(result.value){   
-								    history.back();
-								  } 
-						});
-
-				</script>';
-
-				return;
 			}
 
 		 
+            if($datos["descripcion"] == '<p><br data-cke-filler="true"></p>'){
 
-			$tabla = "habitaciones";
+             
+				return "errorDescripcion";
 
-			$datos = array("tipo_h" => $datos["tipo_h"],
-							"estilo" => $datos["estilo"],
-						    "Galeria" => ($guardarRutaLimpia),
-							"video" => $datos["video"],
-							"recorrido_virtual" => substr($ruta360,3),
-							"descripcion_h" => $datos["descripcion"]);
 
-			$respuesta = ModeloHabitaciones::mdlNuevaHabitacion($tabla, $datos);
+			}else{
+               
+		 
+				 if(isset($guardarRutaLimpia)){
 
-			return $respuesta; 
+					   $tabla = "habitaciones";
+        
+					   $datos = array("tipo_h" => $datos["tipo_h"],
+					   				"estilo" => $datos["estilo"],
+					   				"Galeria" => ($guardarRutaLimpia),
+					   				"video" => $datos["video"],
+					   				"recorrido_virtual" => substr($ruta360,3),
+					   				"descripcion_h" => $datos["descripcion"]);
+		   
+					   $respuesta = ModeloHabitaciones::mdlNuevaHabitacion($tabla, $datos);
+		   
+					   return $respuesta; 
 
+
+
+
+
+				 }
+
+
+
+			}
+			
 
 		}else{
 
-			echo '<script>
-
-					swal({
-
-						type:"error",
-						title: "¡CORREGIR!",
-						text: "¡No se permiten caracteres especiales en ninguno de los campos!",
-						showConfirmButton: true,
-						confirmButtonText: "Cerrar"
-
-					}).then(function(result){
-
-						if(result.value){
-
-							history.back();
-
-						}
-
-					});	
-
-				</script>';
+			return "error";
+		
 		}
 
 

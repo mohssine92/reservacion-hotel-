@@ -438,6 +438,9 @@ $(".guardarHabitacion").click(function(){
 		    processData: false,
 	      	success:function(respuesta){
 
+
+				console.log("reponse", respuesta);
+
       			if(respuesta == "ok"){
 
       				swal({
@@ -458,6 +461,94 @@ $(".guardarHabitacion").click(function(){
 		              });
 
       			}
+
+				if(respuesta == "errorGaleria"){
+
+			
+					swal({
+							type:"error",
+							  title: "¡CORREGIR!",
+							  text: "¡La galería no puede estar vacía",
+							  showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+						  
+					}).then(function(result){
+
+							if(result.value){   
+								history.back();
+							} 
+
+					});
+
+				}  
+
+				if(respuesta == "error"){
+
+					swal({
+
+						type:"error",
+						title: "¡CORREGIR!",
+						text: "¡No se permiten caracteres especiales en ninguno de los campos!",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+
+					}).then(function(result){
+
+						if(result.value){
+
+							history.back();
+
+						}
+
+					});	
+
+					
+
+				}  
+  
+				if(respuesta == 'errorRecorridoVirtual'){
+
+					swal({
+						type:"error",
+						  title: "¡CORREGIR!",
+						  text: "¡El recorrido virtual no puede estar vacío",
+						  showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+					  
+				      }).then(function(result){
+	      
+				      		if(result.value){   
+				      			history.back();
+				      		  } 
+				      });
+
+				}  
+
+				if(respuesta == 'errorDescripcion'){
+           
+					 
+					swal({
+						type:"error",
+						  title: "¡CORREGIR!",
+						  text: "¡La descripcion no puede estar vacío",
+						  showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+					  
+				      }).then(function(result){
+	      
+				      		if(result.value){   
+				      			history.back();
+				      		  } 
+				      });
+
+					 
+ 
+
+				}
+
+ 
+				
+			
 
       		}
 
