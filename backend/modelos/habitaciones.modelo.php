@@ -73,7 +73,7 @@ class ModeloHabitaciones{
 
 	static public function mdlEditarHabitacion($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET tipo_h = :tipo_h, estilo = :estilo, galeria = :galeria, video = :video, recorrido_virtual = :recorrido_virtual, descripcion_h = :descripcion_h WHERE id_h = :id_h");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET categoria_id = :tipo_h, estilo = :estilo, galeria = :galeria, video = :video, recorrido_virtual = :recorrido_virtual, descripcion_h = :descripcion_h WHERE id_h = :id_h");
 
 		$stmt->bindParam(":id_h", $datos["id_h"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo_h", $datos["tipo_h"], PDO::PARAM_STR);

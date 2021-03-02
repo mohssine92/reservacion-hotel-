@@ -12,6 +12,9 @@ class AjaxHabitaciones{
     public $video;
     public $recorrido_virtual;
     public $descripcion;
+	public $idHabitacion;           /* => se usa al actualizar habitacion  */
+    public $galeriaAntigua;        /* => se usa al actualizar habitacion  */
+    public $antiguoRecorrido;     /* => se usa al actualizar habitacion  */
 
 
 	/*=============================================
@@ -29,6 +32,29 @@ class AjaxHabitaciones{
 						"descripcion" => $this->descripcion);
 
 		$respuesta = ControladorHabitaciones::ctrNuevaHabitacion($datos);
+
+		echo $respuesta;
+
+	}
+
+	/*=============================================
+	  Editar habitación
+	=============================================*/	
+
+	public function ajaxEditarHabitacion(){
+	
+		$datos = array( "idHabitacion" => $this->idHabitacion,
+						"tipo_h" => $this->tipo_h,
+						"tipo" => $this->tipo,
+						"estilo" => $this->estilo,
+						"Galeria" => $this->galeria,
+						"galeriaAntigua" => $this->galeriaAntigua,
+						"video" => $this->video,
+						"recorrido_virtual" => $this->recorrido_virtual,
+						"antiguoRecorrido" => $this->antiguoRecorrido,
+						"descripcion" => $this->descripcion);
+
+		$respuesta = ControladorHabitaciones::ctrEditarHabitacion($datos);
 
 		echo $respuesta;
 
@@ -51,10 +77,23 @@ if(isset($_POST["tipo"])){
 	$habitacion -> tipo = $_POST["tipo"];
     $habitacion -> estilo = $_POST["estilo"];
     $habitacion -> galeria = $_POST["Galeria"]; 
+	$habitacion -> galeriaAntigua = $_POST["galeriaAntigua"];       /* de uso en actualizar  */
     $habitacion -> video = $_POST["video"];
     $habitacion -> recorrido_virtual = $_POST["recorrido_virtual"];
+	$habitacion -> antiguoRecorrido = $_POST["antiguoRecorrido"];     /* de uso en actualizar  */
     $habitacion -> descripcion = $_POST["descripcion"];
-    $habitacion -> ajaxNuevaHabitacion();
+   
+	if($_POST["idHabitacion"] != ""){
+
+    	$habitacion -> idHabitacion = $_POST["idHabitacion"];
+    	$habitacion -> ajaxEditarHabitacion();
+
+    }else{
+
+    	$habitacion -> ajaxNuevaHabitacion();
+
+    }
+  
 
   
   

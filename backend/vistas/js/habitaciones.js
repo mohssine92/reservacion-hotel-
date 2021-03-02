@@ -321,24 +321,24 @@ $("#imagen360").change(function(){
 })
 
 /*=============================================
-QUITAR IMAGEN VIEJA GALERÍA
+QUITAR IMAGEN VIEJA GALERÍA _ cuando valla a editar una habitacion
 =============================================*/
 
 $(document).on("click", ".quitarFotoAntigua", function(){
 
-	var listaFotosAntiguas = $(".quitarFotoAntigua"); 
+	var listaFotosAntiguas = $(".quitarFotoAntigua");    console.log(listaFotosAntiguas);   /* => en su atrributo temporal tenemos rutas de fotos */
 
-	var listaTemporales = $(".inputAntiguaGaleria").val().split(",");
+	var listaTemporales = $(".inputAntiguaGaleria").val().split(",");  console.log(listaTemporales);  /* split todo separado por caracte indicado convierta en arary con indices array puro */  /* trae rutas de fotos  */
 
 	for(var i = 0; i < listaFotosAntiguas.length; i++){
 
-		quitarImagen = $(this).attr("temporal");
+		quitarImagen = $(this).attr("temporal");   /* roota foto relacionada */
 
-		if(quitarImagen == listaTemporales[i]){
+		if(quitarImagen == listaTemporales[i]){   /* coincida con una roota de las rootas cargadas de la base de datos    */
 
-			listaTemporales.splice(i, 1);
+			listaTemporales.splice(i, 1);   /* => eleminar el indice cliqueado */
 
-			$(".inputAntiguaGaleria").val(listaTemporales.toString());
+			$(".inputAntiguaGaleria").val(listaTemporales.toString());  /*  .toString() ==> esta funccion me convierta un array a string  , No usamos json stringfy porque lo que tratamos es un array puro*/
 
 			$(this).parent().parent().remove();
 
@@ -353,26 +353,23 @@ GUARDAR HABITACIÓN
 =============================================*/
 $(".guardarHabitacion").click(function(){
 
-/* 	var idHabitacion = $(".idHabitacion").val(); */
 
+	/* ==> Capturacion de datos */
+
+	var idHabitacion = $(".idHabitacion").val();     console.log(idHabitacion );
 	var tipo = $(".seleccionarTipo").val().split(",")[1];      console.log(tipo);
-	var tipo_h = $(".seleccionarTipo").val().split(",")[0];   console.log(tipo_h);
-
+	var tipo_h = $(".seleccionarTipo").val().split(",")[0];   console.log(tipo_h);  /* => refiere al id de su categoria */
 	var estilo = $(".seleccionarEstilo").val();      console.log(estilo);
+	var galeria = $(".InputNuevaGaleria").val();        console.log(galeria);          /* archivos en formato 64 strings */
+	var galeriaAntigua = $(".inputAntiguaGaleria").val();   console.log(galeriaAntigua);  /* se se eleminar alguna imagen se actualiza el valor pero si se agrega no , se actualiza el valor en var galeria */
+	var video = $(".agregarVideo").val();      console.log(video);    
+	var recorrido_virtual = $(".360Nuevo").attr("back");   console.log(recorrido_virtual);  /* si no se actualizar va en valor undefined  */
+	var antiguoRecorrido = $(".antiguoRecorrido").val();    console.log(antiguoRecorrido);  
+	var descripcion = $(".ck-content").html();          console.log(descripcion);  /* descripcio viene con su valor , en caso va vacio se va con este valor :  <p><br data-cke-filler="true"></p> */
     
 	
-	var galeria = $(".InputNuevaGaleria").val();        console.log(galeria);          /* archivos en formato 64 strings */
-	/* var galeriaAntigua = $(".inputAntiguaGaleria").val(); */
 
-
-	var video = $(".agregarVideo").val();      console.log(video);    
-
-	var recorrido_virtual = $(".360Nuevo").attr("back");   console.log(recorrido_virtual);
-	/* var antiguoRecorrido = $(".antiguoRecorrido").val(); */
-
-	var descripcion = $(".ck-content").html();          console.log(descripcion);
-
-
+ 
 	if(tipo == "" || tipo_h == ""){
 
 		swal({
@@ -427,6 +424,9 @@ $(".guardarHabitacion").click(function(){
     	datos.append("video", video);
     	datos.append("recorrido_virtual", recorrido_virtual);
     	datos.append("descripcion", descripcion);
+		datos.append("idHabitacion", idHabitacion);
+		datos.append("galeriaAntigua", galeriaAntigua);
+		datos.append("antiguoRecorrido", antiguoRecorrido);
 
     	 $.ajax({
 
@@ -439,7 +439,7 @@ $(".guardarHabitacion").click(function(){
 	      	success:function(respuesta){
 
 
-				console.log("reponse", respuesta);
+				/* console.log("reponse", respuesta); */
 
       			if(respuesta == "ok"){
 

@@ -143,6 +143,22 @@
                       <i class="fas fa-save"></i>
                        
                   </button>
+
+                  <?php 
+
+                       if($habitacion != null){ /* => segnifica hay habitacion que se esta editando  */
+                       
+                         $galeria = json_decode($habitacion["galeria"], true);
+                       
+                         echo '<button type="button" class="btn btn-danger btn-sm eliminarHabitacion" idEliminar="'.$habitacion["id_h"].'" galeriaHabitacion="'.implode(",", $galeria).'" recorridoHabitacion="'.$habitacion["recorrido_virtual"].'">
+                       
+                               <i class="fas fa-trash"></i> 
+                       
+                             </button>';
+                       
+                       }
+                  
+                  ?>
                      
                     <?php 
                   
@@ -168,6 +184,8 @@
           <!-- card-body-->
 
           <div class="card-body"> 
+               
+                <input type="hidden" class="idHabitacion" value="<?php echo $habitacion["id_h"]?>">  <!-- capturar el id de la habitacion que vamos a iditar  -->
 
                 <!-- Categoría y nombre de la habitación -->
                 <div class="d-flex flex-column flex-md-row justify-content-start mb-3">
@@ -248,7 +266,7 @@
                                    
                                    if($habitacion != null){
                                    
-                                     $galeria = json_decode($habitacion["galeria"], true);  /* colleccion of strings ==> array with indexes  */
+                                     $galeria = json_decode($habitacion["galeria"], true);  /* json_decode Convierte un string codificado en JSON a una variable de PHP. */
                                    
                                      foreach ($galeria as $key => $value) {
                                    
@@ -281,7 +299,8 @@
 
                   <input type="hidden" class="InputNuevaGaleria" > <!-- ojo lo que estoy recibiendo es array de imagenes en formato 64 => imagenes temporales  en string de json  -->
 
-                 <!--  <input type="hidden" class="inputAntiguaGaleria" value="<?php echo implode(",", $galeria); ?>"> --> <!--  -->
+                  <input type="hidden" class="inputAntiguaGaleria" value="<?php echo implode(",", $galeria); ?>">   <!-- implode — Une elementos de un array en un string , separado elentos por el caracter indicado --> 
+                  
 
 
 
@@ -382,11 +401,14 @@
                     </div>
           
                     <div class="card-footer">
-                     <!--   <input type="hidden" class="custom-file-input" id="imagen"> -->
+                     
+                       <input type="hidden" class="antiguoRecorrido" value="<?php echo $habitacion["recorrido_virtual"]; ?>"> <!-- cuando quiero editar capto la antigua routa en caso no voy a cambiar -->
+
                        <div class="custom-file">
                          <input type="file" class="custom-file-input" id="imagen360">
                          <label class="custom-file-label" for="imagen360">Agregar imagen 360°</label>
                        </div>
+                   
                     </div>
                       
                   </div>   <!-- aqui termina ese card --> <!-- pues aqui termina tercer card añidado -->
@@ -443,6 +465,22 @@
                   <i class="fas fa-save"></i>
                
                </button>
+
+               <?php 
+
+                    if($habitacion != null){ /* => segnifica hay habitacion que se esta editando  */
+                    
+                      $galeria = json_decode($habitacion["galeria"], true);
+                    
+                      echo '<button type="button" class="btn btn-danger btn-sm eliminarHabitacion" idEliminar="'.$habitacion["id_h"].'" galeriaHabitacion="'.implode(",", $galeria).'" recorridoHabitacion="'.$habitacion["recorrido_virtual"].'">
+                    
+                            <i class="fas fa-trash"></i> 
+                    
+                          </button>';
+                    
+                    }
+              
+              ?>
 
             </div>
          
