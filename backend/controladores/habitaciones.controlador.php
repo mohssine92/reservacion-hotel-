@@ -470,21 +470,19 @@ class ControladorHabitaciones{
 			    if($type =='png'){
 
 			    	unlink("../".$datos["antiguoRecorrido"]);
-
-
-					/* echo $datos["antiguoRecorrido"];
-					die();
-                    */
     
 			    	list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
     
 			    	
-			         $nuevoAncho = 4030;
-			         $nuevoAlto = 1144;
+			        $nuevoAncho = 4030;
+			        $nuevoAlto = 1144;
+
+					$aleatorio = mt_rand(1000,9999); 
+
     
-			         $directorio = "../vistas/img/".$datos["tipo"];	
+			        $directorio = "../vistas/img/".$datos["tipo"];	
     
-			         $ruta360 = strtolower($directorio."/".$datos["estilo"]."-360.jpg");
+			        $ruta360 = strtolower($directorio."/".$datos["estilo"].$aleatorio."-360.jpg");
     
 			    	$origen = imagecreatefrompng($datos["recorrido_virtual"]);   /* roota original */
     
@@ -509,16 +507,18 @@ class ControladorHabitaciones{
 
 			   if($type == 'jpeg' || $type == 'jpg'){
 
-                    unlink("../".$datos["antiguoRecorrido"]);
+                    unlink("../".$datos["antiguoRecorrido"]);  /* => Eleminar la imagen antigua  */
 				    
 				    list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
     
 				    $nuevoAncho = 4030;
 				    $nuevoAlto = 1144;
+
+					$aleatorio = mt_rand(1000,9999); 
     
 				    $directorio = "../vistas/img/".$datos["tipo"];	
     
-				    $ruta360 = strtolower($directorio."/".$datos["estilo"]."-360.jpg");
+				    $ruta360 = strtolower($directorio."/".$datos["estilo"].$aleatorio."-360.jpg");
     
 				    $origen = imagecreatefromjpeg($datos["recorrido_virtual"]);
     
@@ -526,7 +526,7 @@ class ControladorHabitaciones{
     
 				    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
     
-				    imagejpeg($destino, $ruta360);
+				    imagejpeg($destino, $ruta360);  /* => agregar imagen nueva */
     
 				    $ruta360 = substr($ruta360,3);	
 
@@ -561,6 +561,37 @@ class ControladorHabitaciones{
 
 		}
 
+
+	}
+
+	/*=============================================
+	Eliminar Habitación
+	=============================================*/
+
+	static public function ctrEliminarHabitacion($datos){
+		
+		// Eliminamos fotos de la galería
+
+		$galeriaHabitacion = explode("," , $datos["galeriaHabitacion"]);  /* Explode — Divide un string en varios string */  /* obtencion un array con indices */  /* de routas a eleminar de discoDuro */
+
+	/* 	var_dump($galeriaHabitacion);
+		die(); */
+
+		foreach ($galeriaHabitacion as $key => $value) {
+			
+			unlink("../".$value);
+		
+		}    /* despuesd e eleminar tidas las rutas del servidor  */
+
+		// Eliminamos imagen 360°
+
+		unlink("../".$datos["recorridoHabitacion"]);	
+
+		$tabla = "habitaciones";
+
+		$respuesta = ModeloHabitaciones::mdlEliminarHabitacion($tabla, $datos["idEliminar"]);
+
+		return $respuesta;
 
 	}
 

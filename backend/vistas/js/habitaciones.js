@@ -436,6 +436,27 @@ $(".guardarHabitacion").click(function(){
 		    cache: false,
 		    contentType: false,
 		    processData: false,
+			xhr: function(){             /* este es procesod de jax , se va mostrar cuando se ha completado el proceso de ajax */
+	        
+		    	var xhr = $.ajaxSettings.xhr();   /* => en esta variable se guarda la configuracion de ajax xhr  */
+
+		    	xhr.onprogress = function(evt){ 
+
+		    		var porcentaje = Math.floor((evt.loaded/evt.total*100));   /* mathfloor sin 3,3 ==> 3 lo baja  */ /*  matseil al reves lo suba  */
+
+					/* El ::beforeselector inserta algo antes del contenido de cada elemento seleccionado. */
+		    		$(".preload").before(`
+
+		    			<div class="progress mt-3" style="height:2px">
+		    			<div class="progress-bar" style="width: `+porcentaje+`%;"></div>
+		    			</div>`
+		    			)   
+
+		    	};
+
+		    	return xhr;
+		          
+		    },
 	      	success:function(respuesta){
 
 
@@ -565,15 +586,18 @@ $(".guardarHabitacion").click(function(){
 Eliminar Habitacion
 =============================================*/
 
-$(document).on("click", ".eliminarHabitacion", function(){
+$(document).on("click", ".eliminarHabitacion", function(){  
 
-  var idEliminar = $(this).attr("idEliminar");
+  var idEliminar = $(this).attr("idEliminar");   console.log(idEliminar);
 
-  var galeriaHabitacion = $(this).attr("galeriaHabitacion");
+  var galeriaHabitacion = $(this).attr("galeriaHabitacion");   console.log(galeriaHabitacion);
 
-  var recorridoHabitacion = $(this).attr("recorridoHabitacion");
+  var recorridoHabitacion = $(this).attr("recorridoHabitacion");   console.log(recorridoHabitacion);
 
-  swal({
+
+ 
+
+  swal({ 
     title: '¿Está seguro de eliminar esta Habitación?',
     text: "¡Si no lo está puede cancelar la acción!",
     type: 'warning',

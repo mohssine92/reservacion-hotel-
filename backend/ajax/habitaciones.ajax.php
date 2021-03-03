@@ -37,33 +37,50 @@ class AjaxHabitaciones{
 
 	}
 
+
 	/*=============================================
 	  Editar habitación
 	=============================================*/	
 
 	public function ajaxEditarHabitacion(){
-	
-		$datos = array( "idHabitacion" => $this->idHabitacion,
-						"tipo_h" => $this->tipo_h,
-						"tipo" => $this->tipo,
-						"estilo" => $this->estilo,
-						"Galeria" => $this->galeria,
-						"galeriaAntigua" => $this->galeriaAntigua,
-						"video" => $this->video,
-						"recorrido_virtual" => $this->recorrido_virtual,
-						"antiguoRecorrido" => $this->antiguoRecorrido,
-						"descripcion" => $this->descripcion);
+        $datos = array( "idHabitacion" => $this->idHabitacion,
+                        "tipo_h" => $this->tipo_h,
+                        "tipo" => $this->tipo,
+                        "estilo" => $this->estilo,
+                        "Galeria" => $this->galeria,
+                        "galeriaAntigua" => $this->galeriaAntigua,
+                        "video" => $this->video,
+                        "recorrido_virtual" => $this->recorrido_virtual,
+                        "antiguoRecorrido" => $this->antiguoRecorrido,
+                        "descripcion" => $this->descripcion);
 
-		$respuesta = ControladorHabitaciones::ctrEditarHabitacion($datos);
+        $respuesta = ControladorHabitaciones::ctrEditarHabitacion($datos);
+
+        echo $respuesta;
+    }
+
+
+    /*=============================================
+	   Eliminar habitación
+	=============================================*/	
+
+	public $idEliminar;
+	public $galeriaHabitacion;
+	public $recorridoHabitacion;
+
+	public function ajaxEliminarHabitacion(){
+	
+		$datos = array( "idEliminar" => $this->idEliminar,
+						"galeriaHabitacion" => $this->galeriaHabitacion,
+						"recorridoHabitacion" => $this->recorridoHabitacion);
+
+		$respuesta = ControladorHabitaciones::ctrEliminarHabitacion($datos);
 
 		echo $respuesta;
 
 	}
-	 
 
-	
- 
-	
+	 	
 
 }
 
@@ -93,10 +110,24 @@ if(isset($_POST["tipo"])){
     	$habitacion -> ajaxNuevaHabitacion();
 
     }
-  
-
-  
+    
   
 }
+
+/*=============================================
+Eliminar habitación
+=============================================*/	
+
+if(isset($_POST["idEliminar"])){
+
+	$eliminar = new AjaxHabitaciones();
+    $eliminar -> idEliminar = $_POST["idEliminar"];
+    $eliminar -> galeriaHabitacion = $_POST["galeriaHabitacion"];
+    $eliminar -> recorridoHabitacion = $_POST["recorridoHabitacion"];
+    $eliminar -> ajaxEliminarHabitacion();
+	
+}
+
+
      
 

@@ -134,7 +134,7 @@
                      
                 <h5  class="card-title"><?php echo $habitacion["tipo"] ?> / <?php echo $habitacion["estilo"] ?></h5>
                      
-                <div class="preload"></div>
+                <div class="preload"></div> 
                      
                 <div class="card-tools">
                      
@@ -456,7 +456,7 @@
 
           <div class="card-footer">  <!-- footer principal  -->
 
-            <div class="preload"></div>
+            <div class="preload"></div>   <!-- => mostrar porcentaje de carga  -->
 
             <div class="card-tools float-right">
             
@@ -470,7 +470,7 @@
 
                     if($habitacion != null){ /* => segnifica hay habitacion que se esta editando  */
                     
-                      $galeria = json_decode($habitacion["galeria"], true);
+                      $galeria = json_decode($habitacion["galeria"], true); /* Convierte un string codificado en JSON  */  /*  Cuando es true, los object devueltos serán convertidos a array asociativos. */
                     
                       echo '<button type="button" class="btn btn-danger btn-sm eliminarHabitacion" idEliminar="'.$habitacion["id_h"].'" galeriaHabitacion="'.implode(",", $galeria).'" recorridoHabitacion="'.$habitacion["recorrido_virtual"].'">
                     
