@@ -448,11 +448,25 @@ INFO PERFIL
 					<div class="col-6 d-none d-lg-block"></div>
 
 					<div class="col-12 mt-3">
+
+                    <?php
+
+					if($reservas){
+                       
+                       echo '<p class="help-block small">
+					   
+				        Si necesitas modificar o cancelar una reserava, Favor escribirnos al WhatsApp  <a href="http://api.whatsapp.com/send?phone=34643446409&text=Hola Portobelo, necesito hacer un cambio en la reserva " targer="_blank" >+34 643 446 409</a>	 
+										 
+					   </p>';
+                
+					}
+					;?>
 						
 					<table class="table table-striped">
 					    <thead>
 					      <tr>
 					      	<th>#</th>
+							<th>Codigo Rserva</th>
 					        <th>Habitación</th>
 					        <th>Fecha de Ingreso</th>
 					        <th>Fecha de Salida</th>
@@ -471,18 +485,18 @@ INFO PERFIL
     
 					         }
 
-					             foreach ($reservas as $key => $value) {
-        
-					             	$habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);
-					             	$categoria = ControladorCategorias::ctrMostrarCategoria($habitacion["categoria_id"]);
-					             	$testimonio = ControladorReservas::ctrMostrarTestimonios("reserva_id", $value["id_reserva"]);
+                                 foreach ($reservas as $key => $value) {
+                                     $habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);
+                                     $categoria = ControladorCategorias::ctrMostrarCategoria($habitacion["categoria_id"]);
+                                     $testimonio = ControladorReservas::ctrMostrarTestimonios("reserva_id", $value["id_reserva"]);
 
-									/*  echo '<pre class="bg-white">'; print_r($testimonio); echo '</pre><br>';    */
-								 	/*  echo '<pre class="bg-white">'; print_r($testimonio[0]['testimonio']); echo '</pre><br>';  */
-					             		     	
-					              echo '<tr>
+                                     /*  echo '<pre class="bg-white">'; print_r($testimonio); echo '</pre><br>';    */
+                                     /*  echo '<pre class="bg-white">'; print_r($testimonio[0]['testimonio']); echo '</pre><br>';  */
+                                                  
+                                     echo '<tr>
         
 					        			 <td>'.($key+1).'</td>
+										 <td>'.$value["codigo_reserva"].'</td>
 					        			 <td class="text-uppercase">'.$categoria["tipo"]." ".$habitacion["estilo"].'</td>
 					        			 <td>'.$value["fecha_ingreso"].'</td>
 					        		     <td>'.$value["fecha_salida"].'</td>
@@ -504,8 +518,12 @@ INFO PERFIL
 					                	</td>
 					               
 					             </tr>';
-        
-					         	}
+                                 }
+
+
+
+
+                            
         
 					     ?>
 

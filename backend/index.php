@@ -19,6 +19,10 @@ require_once "modelos/categorias.modelo.php";
 require_once "controladores/habitaciones.controlador.php";
 require_once "modelos/habitaciones.modelo.php";
 
+require_once "controladores/reservas.controlador.php";
+require_once "modelos/reservas.modelo.php";
+
+
 
 
 

@@ -52,7 +52,22 @@
  <link rel="stylesheet" href="vistas/css/plugins/iCheck-flat-blue.css">	
 
  	<!-- Pano -->
-   <link rel="stylesheet" href="vistas/css/plugins/jquery.pano.css">
+  <link rel="stylesheet" href="vistas/css/plugins/jquery.pano.css">
+
+ <!-- bootstrap datepicker -->
+ <link rel="stylesheet" href="vistas/css/plugins/bootstrap-datepicker.standalone.min.css">
+
+ <!-- fullCalendar -->
+ <link rel="stylesheet" href="vistas/css/plugins/fullcalendar.min.css">
+
+ <style>
+     .fc-today{
+
+       background: #0F15DF !important
+
+     } 
+   
+ </style>
 
 
 <!--=====================================
@@ -91,6 +106,18 @@
   <!-- Pano -->
 	<!-- https://www.jqueryscript.net/other/360-Degree-Panoramic-Image-Viewer-with-jQuery-Pano.html -->
 	<script src="vistas/js/plugins/jquery.pano.js"></script>
+
+  <!-- bootstrap datepicker -->
+	<!-- https://bootstrap-datepicker.readthedocs.io/en/latest/ -->
+	<script src="vistas/js/plugins/bootstrap-datepicker.min.js"></script>
+
+	<!-- fullCalendar -->
+	<!-- https://momentjs.com/ -->
+	<script src="vistas/js/plugins/moment.js"></script>
+  <!-- https://fullcalendar.io/docs/background-events-demo -->	
+	<script src="vistas/js/plugins/fullcalendar.min.js"></script>
+
+
 
 
 
@@ -164,6 +191,7 @@
 <script src="vistas/js/planes.js"></script>
 <script src="vistas/js/categorias.js"></script>
 <script src="vistas/js/habitaciones.js"></script>
+<script src="vistas/js/reservas.js"></script>
 
 <?php endif ?>
 
