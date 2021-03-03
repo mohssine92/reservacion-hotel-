@@ -463,7 +463,49 @@ class ControladorHabitaciones{
 			   $porcionA = $porciones[0];
 			   $typeArr = explode("/", $porcionA);
 			   $type =  $typeArr[1];
+
+
 			  
+			         
+			    if($type =='png'){
+
+			    	unlink("../".$datos["antiguoRecorrido"]);
+
+
+					/* echo $datos["antiguoRecorrido"];
+					die();
+                    */
+    
+			    	list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
+    
+			    	
+			         $nuevoAncho = 4030;
+			         $nuevoAlto = 1144;
+    
+			         $directorio = "../vistas/img/".$datos["tipo"];	
+    
+			         $ruta360 = strtolower($directorio."/".$datos["estilo"]."-360.jpg");
+    
+			    	$origen = imagecreatefrompng($datos["recorrido_virtual"]);   /* roota original */
+    
+			    	$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+    
+			    	imagealphablending($destino, false);
+    
+			    	imagesavealpha($destino, true);
+    
+			    	imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+    
+			    	imagepng($destino,  $ruta360);
+			        
+			         $ruta360 = substr($ruta360,3);	 
+
+
+
+
+			    }
+
+			 
 
 			   if($type == 'jpeg' || $type == 'jpg'){
 
@@ -487,35 +529,6 @@ class ControladorHabitaciones{
 				    imagejpeg($destino, $ruta360);
     
 				    $ruta360 = substr($ruta360,3);	
-
-
-			   }else{
-       
-			    	 unlink("../".$datos["antiguoRecorrido"]);
-
-				     list($ancho, $alto) = getimagesize($datos["recorrido_virtual"]);
-     
-				     
-				    $nuevoAncho = 4030;
-				    $nuevoAlto = 1144;
-
-					$directorio = "../vistas/img/".$datos["tipo"];	
-     
-					$ruta360 = strtolower($directorio."/".$datos["estilo"]."-360.jpg");
-     
-				     $origen = imagecreatefrompng($datos["recorrido_virtual"]);   /* roota original */
-     
-				     $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-     
-				     imagealphablending($destino, false);
-     
-				     imagesavealpha($destino, true);
-     
-				     imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-     
-				     imagepng($destino,  $ruta360);
-                   
-					$ruta360 = substr($ruta360,3);	 
 
 
 			   }

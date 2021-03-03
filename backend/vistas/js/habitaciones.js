@@ -357,9 +357,9 @@ $(".guardarHabitacion").click(function(){
 	/* ==> Capturacion de datos */
 
 	var idHabitacion = $(".idHabitacion").val();     console.log(idHabitacion );
-	var tipo = $(".seleccionarTipo").val().split(",")[1];      console.log(tipo);
+	var tipo = $(".seleccionarTipo").val().split(",")[1];      console.log(tipo);   /* => nombre de la categoria */
 	var tipo_h = $(".seleccionarTipo").val().split(",")[0];   console.log(tipo_h);  /* => refiere al id de su categoria */
-	var estilo = $(".seleccionarEstilo").val();      console.log(estilo);
+	var estilo = $(".seleccionarEstilo").val();      console.log(estilo);    /* => nombre de la habitacion */
 	var galeria = $(".InputNuevaGaleria").val();        console.log(galeria);          /* archivos en formato 64 strings */
 	var galeriaAntigua = $(".inputAntiguaGaleria").val();   console.log(galeriaAntigua);  /* se se eleminar alguna imagen se actualiza el valor pero si se agrega no , se actualiza el valor en var galeria */
 	var video = $(".agregarVideo").val();      console.log(video);    
@@ -368,7 +368,7 @@ $(".guardarHabitacion").click(function(){
 	var descripcion = $(".ck-content").html();          console.log(descripcion);  /* descripcio viene con su valor , en caso va vacio se va con este valor :  <p><br data-cke-filler="true"></p> */
     
 	
-
+   /*  return; */
  
 	if(tipo == "" || tipo_h == ""){
 
