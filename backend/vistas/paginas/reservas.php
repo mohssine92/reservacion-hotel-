@@ -46,6 +46,17 @@
    
     </section>
 
+    <!--=====================================
+        Módulo de gráfico de ventas
+    ======================================-->
+
+    <?php 
+
+        include "modulos/ventas.php";
+
+    ?>
+
+
     <!-- Main content -->
     <section class="content">
 

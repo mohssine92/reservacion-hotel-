@@ -60,6 +60,9 @@
  <!-- fullCalendar -->
  <link rel="stylesheet" href="vistas/css/plugins/fullcalendar.min.css">
 
+ <!-- Morris chart -->
+ <link rel="stylesheet" href="vistas/css/plugins/morris.css">
+
  <style>
      .fc-today{
 
@@ -116,6 +119,11 @@
 	<script src="vistas/js/plugins/moment.js"></script>
   <!-- https://fullcalendar.io/docs/background-events-demo -->	
 	<script src="vistas/js/plugins/fullcalendar.min.js"></script>
+
+  <!-- Morris.js charts -->
+	<!-- https://morrisjs.github.io/morris.js/ -->
+	<script src="vistas/js/plugins/raphael-min.js"></script>
+	<script src="vistas/js/plugins/morris.min.js"></script>
 
 
 
