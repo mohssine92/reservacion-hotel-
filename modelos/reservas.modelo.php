@@ -90,7 +90,7 @@ Class ModeloReservas{                                                           
 
 	static public function mdlMostrarReservasUsuario($tabla, $valor){
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id_usuario ORDER BY id_reserva DESC LIMIT 5");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_usuario = :id_usuario ORDER BY id_reserva DESC LIMIT 20");
 
 		$stmt -> bindParam(":id_usuario", $valor, PDO::PARAM_INT);
 
@@ -183,6 +183,55 @@ Class ModeloReservas{                                                           
 		$stmt = null;
 
 	}
+
+	/*=============================================
+	Mostrar Notificaciones
+	=============================================*/
+
+	static public function mdlMostrarNotificaciones($tabla, $valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE tipo = :tipo");
+
+		$stmt -> bindParam(":tipo", $valor, PDO::PARAM_STR);
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+	
+	}
+
+	/*=============================================
+	Actualizar notificaciones
+	=============================================*/
+
+	static public function mdlActualizarNotificaciones($tabla, $tipo, $cantidad){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET cantidad = :cantidad WHERE tipo = :tipo");
+
+		$stmt -> bindParam(":cantidad", $cantidad, PDO::PARAM_STR);
+		$stmt -> bindParam(":tipo", $tipo, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			echo "\nPDO::errorInfo():\n";
+    		print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+	}	
 
 
 

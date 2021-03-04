@@ -179,7 +179,7 @@ Modal Crear Banner
 Modal Editar Banner
 ======================================-->
 
-<div class="modal" id="editarBanner">
+<div class="modal"  data-backdrop="static" id="editarBanner">
 
      <div class="modal-dialog">
    
@@ -190,7 +190,7 @@ Modal Editar Banner
              <!-- Modal Header -->
              <div class="modal-header bg-info">
                <h4 class="modal-title">Editar Banner</h4>
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <button type="button" class="close cerrar" data-dismiss="modal">&times;</button>
              </div>
    
            <!-- Modal body -->
@@ -216,7 +216,7 @@ Modal Editar Banner
            <div class="modal-footer d-flex justify-content-between">
    
               <div>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger cerrar" data-dismiss="modal">Cerrar</button>
               </div>
    
               <div>

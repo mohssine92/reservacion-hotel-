@@ -59,6 +59,12 @@ Class ControladorReservas{
 
 			$crearTestimonio = ModeloReservas::mdlCrearTestimonio($tablaTestimonios, $datos);
 
+			$traerNotifiaciones = ModeloReservas::mdlMostrarNotificaciones("notificaciones", "reservas");    /* ==> tema de notificaciones */
+
+			$cantidad = $traerNotifiaciones["cantidad"]+1;
+
+			$actualizarNotifiaciones = ModeloReservas::mdlActualizarNotificaciones("notificaciones", "reservas", $cantidad);   /* --------- */
+
 			return $crearTestimonio;   /* => debe returnar ok para devolverlo a info perfil al mercado de pago  */
 		}
 
@@ -86,7 +92,7 @@ Class ControladorReservas{
 
 	static public function ctrMostrarTestimonios($item, $valor){
 
-		$tabla1 = "testimonios";
+		$tabla1 = "testimonios";    /* => dependo de id reservas */
 		$tabla2 = "habitaciones";
 		$tabla3 = "reservas";
 		$tabla4 = "usuarios";
@@ -116,6 +122,13 @@ Class ControladorReservas{
 				$respuesta = ModeloReservas::mdlActualizarTestimonio($tabla, $datos);
 
 				if($respuesta == "ok"){
+
+					
+					$traerNotifiaciones = ModeloReservas::mdlMostrarNotificaciones("notificaciones", "testimonios");
+
+					$cantidad = $traerNotifiaciones["cantidad"]+1;
+
+					$actualizarNotifiaciones = ModeloReservas::mdlActualizarNotificaciones("notificaciones", "testimonios", $cantidad);
 
 					echo'<script>
 

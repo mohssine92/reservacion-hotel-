@@ -1,80 +1,131 @@
-<div class="content-wrapper" style="min-height: 1364.81px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
+<?php 
 
-      <div class="container-fluid">
+  if($admin["perfil"] != "Administrador"){
 
-        <div class="row mb-2">
+    echo '<script>
 
-          <div class="col-sm-6">
+      window.location = "banner";
 
-            <h1>Analiticas</h1>
+    </script>';
 
-          </div>
+    return;
 
-          <div class="col-sm-6">
+  }
 
-            <ol class="breadcrumb float-sm-right">
+ ?>
 
-              <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Analiticas</li> <!-- se trata de pagima anliticas  -->
+ <div class="content-wrapper" style="min-height: 717px;">
 
-            </ol>
+  <section class="content-header">
 
-          </div>
+    <div class="container-fluid">
+
+      <div class="row mb-2">
+
+        <div class="col-sm-6">
+
+          <h1>Analíticas</h1>
 
         </div>
+
+        <div class="col-sm-6">
+
+          <ol class="breadcrumb float-sm-right">
+
+            <li class="breadcrumb-item"><a href="inicio">Inicio</a></li>
+            <li class="breadcrumb-item active">Analíticas</li>
+
+          </ol>
+
+        </div>
+
+      </div>
+
+    </div><!-- /.container-fluid -->
+
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="container-fluid">
+
+      <div class="row">
+
+        <?php 
+
+        include "modulos/top.php";  /* donde tengo cuadros  */
+
+        ?>
+
+        <div class="col-3">
+
+          <?php 
+
+            include "modulos/mejorHabitacion.php";
+
+          ?>
+          
+        </div>
+
+        <div class="col-3">
+
+          <?php 
+
+            include "modulos/peorHabitacion.php";
+
+          ?>
+          
+        </div>
       
-      </div><!-- /.container-fluid -->
-   
-    </section>
+        <div class="col-6">
 
-    <!-- Main content -->
-    <section class="content">
+          <?php 
 
-      <div class="container-fluid">
+            include "modulos/ventas.php";
 
-        <div class="row">
+          ?>
+          
+        </div>
+
+        <div class="col-6">
+
+          <?php 
+
+            include "modulos/calendario.php";
+
+          ?>
+          
+        </div>
+
+         <div class="col-6">
 
           <div class="col-12">
 
-            <!-- Default box -->
-            <div class="card card-info card-outline">
+            <?php 
 
-              <div class="card-header">
+              include "modulos/ultimosUsuarios.php";
 
-                <h3 class="card-title">Title</h3>
+            ?>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                    <i class="fas fa-times"></i></button>
-                </div>
-
-              </div>
-
-              <div class="card-body">
-                Start creating your amazing application!
-              </div>
-
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-
-              <!-- /.card-footer-->
-            
-            </div>
-            <!-- /.card -->
-          
           </div>
-        
+
+           <div class="col-12">
+
+            <?php 
+
+              include "modulos/ultimasReservas.php";
+
+            ?>
+
+          </div>
+          
         </div>
-      
+
       </div>
-    
-    </section>
-    <!-- /.content -->
-  
-  </div>
+      
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>

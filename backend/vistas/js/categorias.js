@@ -310,6 +310,15 @@ $(document).on("click", ".editarCategoria", function(){
 
 })
 
+
+$(document).on("click", ".cerrarModal", function(){
+
+
+  location.reload();   /* evitando el error de que se triplica la textarea tambien hemos evitar el cierre desde fuera del modal  */
+
+
+})
+
 /*=============================================
 Eliminar Categoria
 =============================================*/

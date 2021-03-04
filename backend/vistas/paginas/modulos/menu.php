@@ -37,6 +37,8 @@
         </li>
 
         <!-- Botón página inicio -->
+
+        <?php if ($admin["perfil"] == "Administrador"): ?>
         <li class="nav-item">
 
           <a href="inicio" class="nav-link">
@@ -48,6 +50,7 @@
           </a>
             
         </li>
+        <?php endif ?>
 
          <!-- Botón página administradores -->
 

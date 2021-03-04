@@ -1,3 +1,31 @@
+<?php 
+
+$notificaciones = ControladorInicio::ctrMostrarNotificaciones();
+/*  echo '<pre class="bg-white">'; print_r($notificaciones); echo '</pre><br>';  */
+
+$totalNotificaciones = 0;
+$totalReservas = 0;
+$totalTestimonios = 0;
+
+foreach ($notificaciones as $key => $value) {
+
+   $totalNotificaciones += $value["cantidad"]; /* ivrementarle */
+
+    if($value["tipo"] == "reservas"){
+      
+      $totalReservas = $value["cantidad"];
+
+    }else{
+
+      $totalTestimonios = $value["cantidad"];
+    
+    }
+}
+
+?>
+
+
+
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">   
   
 
@@ -30,14 +58,18 @@
     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
     
      <i class="far fa-bell"></i> <!-- icono notificaciones -->
- 
-     <span class="badge badge-danger navbar-badge"><!-- <?php if($totalNotificaciones != 0){echo $totalNotificaciones;}  ?> --> 5</span>  <!-- notificaciones sin visualizar  -->
     
+     <?php if ($totalNotificaciones != 0): ?>
+  
+     <span class="badge badge-danger navbar-badge"><?php echo $totalNotificaciones; ?> </span>  <!-- notificaciones sin visualizar  -->
+    
+     <?php endif ?>
+
     </a>
   
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">  
       
-     <span class="dropdown-item dropdown-header"><!-- <?php echo $totalNotificaciones; ?> --> 5 Notificaciones</span>  
+     <span class="dropdown-item dropdown-header"> <?php echo $totalNotificaciones; ?> Notificaciones</span>  
  
      <div class="dropdown-divider"></div>  <!-- es una clase que me permite separar -->
  
@@ -45,7 +77,7 @@
      
       <i class="far fa-calendar-alt mr-2 float-right"></i>   
       
-      <span class="badge badge-info "><!-- <?php echo $totalReservas; ?> --> 3 Reservas nuevas</span> 
+      <span class="badge badge-info "> <?php echo $totalReservas; ?> Reservas nuevas</span> 
      
      </a>
     
@@ -55,7 +87,7 @@
       
        <i class="fas fa-user-check mr-2 float-right"></i> <!-- icono flotado a la derecha -->
        
-       <span class="badge badge-info "><!-- <?php echo $totalTestimonios; ?> --> 2 Testimonios nuevos</span>
+       <span class="badge badge-info "><?php echo $totalTestimonios; ?> Testimonios nuevos</span>
       
       </a>
     

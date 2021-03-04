@@ -288,11 +288,46 @@ MENÚ MÓVIL
 	
 	<div class="row">
 		
-		<div class="col-6">
+		<div class="col-6 ">
 			
-			<a href="#modalIngreso" data-toggle="modal">
+         <?php if (isset($_SESSION["validarSesion"])): ?>
+         
+		   <?php if ($_SESSION["validarSesion"] == "ok"): ?>
+   
+            <a href="<?php echo $ruta.'perfil'; ?>"> 
+              
+			 <?php if($usuario["foto"] == ""): ?>
+
 				<i class=" fas fa-user lead ml-3 mt-4"></i>
+
+				<?php else: ?>
+
+				<?php if($usuario["modo"] == "directo"): ?>  
+
+					 <img src="<?php echo $servidor.$usuario["foto"]; ?>" class="img-fluid rounded-circle ml-3 mt-4" style="width:30px"> 
+				
+				    <?php else: ?>
+					
+					 <img src="<?php echo $usuario["foto"]; ?>" class="img-fluid rounded-circle ml-3 mt-4" style="width:30px">  
+			
+				<?php endif ?>
+
+
+			 <?php endif ?>
+
 			</a>
+   
+		   <?php endif ?>	
+
+		 <?php else: ?>
+
+		   <a href="#modalIngreso" data-toggle="modal">
+		   	  <i class=" fas fa-user lead ml-3 mt-4"></i>
+		   </a>
+		 
+		 <?php endif ?>	
+
+			
 
 		</div>	
 

@@ -399,7 +399,7 @@ Modal Crear Categorías
 Modal Editar Categorías
 ======================================-->
 
-<div class="modal" id="editarCategoria">
+<div class="modal"  data-backdrop="static" id="editarCategoria">
 
   <div class="modal-dialog">
 
@@ -410,7 +410,7 @@ Modal Editar Categorías
         <!-- Modal Header -->
         <div class="modal-header bg-info">
           <h4 class="modal-title">Editar Categoría</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close cerrarModal" data-dismiss="modal">&times;</button>
         </div>
 
         <!-- Modal body -->
@@ -453,7 +453,6 @@ Modal Editar Categorías
 
 
           <hr class="pb-2">
-
           
           <div class="form-group">
 
@@ -593,7 +592,7 @@ Modal Editar Categorías
         <div class="modal-footer d-flex justify-content-between">
 
           <div>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-danger cerrarModal" data-dismiss="modal">Cerrar</button>
           </div>
 
           <div>

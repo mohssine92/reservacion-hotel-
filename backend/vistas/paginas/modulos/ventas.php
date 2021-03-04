@@ -24,7 +24,7 @@ foreach ($respuesta as $key => $value){   /* => quiero trabajar con mes y año *
     
       /*    echo '<pre>';print_r($key2);echo'</pre>'; */
 		$sumaPagosMes[$key2] += $value2;   /* lo que ocurra cuando un key estarepetido se asuma todos valores en el mismo y yasta asi conseguimos las suma pagada por un key  */
-	/* 	echo '<pre>';print_r($sumaPagosMes);echo'</pre>'; */
+		/* echo '<pre>';print_r($sumaPagosMes);echo'</pre>';   */
 	
 	}
 	
@@ -32,8 +32,8 @@ foreach ($respuesta as $key => $value){   /* => quiero trabajar con mes y año *
 
 
 $noRepetirFechas = array_unique($arrayFechas);  /* al principio no pasa nada con la repiticion de fechas he calculado total facturado en un mes , pero ahora , no quiero que se repitan fechas en el araay aplico esta funccion */
-/*  
-echo '<pre>';print_r($noRepetirFechas);echo'</pre>'; */ 
+
+/*  echo '<pre>';print_r($noRepetirFechas);echo'</pre>';  */ 
 
  ?>
 
@@ -75,9 +75,9 @@ var line = new Morris.Line({
     	 }
 
     }else{
-
-    	 echo "{ y: '0', ventas: '0' }";
-
+ 
+    	 echo "{ y: '0', ventas: '0' }";  /* => en caso que no hay ventas  */
+ 
     }
 
     ?>

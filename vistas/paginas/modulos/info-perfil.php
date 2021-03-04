@@ -1,10 +1,12 @@
 <?php
    
-   $item = "id_u";               /* campo */
+   $item = "id_u";              
    $valor = $_SESSION["id"];
 
    $usuario = ControladorUsuarios::ctrMostrarUsuario($item, $valor);     /* => trae 1 registro de solo tabla usuario , del ususario loguedo  */
    $reservas = ControladorReservas::ctrMostrarReservasUsuario($valor); 
+
+ /*   echo '<pre class="bg-white">'; print_r($reservas); echo '</pre><br>';   */
 
    $hoy = date("Y-m-d");
    $noVencidas = 0;
@@ -128,44 +130,51 @@ INFO PERFIL
                                  }
                                  
                                  
-                                 foreach ($reservas as $key => $value) {
-                                
-									$habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);
+                                foreach ($reservas as $key => $value) { /* permito 20 ultimas reservas hechas por id user  */
+
+                                    $habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);   
 									$categoria = ControladorCategorias::ctrMostrarCategoria($habitacion["categoria_id"]);
-                                    /* $testimonio = ControladorReservas::ctrMostrarTestimonios("id_res", $value["id_reserva"]); */
-                                 
-                                    echo '<div class="d-lg-none d-flex py-2">
-                                 
-                                 		   <div class="p-2 flex-grow-1">
-                                 
-                                 			   <h5>'.$categoria["tipo"]." ".$habitacion["estilo"].'</h5>
-                                 			   <h5 class="small text-gray-dark">Del '.$value["fecha_ingreso"].' al '.$value["fecha_salida"].'</h5>
-                                 
-                                 		   </div>
-                                 
-                                 		   <div class="p-2">
-                                 
-                                 				 <button type="button" class="btn btn-dark text-white actualizarTestimonio" data-toggle="modal" data-target="#actualizarTestimonio" idTestimonio=""
-                                 					verTestimonio="">
-                                 
-                                 					 <i class="fas fa-pencil-alt"></i>
-                                 
-                                 				 </button>
-                                 
-                                 				 <button type="button" class="btn btn-warning text-white verTestimonio" data-toggle="modal" data-target="#verTestimonio" verTestimonio="">
-                                 
-                                 					 <i class="fas fa-eye"></i>
-                                 
-                                 				 </button>
-                                 
-                                 		   </div>
-                                 
-                                 	   </div>
-                                 
-                                 	   <hr class="my-0">';
-                                 
-                                 
-                                 }
+									$testimonio = ControladorReservas::ctrMostrarTestimonios("reserva_id", $value["id_reserva"]);
+
+									
+                                    if($value["fecha_ingreso"] != '0000-00-00') {
+
+                                        echo '<div class="d-lg-none d-flex py-2">
+                                       
+                                 	      	   <div class="p-2 flex-grow-1">
+                                       
+                                 	      		   <h5>'.$categoria["tipo"]." ".$habitacion["estilo"].'</h5>
+                                 	      		   <h5 class="small text-gray-dark">Del '.$value["fecha_ingreso"].' al '.$value["fecha_salida"].'</h5>
+                                       
+                                 	      	   </div>
+                                       
+                                 	      	   <div class="p-2">
+                                       
+                                 	      			 <button type="button" class="btn btn-dark text-white actualizarTestimonio" data-toggle="modal" data-target="#actualizarTestimonio" idTestimonio="'.$testimonio[0]['id_test'].'"
+														verTestimonio="'.$testimonio[0]['testimonio'].'">
+                                       
+                                 	      				 <i class="fas fa-pencil-alt"></i>
+                                       
+                                 	      			 </button>
+                                       
+                                 	      			 <button type="button" class="btn btn-warning text-white verTestimonio" data-toggle="modal" data-target="#verTestimonio" verTestimonio="'.$testimonio[0]['testimonio'].'">
+                                       
+                                 	      				 <i class="fas fa-eye"></i>
+                                       
+                                 	      			 </button>
+                                       
+                                 	      	   </div>
+                                       
+                                 	         </div>
+                                       
+                                 	         <hr class="my-0">';
+                                    }  								
+									
+								
+                                
+                                }
+
+								
                                  
                                  ?>
 							
@@ -486,38 +495,40 @@ INFO PERFIL
 					         }
 
                                  foreach ($reservas as $key => $value) {
-                                     $habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);
+
+                                     $habitacion = ControladorHabitaciones::ctrMostrarHabitacion($value["id_habitacion"]);   
                                      $categoria = ControladorCategorias::ctrMostrarCategoria($habitacion["categoria_id"]);
                                      $testimonio = ControladorReservas::ctrMostrarTestimonios("reserva_id", $value["id_reserva"]);
 
                                      /*  echo '<pre class="bg-white">'; print_r($testimonio); echo '</pre><br>';    */
                                      /*  echo '<pre class="bg-white">'; print_r($testimonio[0]['testimonio']); echo '</pre><br>';  */
-                                                  
-                                     echo '<tr>
-        
-					        			 <td>'.($key+1).'</td>
-										 <td>'.$value["codigo_reserva"].'</td>
-					        			 <td class="text-uppercase">'.$categoria["tipo"]." ".$habitacion["estilo"].'</td>
-					        			 <td>'.$value["fecha_ingreso"].'</td>
-					        		     <td>'.$value["fecha_salida"].'</td>
-					        		     <td>
-					                
-					        			  <button type="button" class="btn btn-dark text-white actualizarTestimonio" data-toggle="modal" data-target="#actualizarTestimonio" idTestimonio="'.$testimonio[0]['id_test'].'"
-					        			     verTestimonio="'.$testimonio[0]['testimonio'].'">
-        
-					        			  	<i class="fas fa-pencil-alt"></i>
-        
-					        			  </button>
-        
-					        			  <button type="button" class="btn btn-warning text-white verTestimonio" data-toggle="modal" data-target="#verTestimonio" verTestimonio="'.$testimonio[0]['testimonio'].'">
-        
-					        			  	<i class="fas fa-eye"></i>
-        
-					        			  </button>
-					        			
-					                	</td>
-					               
-					             </tr>';
+                                       if($value["fecha_ingreso"] != '0000-00-00' ){
+                                           echo '<tr>
+              
+					        	      		 <td>'.($key+1).'</td>
+								      		 <td>'.$value["codigo_reserva"].'</td>
+					        	      		 <td class="text-uppercase">'.$categoria["tipo"]." ".$habitacion["estilo"].'</td>
+					        	      		 <td>'.$value["fecha_ingreso"].'</td>
+					        	      	     <td>'.$value["fecha_salida"].'</td>
+					        	      	     <td>
+					                      
+					        	      		  <button type="button" class="btn btn-dark text-white actualizarTestimonio" data-toggle="modal" data-target="#actualizarTestimonio" idTestimonio="'.$testimonio[0]['id_test'].'"
+					        	      		     verTestimonio="'.$testimonio[0]['testimonio'].'">
+              
+					        	      		  	<i class="fas fa-pencil-alt"></i>
+              
+					        	      		  </button>
+              
+					        	      		  <button type="button" class="btn btn-warning text-white verTestimonio" data-toggle="modal" data-target="#verTestimonio" verTestimonio="'.$testimonio[0]['testimonio'].'">
+              
+					        	      		  	<i class="fas fa-eye"></i>
+              
+					        	      		  </button>
+					        	      		
+					                      	</td>
+					                     
+					                   </tr>';
+                                       }
                                  }
 
 

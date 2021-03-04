@@ -149,6 +149,14 @@ $(document).on("click", ".editarBanner", function(){  /* aplica la funccion desp
 
 }) 
 
+$(document).on("click", ".cerrar", function(){
+
+
+  location.reload();   /* evitando el error de que se triplica la textarea tambien hemos evitar el cierre desde fuera del modal  */
+
+
+})
+
 /*=============================================
 Eliminar Banner
 =============================================*/

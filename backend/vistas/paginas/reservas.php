@@ -13,6 +13,13 @@
 
   }
 
+  if(isset($_GET["not"])){
+
+    $respuesta = ControladorInicio::ctrActualizarNotificaciones("reservas", 0);
+  
+  }
+  
+
  ?>
 
 <div class="content-wrapper" style="min-height: 1364.81px;">

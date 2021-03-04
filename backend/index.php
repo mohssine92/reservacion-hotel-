@@ -22,6 +22,22 @@ require_once "modelos/habitaciones.modelo.php";
 require_once "controladores/reservas.controlador.php";
 require_once "modelos/reservas.modelo.php";
 
+require_once "controladores/testimonios.controlador.php";
+require_once "modelos/testimonios.modelo.php";
+
+require_once "controladores/usuarios.controlador.php";
+require_once "modelos/usuarios.modelo.php";
+
+require_once "controladores/recorrido.controlador.php";
+require_once "modelos/recorrido.modelo.php";
+
+require_once "controladores/restaurante.controlador.php";
+require_once "modelos/restaurante.modelo.php";
+
+require_once "controladores/inicio.controlador.php";
+require_once "modelos/inicio.modelo.php";
+
+
 
 
 
